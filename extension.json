@@ -23,6 +23,10 @@
 			"description": "Domain Name",
 			"value": null
 		},
+		"PlausibleHonorDNT": {
+			"description": "Honor the Do Not Track header and disable tracking",
+			"value": true
+		},
 		"PlausibleTrackOutboundLinks": {
 			"description": "Enable Tracking of outbound link clicks",
 			"value": false

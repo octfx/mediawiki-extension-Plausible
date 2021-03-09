@@ -142,6 +142,11 @@ class Plausible {
 			return false;
 		}
 
+		$dnt = $this->out->getRequest()->getHeader( 'DNT' ) === 1;
+		if ( $dnt === true && (bool)$this->getConfigValue( 'PlausibleHonorDNT', true ) === true ) {
+			return false;
+		}
+
 		$user = $this->out->getUser();
 		$enableLoggedIn = (bool)$this->getConfigValue( 'PlausibleTrackLoggedIn', false );
 

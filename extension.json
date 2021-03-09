@@ -1,0 +1,48 @@
+{
+	"name": "Plausible",
+	"version": "0.0.1",
+	"author": [
+		"Octfx"
+	],
+	"url": "https://www.mediawiki.org/wiki/Extension:Plausible",
+	"descriptionmsg": "ext-plausible-desc",
+	"license-name": "GPL-2.0-or-later",
+	"type": "other",
+	"requires": {
+		"MediaWiki": ">= 1.35.0",
+		"platform": {
+			"php": ">=7.2.0"
+		}
+	},
+	"config": {
+		"PlausibleUrl": {
+			"description": "Plausible URL",
+			"value": null
+		},
+		"PlausibleDomainKey": {
+			"description": "Domain Name",
+			"value": null
+		},
+		"PlausibleEnableLoggedIn": {
+			"description": "Enable Tracking for logged in users",
+			"value": true
+		}
+	},
+	"MessagesDirs": {
+		"Plausible": [
+			"i18n"
+		]
+	},
+	"AutoloadNamespaces": {
+		"MediaWiki\\Extension\\Plausible\\": "includes/"
+	},
+	"HookHandlers": {
+		"PageHooks": {
+			"class": "MediaWiki\\Extension\\Plausible\\Hooks\\PageHooks"
+		}
+	},
+	"Hooks": {
+		"BeforePageDisplay": "PageHooks"
+	},
+	"manifest_version": 2
+}

@@ -21,9 +21,8 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\Plausible\Hooks;
 
-use ConfigException;
+use MediaWiki\Extension\Plausible\Plausible;
 use MediaWiki\Hook\BeforePageDisplayHook;
-use MediaWiki\MediaWikiServices;
 use OutputPage;
 use Skin;
 
@@ -41,46 +40,7 @@ class PageHooks implements BeforePageDisplayHook {
 	 * @param Skin $skin
 	 */
 	public function onBeforePageDisplay( $out, $skin ): void {
-		$url = $this->getConfigValue( 'PlausibleUrl' );
-		$domainKey = $this->getConfigValue( 'PlausibleDomainKey' );
-
-		if ($url === null || $domainKey === null) {
-		    return;
-        }
-
-		$user = $out->getUser();
-        $enableLoggedIn = $this->getConfigValue( 'PlausibleEnableLoggedIn' ) ?? false;
-
-        if ($user->isAnon() || ($user->isLoggedIn() && $enableLoggedIn)) {
-            $out->addScript(sprintf(
-                '<script async defer data-domain="%s" src="%s/js/plausible.js"></script>',
-                $domainKey,
-                rtrim($url, '/')
-            ));
-        }
+		$plausible = new Plausible( $out );
+		$plausible->addScript();
 	}
-
-    /**
-     * Loads a config value for a given key from the main config
-     * Returns null on if an ConfigException was thrown
-     *
-     * @param string $key The config key
-     *
-     * @return mixed|null
-     */
-    protected function getConfigValue( string $key ) {
-        try {
-            $value = MediaWikiServices::getInstance()->getMainConfig()->get( $key );
-        } catch ( ConfigException $e ) {
-            wfLogWarning(
-                sprintf(
-                    'Could not get config for "$wg%s". %s', $key,
-                    $e->getMessage()
-                )
-            );
-            $value = null;
-        }
-
-        return $value;
-    }
 }

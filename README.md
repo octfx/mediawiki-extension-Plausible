@@ -5,9 +5,46 @@ Plausible Analytics is a simple, lightweight (< 1 KB), open-source and privacy-f
 See https://github.com/plausible/analytics
 
 ## Configuration
+| Key                            | Description                                                                                                                                         | Example                         | Default |
+|--------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------|---------|
+| $wgPlausibleDomain             | Plausible Domain                                                                                                                                    | https://plausible.io            | null    |
+| $wgPlausibleDomainKey          | Domain Key set on the plausible webseite                                                                                                            | plausible.io                    | null    |
+| $wgPlausibleTrackOutboundLinks | Enable Tracking of outbound link clicks                                                                                                             | true                            | false   |
+| $wgPlausibleTrackLoggedIn      | Enable Tracking for logged in users                                                                                                                 | true                            | false   |
+| $wgPlausibleEnableCustomEvents | Enable to add the global window.plausible function needed for custom event tracking                                                                 | true                            | false   |
+| $wgPlausibleIgnoredTitles      | List of page titles that should not be tracked. https://github.com/plausible/docs/blob/master/docs/excluding-pages.md#common-use-cases-and-examples | ['/Page1', '/Special:*', ]      | []      |
 
-```php
-$wgPlausibleUrl = 'https://your-plausible.domain';
-$wgPlausibleDomainKey = 'your-plausible.domain';
-$wgPlausibleEnableLoggedIn = true; // Add script for logged in users
+
+## Tracking Custom Events
+https://github.com/plausible/docs/blob/master/docs/custom-event-goals.md
+
+If you want to track custom event goals like button clicks or form completions, you have to trigger these custom events from your website using JavaScript.
+
+Scripts need to be placed in `MediaWiki:<Your Skin>.js` e.g. `MediaWiki:Citizen.js`.
+
+Example: Tracking edit button clicks on [SkinCitizen](https://github.com/StarCitizenTools/mediawiki-skins-Citizen).
+```js
+if (typeof window.plausible === 'undefined') {
+    return;
+}
+
+document.querySelector('#ca-edit a').addEventListener('click', function (event) {
+    plausible('Editbtn Clicked');
+});
 ```
+
+## Ignoring Pages
+https://github.com/plausible/docs/blob/master/docs/excluding-pages.md#common-use-cases-and-examples
+
+By default, Plausible Analytics tracks every page you install the snippet on. If you don't want Plausible to track specific pages, do not include the snippet on those pages.
+
+## Common use cases and examples
+| $wgPlausibleIgnoredTitles input | Prevents tracking on pages with a URL path of: |
+| ------------- | ------------- |
+| `/blog4` | `/blog4` and exactly `/blog4` with nothing before or after it, so not `/blog45` nor `/blog4/new` nor `/blog` |
+| `/rule/*` | `/rule/<anything>`, with `<anything>` being any set of characters (length >=0), but not a forward slash - for example, both `/rule/1` as well as `/rule/general-rule-14`, but not `/rule/4/details` nor `/rules` |
+| `/how-to-*` | `/how-to-<anything>` - for example, `/how-to-play` or `/how-to-succeed`, but not `how-to-/blog` |
+| `/*/admin` | `/<anything>/admin` - for example, `/sites/admin`, but not `/sites/admin/page-2` nor `/sites/2/admin` nor `/admin` |
+| `/*/priv/*` | `/<anything>/priv/<anything>` - for example, `/admin/priv/sites`, but not `/priv` nor `/priv/page` nor `/admin/priv` |
+| `/rule/*/*` | `/rule/<anything>/<anything>` - for example, `/rule/4/new/` or `/rule/10/edit`, but not `/rule` nor `/rule/10/new/save` |
+| `/wp/**` | `/wp<anything, even slashes>` - for example, `/wp/assets/subdirectory/another/image.png` or `/wp/admin`, and everything in between, but not `/page/wp`

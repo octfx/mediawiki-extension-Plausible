@@ -4,7 +4,7 @@
 	"author": [
 		"Octfx"
 	],
-	"url": "https://www.mediawiki.org/wiki/Extension:Plausible",
+	"url": "https://github.com/octfx/mediawiki-extension-Plausible",
 	"descriptionmsg": "ext-plausible-desc",
 	"license-name": "GPL-2.0-or-later",
 	"type": "other",
@@ -15,17 +15,29 @@
 		}
 	},
 	"config": {
-		"PlausibleUrl": {
-			"description": "Plausible URL",
+		"PlausibleDomain": {
+			"description": "Plausible Domain",
 			"value": null
 		},
 		"PlausibleDomainKey": {
 			"description": "Domain Name",
 			"value": null
 		},
-		"PlausibleEnableLoggedIn": {
+		"PlausibleTrackOutboundLinks": {
+			"description": "Enable Tracking of outbound link clicks",
+			"value": false
+		},
+		"PlausibleTrackLoggedIn": {
 			"description": "Enable Tracking for logged in users",
-			"value": true
+			"value": false
+		},
+		"PlausibleEnableCustomEvents": {
+			"description": "Set to true to add the window.plausible function. Needed for custom event goals etc.",
+			"value": false
+		},
+		"PlausibleIgnoredTitles": {
+			"description": "List of page titles that should not be tracked",
+			"value": []
 		}
 	},
 	"MessagesDirs": {

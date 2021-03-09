@@ -137,12 +137,13 @@ class Plausible {
 	 */
 	private function canAdd(): bool {
 		if ( $this->plausibleDomain === null || $this->domainKey === null ) {
-			wfLogWarning( '$wgPlausibleUrl or $wgPlausibleDomainKey is not set.' );
+			wfLogWarning( '$wgPlausibleDomain or $wgPlausibleDomainKey is not set.' );
 
 			return false;
 		}
 
-		$dnt = $this->out->getRequest()->getHeader( 'DNT' ) === 1;
+		$dnt = $this->out->getRequest()->getHeader( 'DNT' ) === '1';
+
 		if ( $dnt === true && (bool)$this->getConfigValue( 'PlausibleHonorDNT', true ) === true ) {
 			return false;
 		}

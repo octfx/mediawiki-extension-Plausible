@@ -42,7 +42,27 @@
 		"PlausibleIgnoredTitles": {
 			"description": "List of page titles that should not be tracked",
 			"value": []
+		},
+		"PlausibleTrackSearchInput": {
+			"description": "Send search form inputs to plausible",
+			"value": false
+		},
+		"PlausibleTrackEditButtonClicks": {
+			"description": "Track clicks to the edit button",
+			"value": false
+		},
+		"PlausibleTrackCitizenSearchLinks": {
+			"description": "Track search link clicks. Only works with skin citizen.",
+			"value": false
+		},
+		"PlausibleTrackCitizenMenuLinks": {
+			"description": "Track menu link clicks. Only works with skin citizen.",
+			"value": false
 		}
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "resources",
+		"remoteExtPath": "Plausible/resources"
 	},
 	"MessagesDirs": {
 		"Plausible": [
@@ -59,6 +79,31 @@
 	},
 	"Hooks": {
 		"BeforePageDisplay": "PageHooks"
+	},
+	"ResourceModules": {
+		"ext.plausible.scripts.track-search": {
+			"scripts": [
+				"ext.plausible.scripts.track-search/track-search.js"
+			]
+		},
+		"ext.plausible.scripts.track-edit-btn": {
+			"scripts": [
+				"ext.plausible.scripts.track-edit-btn/track-edit-btn.js"
+			]
+		},
+		"ext.plausible.scripts.citizen.track-search-links": {
+			"scripts": [
+				"ext.plausible.scripts.citizen.track-search-links/track-search-links.js"
+			],
+			"dependencies": [
+				"skins.citizen.scripts.search"
+			]
+		},
+		"ext.plausible.scripts.citizen.track-menu-links": {
+			"scripts": [
+				"ext.plausible.scripts.citizen.track-menu-links/track-menu-links.js"
+			]
+		}
 	},
 	"manifest_version": 2
 }

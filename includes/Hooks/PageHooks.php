@@ -42,5 +42,6 @@ class PageHooks implements BeforePageDisplayHook {
 	public function onBeforePageDisplay( $out, $skin ): void {
 		$plausible = new Plausible( $out );
 		$plausible->addScript();
+		$plausible->addModules();
 	}
 }

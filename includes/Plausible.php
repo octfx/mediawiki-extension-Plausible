@@ -46,6 +46,13 @@ class Plausible {
 	 */
 	private $domainKey;
 
+	/**
+	 * True if window.plausible was added
+	 *
+	 * @var bool
+	 */
+	private $windowFnAdded = false;
+
 	public function __construct( OutputPage $out ) {
 		$this->out = $out;
 		$this->plausibleDomain = $this->getConfigValue( 'PlausibleDomain' );
@@ -69,8 +76,47 @@ class Plausible {
 		}
 
 		if ( $this->getConfigValue( 'PlausibleEnableCustomEvents', false ) === true ) {
-			$this->out->addScript( '<script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>' );
+			$this->addWindowDotPlausible();
 		}
+	}
+
+	/**
+	 * Checks the config for each available tracking module and adds it if it is active
+	 */
+	public function addModules(): void {
+		$availableModules = [
+			'PlausibleTrackSearchInput' => 'ext.plausible.scripts.track-search',
+			'PlausibleTrackEditButtonClicks' => 'ext.plausible.scripts.track-edit-btn',
+
+			'PlausibleTrackCitizenSearchLinks' => 'ext.plausible.scripts.citizen.track-search-links',
+			'PlausibleTrackCitizenMenuLinks' => 'ext.plausible.scripts.citizen.track-menu-links',
+		];
+
+		$anythingAdded = false;
+
+		foreach ( $availableModules as $config => $module ) {
+			if ( $this->getConfigValue( $config, false ) === false ) {
+				continue;
+			}
+
+			$this->out->addModules( $module );
+			$anythingAdded = true;
+		}
+
+		if ( $anythingAdded ) {
+			$this->addWindowDotPlausible();
+		}
+	}
+
+	/**
+	 * Adds the global window.plausible function
+	 */
+	private function addWindowDotPlausible(): void {
+		if ( $this->windowFnAdded === true ) {
+			return;
+		}
+		$this->out->addScript( '<script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>' );
+		$this->windowFnAdded = true;
 	}
 
 	/**

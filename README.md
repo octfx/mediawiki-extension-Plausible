@@ -5,15 +5,19 @@ Plausible Analytics is a simple, lightweight (< 1 KB), open-source and privacy-f
 See https://github.com/plausible/analytics
 
 ## Configuration
-| Key                            | Description                                                                                                                                         | Example                         | Default |
-|--------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------|---------|
-| $wgPlausibleDomain             | Plausible Domain                                                                                                                                    | https://plausible.io            | null    |
-| $wgPlausibleDomainKey          | Domain Key set on the plausible webseite                                                                                                            | plausible.io                    | null    |
-| $wgPlausibleHonorDNT           | DHonor the Do Not Track header and disable tracking                                                                                                 | false                           | true    |
-| $wgPlausibleTrackOutboundLinks | Enable Tracking of outbound link clicks                                                                                                             | true                            | false   |
-| $wgPlausibleTrackLoggedIn      | Enable Tracking for logged in users                                                                                                                 | true                            | false   |
-| $wgPlausibleEnableCustomEvents | Enable to add the global window.plausible function needed for custom event tracking                                                                 | true                            | false   |
-| $wgPlausibleIgnoredTitles      | List of page titles that should not be tracked. https://github.com/plausible/docs/blob/master/docs/excluding-pages.md#common-use-cases-and-examples | ['/Page1', '/Special:*', ]      | []      |
+| Key                                 | Description                                                                                                                                         | Example                         | Default |
+|-------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------|---------|
+| $wgPlausibleDomain                  | Plausible Domain                                                                                                                                    | https://plausible.io            | null    |
+| $wgPlausibleDomainKey               | Domain Key set on the plausible website                                                                                                             | plausible.io                    | null    |
+| $wgPlausibleHonorDNT                | Honor the Do Not Track header and disable tracking                                                                                                  | false                           | true    |
+| $wgPlausibleTrackOutboundLinks      | Enable Tracking of outbound link clicks                                                                                                             | true                            | false   |
+| $wgPlausibleTrackLoggedIn           | Enable Tracking for logged in users                                                                                                                 | true                            | false   |
+| $wgPlausibleEnableCustomEvents      | Enable to add the global window.plausible function needed for custom event tracking                                                                 | true                            | false   |
+| $wgPlausibleIgnoredTitles           | List of page titles that should not be tracked. https://github.com/plausible/docs/blob/master/docs/excluding-pages.md#common-use-cases-and-examples | ['/Page1', '/Special:*', ]      | []      |
+| $wgPlausibleTrackSearchInput        | Send inputs to `#searchInput` to plausible as a custom event named 'SearchInput'                                                                    | true                            | false   |
+| $wgPlausibleTrackEditButtonClicks   | Track clicks to `#ca-edit a` as a custom event named 'EditButtonClick'                                                                              | true                            | false   |
+| $wgPlausibleTrackCitizenSearchLinks | Only for skin Citizen. Track clicks to search result links found in `#typeahead-suggestions`. Event is named 'CitizenSearchLinkClick'               | true                            | false   |
+| $wgPlausibleTrackCitizenMenuLinks   | Only for skin Citizen. Track clicks to links in the sidebar menu. Event is named 'CitizenMenuLinkClick'                                             | true                            | false   |
 
 
 ## Tracking Custom Events

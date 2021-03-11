@@ -51,6 +51,10 @@
 			"description": "Track clicks to the edit button",
 			"value": false
 		},
+		"PlausibleTrack404": {
+			"description": "Tracks 404 pages. Does not actually check 404 responses, instead 404 = page is unknown.",
+			"value": false
+		},
 		"PlausibleTrackCitizenSearchLinks": {
 			"description": "Track search link clicks. Only works with skin citizen.",
 			"value": false
@@ -84,6 +88,14 @@
 		"ext.plausible.scripts.track-search": {
 			"scripts": [
 				"ext.plausible.scripts.track-search/track-search.js"
+			]
+		},
+		"ext.plausible.scripts.track-404": {
+			"scripts": [
+				"ext.plausible.scripts.track-404/track-404.js"
+			],
+			"dependencies": [
+
 			]
 		},
 		"ext.plausible.scripts.track-edit-btn": {

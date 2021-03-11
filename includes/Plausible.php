@@ -84,11 +84,12 @@ class Plausible {
 	 * Checks the config for each available tracking module and adds it if it is active
 	 */
 	public function addModules(): void {
-        if ( !$this->canAdd() ) {
-            return;
-        }
+		if ( !$this->canAdd() ) {
+			return;
+		}
 
 		$availableModules = [
+			'PlausibleTrack404' => 'ext.plausible.scripts.track-404',
 			'PlausibleTrackSearchInput' => 'ext.plausible.scripts.track-search',
 			'PlausibleTrackEditButtonClicks' => 'ext.plausible.scripts.track-edit-btn',
 
@@ -101,6 +102,11 @@ class Plausible {
 		foreach ( $availableModules as $config => $module ) {
 			if ( $this->getConfigValue( $config, false ) === false ) {
 				continue;
+			}
+
+			if ( $config === 'PlausibleTrack404' ) {
+				$exists = $this->out->getTitle() !== null && $this->out->getTitle()->isKnown();
+				$this->out->addJsConfigVars( 'is404', !$exists );
 			}
 
 			$this->out->addModules( $module );

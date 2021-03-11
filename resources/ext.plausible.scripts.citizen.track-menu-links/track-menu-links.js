@@ -8,9 +8,17 @@
 
 	document.querySelectorAll( '#mw-drawer-menu .mw-portal li a' ).forEach( function ( link ) {
 		link.addEventListener( 'click', function ( event ) {
-			window.plausible( eventName, {
-				props: { href: event.target.href }
-			} );
+			if ( typeof event.target.href !== 'undefined' && event.target.href !== null ) {
+				event.preventDefault();
+				event.stopPropagation();
+
+				window.plausible( eventName, {
+					props: { href: event.target.href },
+					callback: function () {
+						window.location = event.target.href;
+					}
+				} );
+			}
 		} );
 	} );
 }() );

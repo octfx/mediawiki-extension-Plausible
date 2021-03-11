@@ -2,7 +2,7 @@
 ( function () {
 	var eventName = 'SearchInput',
 		search = document.getElementById( 'searchInput' ),
-		sendAfter = 100, // ms
+		sendAfter = 200, // ms
 		timeoutId;
 
 	if ( typeof window.plausible === 'undefined' || search === null ) {
@@ -10,11 +10,11 @@
 	}
 
 	search.addEventListener( 'input', function ( event ) {
+		clearTimeout( timeoutId );
+
 		if ( event.target.value === '' ) {
 			return;
 		}
-
-		clearTimeout( timeoutId );
 
 		timeoutId = setTimeout( function () {
 			window.plausible( eventName, { props: { query: event.target.value } } );

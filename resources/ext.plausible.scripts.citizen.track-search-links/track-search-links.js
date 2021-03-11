@@ -3,12 +3,10 @@
 	var eventName = 'CitizenSearchLinkClick',
 		suggestions = document.getElementById( 'searchform' ),
 		callback = function ( event ) {
-			event.preventDefault();
-			event.stopPropagation();
 			window.plausible( eventName, {
-				props: { href: event.target.href },
+				props: { href: event.target.parentNode.parentNode.href },
 				callback: function () {
-					window.location = event.target.href;
+					window.location = event.target.parentNode.parentNode.href;
 				}
 			} );
 		},

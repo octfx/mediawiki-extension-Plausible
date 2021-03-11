@@ -3,10 +3,30 @@
 	var eventName = 'CitizenSearchLinkClick',
 		suggestions = document.getElementById( 'searchform' ),
 		callback = function ( event ) {
+			var currentEl,
+				href = null;
+
+			currentEl = event.target.parentNode;
+
+			while ( typeof currentEl !== 'undefined' ) {
+				if ( currentEl.classList.contains( 'suggestion-link' ) ) {
+					href = currentEl.href;
+
+					break;
+				}
+
+				currentEl = currentEl.parentNode;
+			}
+
+			if ( href !== null ) {
+				event.preventDefault();
+				event.stopPropagation();
+			}
+
 			window.plausible( eventName, {
-				props: { href: event.target.parentNode.parentNode.href },
+				props: { href: href },
 				callback: function () {
-					window.location = event.target.parentNode.parentNode.href;
+					window.location = href;
 				}
 			} );
 		},

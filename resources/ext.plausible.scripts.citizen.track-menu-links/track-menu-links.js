@@ -9,7 +9,7 @@
 	document.querySelectorAll( '#mw-drawer-menu .mw-portal li a' ).forEach( function ( link ) {
 		link.addEventListener( 'click', function ( event ) {
 			window.plausible( eventName, {
-				props: { href: event.target.href },
+				props: { href: event.target.href }
 			} );
 		} );
 	} );

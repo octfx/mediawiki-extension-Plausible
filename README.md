@@ -14,11 +14,16 @@ See https://github.com/plausible/analytics
 | $wgPlausibleTrackLoggedIn           | Enable Tracking for logged in users                                                                                                                 | true                            | false   |
 | $wgPlausibleEnableCustomEvents      | Enable to add the global window.plausible function needed for custom event tracking                                                                 | true                            | false   |
 | $wgPlausibleIgnoredTitles           | List of page titles that should not be tracked. https://github.com/plausible/docs/blob/master/docs/excluding-pages.md#common-use-cases-and-examples | ['/Page1', '/Special:*', ]      | []      |
-| $wgPlausibleTrack404                | Sends a '404' event for unknown titles                                                                                                              | true                            | false   |
-| $wgPlausibleTrackSearchInput        | Send inputs to `#searchInput` to plausible as a custom event named 'SearchInput'                                                                    | true                            | false   |
-| $wgPlausibleTrackEditButtonClicks   | Track clicks to `#ca-edit a` as a custom event named 'EditButtonClick'                                                                              | true                            | false   |
-| $wgPlausibleTrackCitizenSearchLinks | Only for skin Citizen. Track clicks to search result links found in `#typeahead-suggestions`. Event is named 'CitizenSearchLinkClick'               | true                            | false   |
-| $wgPlausibleTrackCitizenMenuLinks   | Only for skin Citizen. Track clicks to links in the sidebar menu. Event is named 'CitizenMenuLinkClick'                                             | true                            | false   |
+
+### Included tracking scripts
+The following tracking modules can be activated by setting the provided configuration key in `LocalSettings.php` to true.
+| Key                                 | Description                                                                                                                                         | EventName                       |
+|-------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------|
+| $wgPlausibleTrack404                | Sends a '404' event for unknown titles                                                                                                              | `404`                           |
+| $wgPlausibleTrackSearchInput        | Send inputs to `#searchInput` to plausible as a custom event named 'SearchInput'                                                                    | `SearchInput`                   |
+| $wgPlausibleTrackEditButtonClicks   | Track clicks to `#ca-edit a` as a custom event named 'EditButtonClick'                                                                              | `EditButtonClick`               |
+| $wgPlausibleTrackCitizenSearchLinks | Only for skin Citizen. Track clicks to search result links found in `#typeahead-suggestions`. Event is named 'CitizenSearchLinkClick'               | `CitizenSearchLinkClick`        |
+| $wgPlausibleTrackCitizenMenuLinks   | Only for skin Citizen. Track clicks to links in the sidebar menu. Event is named 'CitizenMenuLinkClick'                                             | `CitizenMenuLinkClick`          |
 
 
 ## Tracking Custom Events

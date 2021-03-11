@@ -4,7 +4,8 @@
 		suggestions = document.getElementById( 'searchform' ),
 		callback = function ( event ) {
 			var currentEl,
-				href = null;
+				href = null,
+				url;
 
 			currentEl = event.target.parentNode;
 
@@ -23,8 +24,18 @@
 				event.stopPropagation();
 			}
 
+			url = new URL(href);
+			// Catch invalid urls, should not happen
+			if (url === false) {
+				url = {
+					pathname: href
+				}
+			}
+
 			window.plausible( eventName, {
-				props: { href: href },
+				props: {
+					path: url.pathname
+				},
 				callback: function () {
 					window.location = href;
 				}

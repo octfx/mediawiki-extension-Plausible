@@ -14,7 +14,14 @@
 
 		if ( event.target.value !== '' ) {
 			timeoutId = setTimeout( function () {
-				window.plausible( eventName, { props: { query: event.target.value } } );
+				window.plausible(
+					eventName, {
+						props: {
+							query: event.target.value,
+							path: document.location.pathname,
+						}
+					}
+				);
 			}, sendAfter );
 		}
 	} );

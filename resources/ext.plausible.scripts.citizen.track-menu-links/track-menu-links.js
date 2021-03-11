@@ -13,7 +13,9 @@
 				event.stopPropagation();
 
 				window.plausible( eventName, {
-					props: { href: event.target.href },
+					props: {
+						path: event.target.href,
+					},
 					callback: function () {
 						window.location = event.target.href;
 					}

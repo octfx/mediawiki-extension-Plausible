@@ -8,6 +8,10 @@
 	}
 
 	btn.addEventListener( 'click', function () {
-		window.plausible( eventName, { props: { page: window.location.href } } );
+		window.plausible( eventName, {
+			props: {
+				path: document.location.pathname
+			}
+		} );
 	} );
 }() );

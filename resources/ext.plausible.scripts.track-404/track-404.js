@@ -7,6 +7,10 @@
 	}
 
 	if ( mw.config.get( 'is404', false ) === true ) {
-		window.plausible( eventName );
+		window.plausible( eventName, {
+			props: {
+				path: document.location.pathname
+			}
+		} );
 	}
 }() );

@@ -84,6 +84,10 @@ class Plausible {
 	 * Checks the config for each available tracking module and adds it if it is active
 	 */
 	public function addModules(): void {
+        if ( !$this->canAdd() ) {
+            return;
+        }
+
 		$availableModules = [
 			'PlausibleTrackSearchInput' => 'ext.plausible.scripts.track-search',
 			'PlausibleTrackEditButtonClicks' => 'ext.plausible.scripts.track-edit-btn',

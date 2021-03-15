@@ -1,7 +1,7 @@
-// Search Input Tracking
+// Special Search Input Tracking
 ( function () {
-	var eventName = 'SearchInput',
-		search = document.getElementById( 'searchInput' ),
+	var eventName = 'SpecialSearchInput',
+		search = document.querySelector( 'body.mw-special-Search input[type="search"]' ),
 		sendAfter = 1500, // ms
 		minLength = 3,
 		timeoutId;

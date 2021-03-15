@@ -2,10 +2,12 @@
 ( function () {
 	var eventName = 'CitizenSearchLinkClick',
 		suggestions = document.getElementById( 'searchform' ),
+		search = document.getElementById( 'searchInput' ),
 		callback = function ( event ) {
 			var currentEl,
 				href = null,
-				url;
+				url,
+				searchValue;
 
 			currentEl = event.target.parentNode;
 
@@ -24,16 +26,19 @@
 				event.stopPropagation();
 			}
 
-			url = new URL(href);
+			url = new URL( href );
 			// Catch invalid urls, should not happen
-			if (url === false) {
+			if ( url === false ) {
 				url = {
 					pathname: href
-				}
+				};
 			}
+
+			searchValue = typeof search.value === 'undefined' ? null : search.value;
 
 			window.plausible( eventName, {
 				props: {
+					query: searchValue,
 					path: url.pathname
 				},
 				callback: function () {

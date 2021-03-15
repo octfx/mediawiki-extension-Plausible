@@ -15,7 +15,7 @@
 				window.plausible( eventName, {
 					props: {
 						entry: event.target.innerText,
-						path: event.target.href,
+						path: event.target.href
 					},
 					callback: function () {
 						window.location = event.target.href;

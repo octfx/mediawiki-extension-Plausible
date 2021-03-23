@@ -126,14 +126,14 @@ class Plausible {
 			return;
 		}
 
-        $nonce = $this->out->getCSP()->getNonce();
+		$nonce = $this->out->getCSP()->getNonce();
 
-        $this->out->addScript(
-            sprintf(
-                '<script nonce="%s">window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>',
-                $nonce !== false ? $nonce : ''
-            )
-        );
+		$this->out->addScript(
+			sprintf(
+				'<script nonce="%s">window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>',
+				$nonce !== false ? $nonce : ''
+			)
+		);
 		$this->windowFnAdded = true;
 	}
 
@@ -143,13 +143,13 @@ class Plausible {
 	 * @return string
 	 */
 	private function buildScript(): string {
-	    $nonce = $this->out->getCSP()->getNonce();
+		$nonce = $this->out->getCSP()->getNonce();
 
 		return sprintf(
 			'<script async defer %s src="%s" nonce="%s"></script>',
 			$this->buildDataAttribs(),
 			$this->buildScriptPath(),
-            $nonce !== false ? $nonce : ''
+			$nonce !== false ? $nonce : ''
 		);
 	}
 

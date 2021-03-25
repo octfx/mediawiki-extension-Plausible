@@ -218,7 +218,7 @@ class Plausible {
 		$user = $this->out->getUser();
 		$enableLoggedIn = (bool)$this->getConfigValue( 'PlausibleTrackLoggedIn', false );
 
-		return $user->isAnon() || ( $user->isLoggedIn() && $enableLoggedIn );
+		return $user->isAnon() || ( $user->isRegistered() && $enableLoggedIn );
 	}
 
 	/**

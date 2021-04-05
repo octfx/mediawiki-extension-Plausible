@@ -146,10 +146,10 @@ class Plausible {
 		$nonce = $this->out->getCSP()->getNonce();
 
 		return sprintf(
-			'<script async defer %s src="%s" nonce="%s"></script>',
+			'<script async defer %s src="%s"%s></script>',
 			$this->buildDataAttribs(),
 			$this->buildScriptPath(),
-			$nonce !== false ? $nonce : ''
+			$nonce !== false ? sprintf( ' nonce="%s"', $nonce ) : ''
 		);
 	}
 

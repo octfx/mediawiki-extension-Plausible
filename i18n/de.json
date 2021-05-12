@@ -1,0 +1,7 @@
+{
+	"ext-plausible-desc": "Integriert Plausible Analytics, eine Open-Source- und datenschutzfreundliche Alternative zu Google Analytics.",
+	"ext-plausible-exclude-visits": "Besuche ausschließen",
+	"ext-plausible-include-visits": "Besuche nicht mehr ausschließen",
+	"ext-plausible-notification-visits-excluded": "Deine Besuche werden nun ausgeschlossen",
+	"ext-plausible-notification-visits-included": "Deine Besuche werden nun eingeschlossen"
+}

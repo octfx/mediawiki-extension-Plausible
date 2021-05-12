@@ -62,7 +62,14 @@
 		"PlausibleTrackCitizenMenuLinks": {
 			"description": "Track menu link clicks. Only works with skin citizen.",
 			"value": false
+		},
+		"PlausibleEnableOptOutTag": {
+			"description": "Enables the <plausible-opt-out /> tag",
+			"value": true
 		}
+	},
+	"ConfigRegistry": {
+		"Plausible": "GlobalVarConfig::newInstance"
 	},
 	"ResourceFileModulePaths": {
 		"localBasePath": "resources",
@@ -79,12 +86,30 @@
 	"HookHandlers": {
 		"PageHooks": {
 			"class": "MediaWiki\\Extension\\Plausible\\Hooks\\PageHooks"
+		},
+		"ParserHooks": {
+			"class": "MediaWiki\\Extension\\Plausible\\Hooks\\ParserHooks"
 		}
 	},
 	"Hooks": {
-		"BeforePageDisplay": "PageHooks"
+		"BeforePageDisplay": "PageHooks",
+		"ParserFirstCallInit": "ParserHooks"
 	},
 	"ResourceModules": {
+		"ext.plausible.opt-out": {
+			"scripts": [
+				"ext.plausible.scripts.opt-out/opt-out.js"
+			],
+			"styles": [
+				"ext.plausible.styles.opt-out/opt-out.less"
+			],
+			"messages": [
+				"ext-plausible-exclude-visits",
+				"ext-plausible-include-visits",
+				"ext-plausible-notification-visits-excluded",
+				"ext-plausible-notification-visits-included"
+			]
+		},
 		"ext.plausible.scripts.track-search": {
 			"scripts": [
 				"ext.plausible.scripts.track-search/track-search.js"

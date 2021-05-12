@@ -231,7 +231,7 @@ class Plausible {
 	 */
 	private function getConfigValue( string $key, $default = null ) {
 		try {
-			$value = MediaWikiServices::getInstance()->getMainConfig()->get( $key );
+			$value = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Plausible' )->get( $key );
 		} catch ( ConfigException $e ) {
 			wfLogWarning(
 				sprintf(

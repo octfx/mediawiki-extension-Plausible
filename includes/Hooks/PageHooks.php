@@ -32,7 +32,7 @@ use Skin;
 class PageHooks implements BeforePageDisplayHook {
 
 	/**
-	 * Adds the tracking script to the apge
+	 * Adds the tracking script to the page
 	 *
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/BeforePageDisplay
 	 *

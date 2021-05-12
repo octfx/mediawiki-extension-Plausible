@@ -14,6 +14,7 @@ See https://github.com/plausible/analytics
 | $wgPlausibleTrackLoggedIn           | Enable Tracking for logged in users                                                                                                                 | true                            | false   |
 | $wgPlausibleEnableCustomEvents      | Enable to add the global window.plausible function needed for custom event tracking                                                                 | true                            | false   |
 | $wgPlausibleIgnoredTitles           | List of page titles that should not be tracked. https://github.com/plausible/docs/blob/master/docs/excluding-pages.md#common-use-cases-and-examples | ['/Page1', '/Special:*', ]      | []      |
+| $wgPlausibleEnableOptOutTag         | Enables or disables the `<plausible-opt-out />` tag that allows users to opt-out from being tracked                                                 | false                           | true    |
 
 ### Included tracking scripts
 The following tracking modules can be activated by setting the provided configuration key in `LocalSettings.php` to true.

@@ -1,3 +1,7 @@
 {
-	"ext-plausible-desc": "{{desc|name=Plausible|url=https://www.mediawiki.org/wiki/Extension:Plausible}}"
+	"ext-plausible-desc": "{{desc|name=Plausible|url=https://www.mediawiki.org/wiki/Extension:Plausible}}",
+	"ext-plausible-exclude-visits": "Exclude my visits",
+	"ext-plausible-include-visits": "Stop excluding my visits",
+	"ext-plausible-notification-visits-excluded": "Your visits are now being excluded",
+	"ext-plausible-notification-visits-included": "Your visits are now being included"
 }

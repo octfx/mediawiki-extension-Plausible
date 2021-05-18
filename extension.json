@@ -133,7 +133,7 @@
 				"ext.plausible.scripts.citizen.track-search-links/track-search-links.js"
 			],
 			"dependencies": [
-				"skins.citizen.scripts.search"
+
 			]
 		},
 		"ext.plausible.scripts.citizen.track-menu-links": {

@@ -11,8 +11,8 @@
 
 			currentEl = event.target.parentNode;
 
-			while ( typeof currentEl !== 'undefined' ) {
-				if ( currentEl.classList.contains( 'suggestion-link' ) ) {
+			while ( typeof currentEl !== 'undefined' && currentEl !== null && typeof currentEl.parentNode !== 'undefined' ) {
+				if ( currentEl instanceof HTMLAnchorElement && currentEl.getAttribute( 'href' ) !== null ) {
 					href = currentEl.href;
 
 					break;
@@ -48,8 +48,7 @@
 		},
 		observer,
 		idxMutation,
-		idxChild,
-		dropdown;
+		idxChild;
 
 	if ( typeof window.plausible === 'undefined' || suggestions === null ) {
 		return;
@@ -61,13 +60,26 @@
 				continue;
 			}
 
-			dropdown = mutationList[ idxMutation ].addedNodes[ 0 ];
-			if ( typeof dropdown.childNodes === 'undefined' ) {
+			const target = mutationList[ idxMutation ]?.target;
+
+			if ( typeof target === 'undefined' || !( target instanceof HTMLOListElement ) ) {
 				return;
 			}
 
-			for ( idxChild = 0; idxChild < dropdown.childNodes.length; idxChild++ ) {
-				dropdown.childNodes[ idxChild ].addEventListener( 'click', callback );
+			for ( idxChild = 0; idxChild < mutationList[ idxMutation ].addedNodes.length; idxChild++ ) {
+				let child = mutationList[ idxMutation ].addedNodes[ idxChild ];
+
+				if ( !( child instanceof HTMLLIElement ) || typeof child.querySelector === 'undefined' ) {
+					continue;
+				}
+
+				const a = child.querySelector('a');
+
+				if ( a === null ) {
+					continue;
+				}
+
+				a.addEventListener( 'click', callback );
 			}
 		}
 	} );

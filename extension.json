@@ -1,10 +1,10 @@
 {
 	"name": "Plausible",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"author": [
 		"Octfx"
 	],
-	"url": "https://github.com/octfx/mediawiki-extension-Plausible",
+	"url": "https://www.mediawiki.org/wiki/Extension:Plausible",
 	"descriptionmsg": "ext-plausible-desc",
 	"license-name": "GPL-2.0-or-later",
 	"type": "other",

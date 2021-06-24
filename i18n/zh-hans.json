@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"GuoPC"
+		]
+	},
+	"ext-plausible-desc": "Integrates Plausible Analytics，一个开源且隐私友好的Google Analytics替代方案。",
+	"ext-plausible-exclude-visits": "排除我的访问",
+	"ext-plausible-include-visits": "停止排除我的访问",
+	"ext-plausible-notification-visits-excluded": "您的访问现在被排除",
+	"ext-plausible-notification-visits-included": "您的访问现在被包含"
+}

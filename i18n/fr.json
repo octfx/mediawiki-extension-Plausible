@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Gomoko"
+		]
+	},
+	"ext-plausible-desc": "Intègre Plausible Analytics, une alternative à Google Analytics libre et garantissant la confidentialité",
+	"ext-plausible-exclude-visits": "Exclure mes visites",
+	"ext-plausible-include-visits": "Arrêter d’exclure mes visites",
+	"ext-plausible-notification-visits-excluded": "Vos visites sont maintenant exclues",
+	"ext-plausible-notification-visits-included": "Vos visites sont maintenant incluses"
+}

@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eduardoaddad"
+		]
+	},
+	"ext-plausible-desc": "Integra o Plausible Analytics, de código aberto e amiga da privacidade alternativa ao Google Analytics.",
+	"ext-plausible-exclude-visits": "Excluir minhas visitas",
+	"ext-plausible-include-visits": "Parar de excluir minhas visitas",
+	"ext-plausible-notification-visits-excluded": "Suas visitas agora estão sendo excluídas",
+	"ext-plausible-notification-visits-included": "Suas visitas agora estão sendo incluídas"
+}

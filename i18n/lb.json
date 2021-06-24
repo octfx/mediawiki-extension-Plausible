@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Robby"
+		]
+	},
+	"ext-plausible-desc": "integréiert Plausible Analytics, eng Quell-oppen an dateschutzfrëndlech Alternativ zu Google Analytics.",
+	"ext-plausible-exclude-visits": "Meng Visitten net méi matzielen",
+	"ext-plausible-include-visits": "Meng Visitten nees matzielen",
+	"ext-plausible-notification-visits-excluded": "Är Visitte ginn elo net méi matgezielt",
+	"ext-plausible-notification-visits-included": "Är Visitte ginn elo matgezielt"
+}

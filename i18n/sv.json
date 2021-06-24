@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Sabelöga"
+		]
+	},
+	"ext-plausible-desc": "Integrerar Plausible Analytics, ett integritetsvänligt alternativ till Google Analytics med öppen källkod.",
+	"ext-plausible-exclude-visits": "Utelämna mina besök",
+	"ext-plausible-include-visits": "Sluta utesluta mina besök",
+	"ext-plausible-notification-visits-excluded": "Dina besök utesluts nu",
+	"ext-plausible-notification-visits-included": "Dina besök räknas nu"
+}

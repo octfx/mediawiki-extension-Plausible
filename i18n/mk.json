@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bjankuloski06"
+		]
+	},
+	"ext-plausible-desc": "Го вклопува Plausible Analytics — алтернатива на Гугл Аналитика со отворен код која ги штити личните податоци.",
+	"ext-plausible-exclude-visits": "Изземи ги моите посети",
+	"ext-plausible-include-visits": "Повеќе не ги изземај моите посети",
+	"ext-plausible-notification-visits-excluded": "Вашите посети сега се изземени.",
+	"ext-plausible-notification-visits-included": "Вашите посети сега се вклучени"
+}

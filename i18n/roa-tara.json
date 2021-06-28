@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Joetaras"
+		]
+	},
+	"ext-plausible-desc": "Integrate Plausible Analytics, 'n'alternative open-source e amiche d'a privacy a Google Analytics.",
+	"ext-plausible-exclude-visits": "Esclude le visite mije",
+	"ext-plausible-include-visits": "Firme l'esclusione de le visite mije",
+	"ext-plausible-notification-visits-excluded": "Le visite tune mò avènene escluse",
+	"ext-plausible-notification-visits-included": "Le visite tune mò avènene ingluse"
+}

@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jackiezelaya"
+		]
+	},
+	"ext-plausible-desc": "Integra Plausible Analytics, una alternativa de código abierto y amigable con la privacidad a Google Analytics.",
+	"ext-plausible-exclude-visits": "Excluir mis visitas",
+	"ext-plausible-include-visits": "Deja de excluir mis visitas",
+	"ext-plausible-notification-visits-excluded": "Sus visitas ahora están siendo excluidas",
+	"ext-plausible-notification-visits-included": "Ahora se incluyen sus visitas"
+}

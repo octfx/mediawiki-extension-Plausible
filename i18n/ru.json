@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kareyac"
+		]
+	},
+	"ext-plausible-exclude-visits": "Исключить мои посещения",
+	"ext-plausible-notification-visits-excluded": "Ваши посещения теперь исключаются",
+	"ext-plausible-notification-visits-included": "Ваши посещения теперь включены"
+}

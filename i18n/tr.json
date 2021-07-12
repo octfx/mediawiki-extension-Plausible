@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Hedda"
+		]
+	},
+	"ext-plausible-desc": "Google Analytics'e açık kaynaklı ve gizlilik dostu bir alternatif olan Plausible Analytics'i entegre eder.",
+	"ext-plausible-exclude-visits": "Ziyaretlerimi hariç tut",
+	"ext-plausible-include-visits": "Ziyaretlerimi hariç tutmayı bırak",
+	"ext-plausible-notification-visits-excluded": "Ziyaretleriniz artık hariç tutuluyor",
+	"ext-plausible-notification-visits-included": "Ziyaretleriniz artık dahil ediliyor"
+}

@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"DDPAT"
+		]
+	},
+	"ext-plausible-desc": "Інтегрує правдоподібну аналітику, альтернативу Google Analytics з відкритим вихідним кодом та конфіденційність.",
+	"ext-plausible-exclude-visits": "Виключити мої відвідування",
+	"ext-plausible-include-visits": "Перестати виключати мої візити",
+	"ext-plausible-notification-visits-excluded": "Зараз ваші відвідування виключаються",
+	"ext-plausible-notification-visits-included": "Тепер ваші відвідування включені"
+}

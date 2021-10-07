@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kly"
+		]
+	},
+	"ext-plausible-desc": "整合 Plausible 分析，一套開放原始碼且對隱私方面友善的 Google 分析替代方案。",
+	"ext-plausible-exclude-visits": "排除我的訪問",
+	"ext-plausible-include-visits": "停止排除我的訪問",
+	"ext-plausible-notification-visits-excluded": "您的訪問現在被排除",
+	"ext-plausible-notification-visits-included": "您的訪問現在被包含到"
+}

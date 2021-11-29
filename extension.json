@@ -55,6 +55,10 @@
 			"description": "Tracks 404 pages. Does not actually check 404 responses, instead 404 = page is unknown.",
 			"value": false
 		},
+		"PlausibleTrackNavplateClicks": {
+			"description": "Tracks clicks to links inside .navplate elements",
+			"value": false
+		},
 		"PlausibleTrackCitizenSearchLinks": {
 			"description": "Track search link clicks. Only works with skin citizen.",
 			"value": false
@@ -118,9 +122,6 @@
 		"ext.plausible.scripts.track-404": {
 			"scripts": [
 				"ext.plausible.scripts.track-404/track-404.js"
-			],
-			"dependencies": [
-
 			]
 		},
 		"ext.plausible.scripts.track-edit-btn": {
@@ -128,12 +129,14 @@
 				"ext.plausible.scripts.track-edit-btn/track-edit-btn.js"
 			]
 		},
+		"ext.plausible.scripts.track-navplate-clicks": {
+			"scripts": [
+				"ext.plausible.scripts.track-navplate-clicks/track-navplate-clicks.js"
+			]
+		},
 		"ext.plausible.scripts.citizen.track-search-links": {
 			"scripts": [
 				"ext.plausible.scripts.citizen.track-search-links/track-search-links.js"
-			],
-			"dependencies": [
-
 			]
 		},
 		"ext.plausible.scripts.citizen.track-menu-links": {

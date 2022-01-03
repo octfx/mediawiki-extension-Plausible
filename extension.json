@@ -59,6 +59,10 @@
 			"description": "Tracks clicks to links inside .navplate elements",
 			"value": false
 		},
+		"PlausibleTrackInfoboxClicks": {
+			"description": "Tracks clicks to links inside .mw-capiunto-infobox elements",
+			"value": false
+		},
 		"PlausibleTrackCitizenSearchLinks": {
 			"description": "Track search link clicks. Only works with skin citizen.",
 			"value": false
@@ -132,6 +136,11 @@
 		"ext.plausible.scripts.track-navplate-clicks": {
 			"scripts": [
 				"ext.plausible.scripts.track-navplate-clicks/track-navplate-clicks.js"
+			]
+		},
+		"ext.plausible.scripts.track-infobox-clicks": {
+			"scripts": [
+				"ext.plausible.scripts.track-infobox-clicks/track-infobox-clicks.js"
 			]
 		},
 		"ext.plausible.scripts.citizen.track-search-links": {

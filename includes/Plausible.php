@@ -93,6 +93,7 @@ class Plausible {
 			'PlausibleTrackSearchInput' => 'ext.plausible.scripts.track-search',
 			'PlausibleTrackEditButtonClicks' => 'ext.plausible.scripts.track-edit-btn',
 			'PlausibleTrackNavplateClicks' => 'ext.plausible.scripts.track-navplate-clicks',
+			'PlausibleTrackInfoboxClicks' => 'ext.plausible.scripts.track-infobox-clicks',
 
 			'PlausibleTrackCitizenSearchLinks' => 'ext.plausible.scripts.citizen.track-search-links',
 			'PlausibleTrackCitizenMenuLinks' => 'ext.plausible.scripts.citizen.track-menu-links',

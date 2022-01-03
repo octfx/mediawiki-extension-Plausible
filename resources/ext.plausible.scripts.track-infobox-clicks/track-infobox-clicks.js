@@ -1,14 +1,14 @@
-// Navplate Link Click Tracking
+// Infobox Link Click Tracking
 ( function () {
-	var eventName = 'Navplate: Click',
-		navplates = document.querySelectorAll( '.navplate' );
+	var eventName = 'Infobox: Click',
+		infoboxes = document.querySelectorAll( '.mw-capiunto-infobox' );
 
-	if ( typeof window.plausible === 'undefined' || navplates === null ) {
+	if ( typeof window.plausible === 'undefined' || infoboxes === null ) {
 		return;
 	}
 
-	navplates.forEach(navplate => {
-		navplate.querySelectorAll('a:not(.new)').forEach(link => {
+	infoboxes.forEach(infobox => {
+		infobox.querySelectorAll('a:not(.new)').forEach(link => {
 			link.addEventListener('click', function (event) {
 				if (link.getAttribute('href') === null) {
 					return;

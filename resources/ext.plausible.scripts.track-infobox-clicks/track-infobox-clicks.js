@@ -14,19 +14,30 @@
 					return;
 				}
 
-				event.preventDefault();
-
-				window.plausible(
-					eventName,
-					{
-						props: {
-							link: link.textContent
-						},
-						callback: function () {
-							window.location = link.getAttribute('href');
+				if ( link.classList.contains('image') ) {
+					window.plausible(
+						eventName,
+						{
+							props: {
+								link: 'Infobox Image'
+							}
 						}
-					}
-				);
+					);
+				} else {
+					event.preventDefault();
+
+					window.plausible(
+						eventName,
+						{
+							props: {
+								link: link.textContent
+							},
+							callback: function () {
+								window.location = link.getAttribute('href');
+							}
+						}
+					);
+				}
 			});
 		});
 	});

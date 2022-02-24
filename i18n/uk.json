@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"DDPAT"
+			"DDPAT",
+			"Ice bulldog"
 		]
 	},
 	"ext-plausible-desc": "Інтегрує правдоподібну аналітику, альтернативу Google Analytics з відкритим вихідним кодом та конфіденційність.",

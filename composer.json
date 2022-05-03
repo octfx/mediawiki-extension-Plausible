@@ -38,5 +38,10 @@
 	},
 	"extra": {
 		"installer-name": "Plausible"
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true
+		}
 	}
 }

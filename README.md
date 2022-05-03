@@ -23,6 +23,8 @@ The following tracking modules can be activated by setting the provided configur
 | $wgPlausibleTrack404                | Sends a '404' event for unknown titles                                                                                                              | `404`                           |
 | $wgPlausibleTrackSearchInput        | Send inputs to `#searchInput` to plausible as a custom event named 'SearchInput'                                                                    | `SearchInput`                   |
 | $wgPlausibleTrackEditButtonClicks   | Track clicks to `#ca-edit a` as a custom event named 'EditButtonClick'                                                                              | `EditButtonClick`               |
+| $wgPlausibleTrackNavplateClicks     | Track clicks to links inside `.navplate` elements						                                                                            | `Navplate: Click`               |
+| $wgPlausibleTrackInfoboxClicks      | Track clicks to links inside `.mw-capiunto-infobox` elements				                                                                        | `Infobox: Click`                |
 | $wgPlausibleTrackCitizenSearchLinks | Only for skin Citizen. Track clicks to search result links found in `#typeahead-suggestions`. Event is named 'CitizenSearchLinkClick'               | `CitizenSearchLinkClick`        |
 | $wgPlausibleTrackCitizenMenuLinks   | Only for skin Citizen. Track clicks to links in the sidebar menu. Event is named 'CitizenMenuLinkClick'                                             | `CitizenMenuLinkClick`          |
 

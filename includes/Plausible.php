@@ -92,6 +92,8 @@ class Plausible {
 			'PlausibleTrack404' => 'ext.plausible.scripts.track-404',
 			'PlausibleTrackSearchInput' => 'ext.plausible.scripts.track-search',
 			'PlausibleTrackEditButtonClicks' => 'ext.plausible.scripts.track-edit-btn',
+			'PlausibleTrackNavplateClicks' => 'ext.plausible.scripts.track-navplate-clicks',
+			'PlausibleTrackInfoboxClicks' => 'ext.plausible.scripts.track-infobox-clicks',
 
 			'PlausibleTrackCitizenSearchLinks' => 'ext.plausible.scripts.citizen.track-search-links',
 			'PlausibleTrackCitizenMenuLinks' => 'ext.plausible.scripts.citizen.track-menu-links',

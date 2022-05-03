@@ -1,17 +1,29 @@
 // Edit Button Tracking
 ( function () {
-	var eventName = 'EditButtonClick',
-		btn = document.querySelector( '#ca-edit a' );
+  if ( typeof window.plausible === 'undefined' ) {
+	return;
+  }
+  
+  var registerEvent = function() {
+    var eventName = 'EditButtonClick';
+    window.plausible( eventName, {
+        props: {
+          path: document.location.pathname
+        }
+    } );
+  };
+  
+  var btns = {
+    edit: document.querySelector( '#ca-edit a' ),
+    veEdit: document.querySelector( '#ca-ve-edit a' ),
+    // This is not great but there is no good selector to get the regular edit button
+    sectionEdit: document.querySelector( '.mw-editsection a:last-of-type' ),
+    sectionVeEdit: document.querySelector( '.mw-editsection-visualeditor a' )
+  };
 
-	if ( typeof window.plausible === 'undefined' || btn === null ) {
-		return;
-	}
-
-	btn.addEventListener( 'click', function () {
-		window.plausible( eventName, {
-			props: {
-				path: document.location.pathname
-			}
-		} );
-	} );
+  for( var btn in btns ) {
+    if( btn !== null ) {
+      btn.addEventListener( 'click', registerEvent );
+    }
+  }
 }() );

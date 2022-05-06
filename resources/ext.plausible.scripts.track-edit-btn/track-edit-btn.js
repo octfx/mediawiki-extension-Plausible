@@ -22,8 +22,8 @@
   };
 
   for( var btn in btns ) {
-    if( btn !== null ) {
-      btn.addEventListener( 'click', registerEvent );
+    if( btns[ btn ] !== null ) {
+      btns[ btn ].addEventListener( 'click', registerEvent );
     }
   }
 }() );

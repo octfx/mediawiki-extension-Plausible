@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ex-Diktator"
+		]
+	},
+	"ext-plausible-desc": "אינטגרציה של Plausible Analytics, חלופה בקוד פתוח וידידותית לפרטיות של Google Analytics.",
+	"ext-plausible-exclude-visits": "לא לכלול את הביקורים שלי",
+	"ext-plausible-include-visits": "להפסיק לא לכלול את הביקורים שלי",
+	"ext-plausible-notification-visits-excluded": "הביקורים שלך לא נכללים עכשיו",
+	"ext-plausible-notification-visits-included": "הביקורים שלך נכללים עכשיו"
+}

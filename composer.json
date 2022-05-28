@@ -1,6 +1,6 @@
 {
 	"name": "mediawiki/plausible",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"type": "mediawiki-extension",
 	"description": "Integrates plausible analytics",
 	"homepage": "https://www.mediawiki.org/wiki/Extension:Plausible",

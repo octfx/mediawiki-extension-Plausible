@@ -17,7 +17,7 @@ class OptOut {
 	 * @return string The button
 	 */
 	public static function fromTag( ?string $input, array $args, Parser $parser, PPFrame $frame ): string {
-		$parser->getOutput()->addModules( 'ext.plausible.opt-out' );
+		$parser->getOutput()->addModules( [ 'ext.plausible.opt-out' ] );
 
 		$message = new Message( 'ext-plausible-exclude-visits' );
 

@@ -6,7 +6,7 @@
 		return;
 	}
 
-	document.querySelectorAll( '.citizen-drawer__menu .mw-portal a' ).forEach( function ( link ) {
+	document.querySelectorAll( '.citizen-drawer__menu nav a' ).forEach( function ( link ) {
 		link.addEventListener( 'click', function ( event ) {
 			if ( typeof event.target.href !== 'undefined' && event.target.href !== null ) {
 				event.preventDefault();

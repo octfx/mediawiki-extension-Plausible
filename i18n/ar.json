@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Meno25"
+		]
+	},
+	"ext-plausible-desc": "يدمج Plausible Analytics ، وهو بديل مفتوح المصدر وصديق للخصوصية لبرنامج Google Analytics.",
+	"ext-plausible-exclude-visits": "استبعاد زياراتي",
+	"ext-plausible-include-visits": "توقف عن استبعاد زياراتي",
+	"ext-plausible-notification-visits-excluded": "يتم الآن استبعاد زياراتك",
+	"ext-plausible-notification-visits-included": "يتم الآن تضمين زياراتك"
+}

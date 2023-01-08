@@ -3,7 +3,7 @@
 	var eventName = 'Infobox: Click',
 		infoboxes = document.querySelectorAll( '.mw-capiunto-infobox' );
 
-	if ( typeof window.plausible === 'undefined' || infoboxes === null ) {
+	if ( typeof window.plausible === 'undefined' || window.plausible.length === 0 || infoboxes === null ) {
 		return;
 	}
 

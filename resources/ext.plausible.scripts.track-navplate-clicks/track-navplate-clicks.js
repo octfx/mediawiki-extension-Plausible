@@ -3,7 +3,7 @@
 	var eventName = 'Navplate: Click',
 		navplates = document.querySelectorAll( '.navplate' );
 
-	if ( typeof window.plausible === 'undefined' || navplates === null ) {
+	if ( typeof window.plausible === 'undefined' || window.plausible.length === 0 || navplates === null ) {
 		return;
 	}
 

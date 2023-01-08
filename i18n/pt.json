@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Hamilton Abreu"
+		]
+	},
+	"ext-plausible-desc": "Integra o Plausible Analytics, uma alternativa ao Google Analytics de código aberto e respeitador da privacidade.",
+	"ext-plausible-exclude-visits": "Excluir as minhas visitas",
+	"ext-plausible-include-visits": "Parar de excluir as minhas visitas",
+	"ext-plausible-notification-visits-excluded": "As suas visitas estão agora a ser excluídas",
+	"ext-plausible-notification-visits-included": "As suas visitas estão agora a ser incluídas"
+}

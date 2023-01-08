@@ -2,7 +2,7 @@
 ( function () {
 	var eventName = 'CitizenMenuLinkClick';
 
-	if ( typeof window.plausible === 'undefined' ) {
+	if ( typeof window.plausible === 'undefined' || window.plausible.length === 0 ) {
 		return;
 	}
 

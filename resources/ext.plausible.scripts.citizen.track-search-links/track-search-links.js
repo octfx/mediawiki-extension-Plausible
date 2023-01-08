@@ -50,7 +50,7 @@
 		idxMutation,
 		idxChild;
 
-	if ( typeof window.plausible === 'undefined' || suggestions === null ) {
+	if ( typeof window.plausible === 'undefined' || window.plausible.length === 0 || suggestions === null ) {
 		return;
 	}
 

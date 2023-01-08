@@ -1,6 +1,6 @@
 // Edit Button Tracking
 ( function () {
-  if ( typeof window.plausible === 'undefined' ) {
+  if ( typeof window.plausible === 'undefined' || window.plausible.length === 0 ) {
 	return;
   }
   

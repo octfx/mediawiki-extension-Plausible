@@ -2,7 +2,7 @@
 ( function () {
 	var eventName = '404';
 
-	if ( typeof window.plausible === 'undefined' || typeof mw.config === 'undefined' ) {
+	if ( typeof window.plausible === 'undefined' || window.plausible.length === 0 || typeof mw.config === 'undefined' ) {
 		return;
 	}
 

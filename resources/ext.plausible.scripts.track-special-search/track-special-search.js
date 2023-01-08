@@ -6,7 +6,7 @@
 		minLength = 3,
 		timeoutId;
 
-	if ( typeof window.plausible === 'undefined' || search === null ) {
+	if ( typeof window.plausible === 'undefined' || window.plausible.length === 0 || search === null ) {
 		return;
 	}
 

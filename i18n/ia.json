@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"McDutchie"
+		]
+	},
+	"ext-plausible-desc": "Integra Plausible Analytics, un alternativa a Google Analytics open source e respectuose del vita private.",
+	"ext-plausible-exclude-visits": "Excluder mi visitas",
+	"ext-plausible-include-visits": "Cessar de excluder mi visitas",
+	"ext-plausible-notification-visits-excluded": "Tu visitas essera ora excludite",
+	"ext-plausible-notification-visits-included": "Tu visitas essera ora includite"
+}

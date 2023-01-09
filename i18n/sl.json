@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eleassar"
+		]
+	},
+	"ext-plausible-desc": "Integrira Plausible Analytics, odprtokodno in zasebnosti prijazno alternativo Google Analitike.",
+	"ext-plausible-exclude-visits": "Izključi moje obiske",
+	"ext-plausible-include-visits": "Prenehaj izključevati moje obiske",
+	"ext-plausible-notification-visits-excluded": "Vaši obiski so zdaj izključeni",
+	"ext-plausible-notification-visits-included": "Vaši obiski so zdaj vključeni"
+}

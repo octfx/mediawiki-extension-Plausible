@@ -21,6 +21,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\Plausible;
 
+use Config;
 use ConfigException;
 use MediaWiki\MediaWikiServices;
 use OutputPage;
@@ -53,8 +54,14 @@ class Plausible {
 	 */
 	private $windowFnAdded = false;
 
+	/**
+	 * @var Config
+	 */
+	private $config;
+
 	public function __construct( OutputPage $out ) {
 		$this->out = $out;
+		$this->config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Plausible' );
 		$this->plausibleDomain = $this->getConfigValue( 'PlausibleDomain' );
 		$this->domainKey = $this->getConfigValue( 'PlausibleDomainKey' );
 	}
@@ -149,7 +156,7 @@ class Plausible {
 
 		return sprintf(
 			'<script async defer %s src="%s"%s></script>',
-			$this->buildDataAttribs(),
+			$this->buildScriptAttribs(),
 			$this->buildScriptPath(),
 			$nonce !== false ? sprintf( ' nonce="%s"', $nonce ) : ''
 		);
@@ -171,6 +178,10 @@ class Plausible {
 			$name = sprintf( '%s.exclusions', $name );
 		}
 
+		if ( $this->getConfigValue( 'PlausibleTrackFileDownloads', false ) === true ) {
+			$name = sprintf( '%s.file-downloads', $name );
+		}
+
 		return sprintf(
 			'%s/js/%s.js',
 			rtrim( $this->plausibleDomain, '/' ),
@@ -183,7 +194,7 @@ class Plausible {
 	 *
 	 * @return string
 	 */
-	private function buildDataAttribs(): string {
+	private function buildScriptAttribs(): string {
 		$attributes = [
 			'domain' => $this->domainKey,
 		];
@@ -194,9 +205,16 @@ class Plausible {
 			$attributes['exclude'] = implode( ', ', $ignoredTitles );
 		}
 
-		return implode( ' ', array_map( static function ( $key, $value ) {
+		$attributes = array_map( static function ( $key, $value ) {
 			return sprintf( 'data-%s="%s"', $key, $value );
-		}, array_keys( $attributes ), $attributes ) );
+		}, array_keys( $attributes ), $attributes );
+
+		$additionalExtensions = $this->getConfigValue( 'PlausibleTrackFileDownloadExtensions', [] );
+		if ( $this->getConfigValue( 'PlausibleTrackFileDownloads' ) && !empty( $additionalExtensions ) ) {
+			$attributes[] = sprintf( 'file-types="%s"', implode( ',', $additionalExtensions ) );
+		}
+
+		return implode( ' ', $attributes );
 	}
 
 	/**
@@ -233,7 +251,7 @@ class Plausible {
 	 */
 	private function getConfigValue( string $key, $default = null ) {
 		try {
-			$value = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Plausible' )->get( $key );
+			$value = $this->config->get( $key );
 		} catch ( ConfigException $e ) {
 			wfLogWarning(
 				sprintf(

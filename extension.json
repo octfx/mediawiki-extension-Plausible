@@ -2,7 +2,7 @@
 	"name": "Plausible",
 	"version": "1.0.2",
 	"author": [
-		"Octfx"
+		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
 	],
 	"url": "https://www.mediawiki.org/wiki/Extension:Plausible",
 	"descriptionmsg": "ext-plausible-desc",
@@ -30,6 +30,14 @@
 		"PlausibleTrackOutboundLinks": {
 			"description": "Enable Tracking of outbound link clicks",
 			"value": false
+		},
+		"PlausibleTrackFileDownloads": {
+			"description": "Enable Tracking of link clicks that lead to files. This needs a custom event goal called 'File Download'.",
+			"value": false
+		},
+		"PlausibleTrackFileDownloadExtensions": {
+			"description": "List of file extensions to additionally track, e.g. 'js'",
+			"value": []
 		},
 		"PlausibleTrackLoggedIn": {
 			"description": "Enable Tracking for logged in users",

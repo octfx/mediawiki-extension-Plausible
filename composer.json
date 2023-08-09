@@ -1,6 +1,6 @@
 {
 	"name": "octfx/plausible",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"type": "mediawiki-extension",
 	"description": "Integrates plausible analytics",
 	"homepage": "https://www.mediawiki.org/wiki/Extension:Plausible",

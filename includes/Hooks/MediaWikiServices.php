@@ -22,7 +22,7 @@ class MediaWikiServices implements MediaWikiServicesHook {
 		global $wgPageViewApiMaxDays;
 
 		$cache = ObjectCache::getLocalClusterInstance();
-		$logger = LoggerFactory::getInstance( 'PageViewInfoGA' );
+		$logger = LoggerFactory::getInstance( 'Plausible' );
 		$cachedDays = max( 30, $wgPageViewApiMaxDays );
 
 		$services->redefineService(

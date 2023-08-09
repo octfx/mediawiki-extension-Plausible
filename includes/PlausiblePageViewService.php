@@ -10,6 +10,7 @@ use MediaWiki\Extension\PageViewInfo\PageViewService;
 use MediaWiki\MediaWikiServices;
 use MWTimestamp;
 use Psr\Log\NullLogger;
+use RuntimeException;
 use StatusValue;
 use Title;
 
@@ -241,6 +242,9 @@ class PlausiblePageViewService implements PageViewService {
 	 * @return string
 	 */
 	private function getAuthHeaderValue(): string {
+		if ( empty( $this->config->get( 'PlausibleApiKey' ) ) ) {
+			throw new RuntimeException( 'wgPlausibleApiKey is empty' );
+		}
 		return sprintf( 'Bearer %s', $this->config->get( 'PlausibleApiKey' ) );
 	}
 

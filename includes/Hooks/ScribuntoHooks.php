@@ -22,7 +22,7 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\Plausible\Hooks;
 
 use ExtensionRegistry;
-use MediaWiki\Extension\Plausible\ScribuntoLua;
+use MediaWiki\Extension\Plausible\PlausibleLua;
 
 class ScribuntoHooks {
 
@@ -34,8 +34,12 @@ class ScribuntoHooks {
 	 * @return bool
 	 */
 	public static function onScribuntoExternalLibraries( string $engine, array &$extraLibraries ): bool {
-		if ( $engine === 'lua' && ExtensionRegistry::getInstance()->isLoaded( 'Scribunto' ) ) {
-			$extraLibraries['mw.ext.plausible'] = ScribuntoLua::class;
+		if (
+			$engine === 'lua' &&
+			ExtensionRegistry::getInstance()->isLoaded( 'Scribunto' ) &&
+			ExtensionRegistry::getInstance()->isLoaded( 'PageViewInfo' )
+		) {
+			$extraLibraries['mw.ext.plausible'] = PlausibleLua::class;
 		}
 
 		return true;

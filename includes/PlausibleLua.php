@@ -21,27 +21,24 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\Plausible;
 
-use ExtensionRegistry;
 use MediaWiki\Extension\PageViewInfo\CachedPageViewService;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 use Scribunto_LuaLibraryBase;
 
-class ScribuntoLua extends Scribunto_LuaLibraryBase {
+class PlausibleLua extends Scribunto_LuaLibraryBase {
 
 	/**
 	 * @inheritDoc
 	 */
 	public function register() {
-		if ( ExtensionRegistry::getInstance()->isLoaded( 'PageViewInfo' ) ) {
-			$lib = [
-				'getTopPages' => [ $this, 'getTopPages' ],
-				'getPageData' => [ $this, 'getPageData' ],
-				'getSiteData' => [ $this, 'getSiteData' ],
-			];
+		$lib = [
+			'getTopPages' => [ $this, 'getTopPages' ],
+			'getPageData' => [ $this, 'getPageData' ],
+			'getSiteData' => [ $this, 'getSiteData' ],
+		];
 
-			$this->getEngine()->registerInterface( __DIR__ . '/' . 'mw.ext.plausible.lua', $lib, [] );
-		}
+		$this->getEngine()->registerInterface( __DIR__ . '/' . 'mw.ext.plausible.lua', $lib, [] );
 	}
 
 	public function getTopPages() {

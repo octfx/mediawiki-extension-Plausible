@@ -17,6 +17,7 @@ See https://github.com/plausible/analytics
 | $wgPlausibleEnableCustomEvents          | Enable to add the global `window.plausible` function needed for custom event tracking.                                                                           | true                       | false   |
 | $wgPlausibleIgnoredTitles               | List of page titles that should not be tracked. [Examples](https://github.com/plausible/docs/blob/master/docs/excluding-pages.md#common-use-cases-and-examples). | ['/Page1', '/Special:*', ] | []      |
 | $wgPlausibleEnableOptOutTag             | Enables or disables the `<plausible-opt-out />` tag that allows users to opt-out from being tracked.                                                             | false                      | true    |
+| $wgPlausibleApiKey                      | Auth Bearer key for integration with Extension:PageViewInfo                                                                                                      |                            |         |
 
 
 ### Included tracking scripts
@@ -87,14 +88,14 @@ By default, Plausible Analytics tracks every page you install the snippet on. If
 | `/wp/**`                        | `/wp<anything, even slashes>` - for example, `/wp/assets/subdirectory/another/image.png` or `/wp/admin`, and everything in between, but not `/page/wp`                                                           |
 
 ## Lua Integration
-With [Extension:PageViewInfo](https://www.mediawiki.org/wiki/Extension:PageViewInfo) active, plausible exposes the following function:
+With [Extension:PageViewInfo](https://www.mediawiki.org/wiki/Extension:PageViewInfo) active, plausible exposes the following functions:
 
 1. `mw.ext.plausible.topPages()`
-Returns the top pages for the last day.  
+Returns the top pages and the views for the last day.  
 Example:
 ```lua
 local result = mw.ext.plausible.topPages()
-{
+> {
   {
     page = "Foo",
     views = 100
@@ -112,7 +113,7 @@ Returns the page views for the given titles over the last N days.
 Example:
 ```lua
 local result = mw.ext.plausible.pageData( { "Foo", "Bar" }, 5 )
-{
+> {
   ["Foo"] = {
     ["2023-08-04"] = 10,
     ["2023-08-05"] = 1,
@@ -132,12 +133,12 @@ local result = mw.ext.plausible.pageData( { "Foo", "Bar" }, 5 )
 }
 ```
 
-3`mw.ext.plausible.siteData( days )`
+3. `mw.ext.plausible.siteData( days )`
 Returns the site views for the given last N days.  
 Example:
 ```lua
 local result = mw.ext.plausible.siteData( 5 )
-{
+> {
   ["2023-08-04"] = 10,
   ["2023-08-05"] = 1,
   ["2023-08-06"] = 4,

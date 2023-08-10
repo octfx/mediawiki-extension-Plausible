@@ -2,19 +2,24 @@
 
 namespace MediaWiki\Extension\Plausible;
 
+use Exception;
 use GenericParameterJob;
 use Job;
 use MediaWiki\MediaWikiServices;
-use MWException;
+use NullJob;
 use WebRequest;
 
 class PlausibleEventJob extends Job implements GenericParameterJob {
+
+	public function __construct( array $params ) {
+		parent::__construct( null, $params );
+	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function run(): bool {
-		if ( !empty( $this->params['url'] ) || !empty( $this->params['agent'] ) ) {
+		if ( !empty( $this->params['url'] ) || !is_string( $this->params['agent'] ) ) {
 			return false;
 		}
 
@@ -48,18 +53,18 @@ class PlausibleEventJob extends Job implements GenericParameterJob {
 	 * @param string $event
 	 * @param array $props
 	 * @return Job
-	 * @throws MWException
 	 */
 	public static function newFromRequest( WebRequest $request, string $event = 'pageview', array $props = [] ): Job {
-		return MediaWikiServices::getInstance()->getJobFactory()->newJob(
-			'PlausibleEvent',
-			[
+		try {
+			return new self( [
 				'event' => $event,
 				'ip' => $request->getIP(),
 				'url' => $request->getRequestURL(),
 				'agent' => $request->getHeader( 'User-Agent' ),
 				'props' => $props,
-			]
-		);
+			] );
+		} catch ( Exception $e ) {
+			return new NullJob( [ 'removeDuplicates' => true ] );
+		}
 	}
 }

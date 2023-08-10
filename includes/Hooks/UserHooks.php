@@ -28,12 +28,12 @@ class UserHooks implements LocalUserCreatedHook, UserLogoutCompleteHook, UserLog
 		}
 
 		$this->jobs->push( PlausibleEventJob::newFromRequest(
-            $user->getRequest(),
-            'userregister',
-            [
-                'user' => $user->isRegistered() ? $user->getName() : null,
-            ]
-        ) );
+			$user->getRequest(),
+			'userregister',
+			[
+				'user' => $user->isRegistered() ? $user->getName() : null,
+			]
+		) );
 	}
 
 	/**
@@ -45,12 +45,12 @@ class UserHooks implements LocalUserCreatedHook, UserLogoutCompleteHook, UserLog
 		}
 
 		$this->jobs->push( PlausibleEventJob::newFromRequest(
-            $user->getRequest(),
-            'userlogin',
-            [
-                'user' => $user->isRegistered() ? $user->getName() : null,
-            ]
-        ) );
+			$user->getRequest(),
+			'userlogin',
+			[
+				'user' => $user->isRegistered() ? $user->getName() : null,
+			]
+		) );
 	}
 
 	/**
@@ -62,11 +62,11 @@ class UserHooks implements LocalUserCreatedHook, UserLogoutCompleteHook, UserLog
 		}
 
 		$this->jobs->push( PlausibleEventJob::newFromRequest(
-            $user->getRequest(),
-            'userlogout',
-            [
-                'user' => $user->isRegistered() ? $user->getName() : null,
-            ]
-        ) );
+			$user->getRequest(),
+			'userlogout',
+			[
+				'user' => $user->isRegistered() ? $user->getName() : null,
+			]
+		) );
 	}
 }

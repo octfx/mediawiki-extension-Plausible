@@ -86,6 +86,24 @@
 		"PlausibleApiKey": {
 			"description": "API Key used for querying statistics when Extension:PageViewInfo is active",
 			"value": ""
+		},
+		"PlausibleServerSideTracking": {
+			"description": "Server side events that get sent as custom events to plausible",
+			"value": {
+				"pageview": false,
+				"pageedit": true,
+				"pagedelete": true,
+				"pageundelete": true,
+				"pagemove": true,
+				"userregister": true,
+				"userlogin": true,
+				"userlogout":  true,
+				"fileupload": true,
+				"filedelete": true,
+				"fileundelete": true,
+				"searchnotfound": true,
+				"searchfound": true
+			}
 		}
 	},
 	"ConfigRegistry": {
@@ -105,7 +123,32 @@
 	},
 	"HookHandlers": {
 		"PageHooks": {
-			"class": "MediaWiki\\Extension\\Plausible\\Hooks\\PageHooks"
+			"class": "MediaWiki\\Extension\\Plausible\\Hooks\\PageHooks",
+			"services": [
+				"MainConfig",
+				"JobQueueGroup"
+			]
+		},
+		"UserHooks": {
+			"class": "MediaWiki\\Extension\\Plausible\\Hooks\\UserHooks",
+			"services": [
+				"MainConfig",
+				"JobQueueGroup"
+			]
+		},
+		"FileHooks": {
+			"class": "MediaWiki\\Extension\\Plausible\\Hooks\\FileHooks",
+			"services": [
+				"MainConfig",
+				"JobQueueGroup"
+			]
+		},
+		"SearchHooks": {
+			"class": "MediaWiki\\Extension\\Plausible\\Hooks\\SearchHooks",
+			"services": [
+				"MainConfig",
+				"JobQueueGroup"
+			]
 		},
 		"ParserHooks": {
 			"class": "MediaWiki\\Extension\\Plausible\\Hooks\\ParserHooks"
@@ -116,8 +159,17 @@
 	},
 	"Hooks": {
 		"BeforePageDisplay": "PageHooks",
+		"PageSaveCompleteHook": "PageHooks",
+		"ArticleDeleteAfterSuccessHook": "PageHooks",
 		"ParserFirstCallInit": "ParserHooks",
-		"MediaWikiServices": "MediaWikiServices"
+		"MediaWikiServices": "MediaWikiServices",
+		"LocalUserCreatedHook": "UserHooks",
+		"UserLogoutCompleteHook": "UserHooks",
+		"UserLoginCompleteHook":  "UserHooks",
+		"UploadCompleteHook":  "FileHooks",
+		"FileDeleteCompleteHook": "FileHooks",
+		"SpecialSearchNogomatchHook": "SearchHooks",
+		"SpecialSearchGoResultHook": "SearchHooks"
 	},
 	"ResourceModules": {
 		"ext.plausible.opt-out": {
@@ -169,6 +221,9 @@
 				"ext.plausible.scripts.citizen.track-menu-links/track-menu-links.js"
 			]
 		}
+	},
+	"JobClasses": {
+		"PlausibleEvent": "MediaWiki\\Extension\\Plausible\\PlausibleEventJob"
 	},
 	"manifest_version": 2
 }

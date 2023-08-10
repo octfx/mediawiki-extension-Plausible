@@ -169,7 +169,7 @@ class PlausiblePageViewService implements PageViewService {
 
 		$metric = $metric === self::METRIC_UNIQUE ? 'visitors' : 'pageviews';
 
-		$query = http_build_query( $this->makeBaseQuery( $metric, 1 ), [
+		$query = http_build_query( $this->makeBaseQuery( $metric, 1 ) + [
 			'property' => 'event:page',
 			'limit' => 10,
 		] );

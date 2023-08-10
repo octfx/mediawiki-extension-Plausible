@@ -85,3 +85,64 @@ By default, Plausible Analytics tracks every page you install the snippet on. If
 | `/*/priv/*`                     | `/<anything>/priv/<anything>` - for example, `/admin/priv/sites`, but not `/priv` nor `/priv/page` nor `/admin/priv`                                                                                             |
 | `/rule/*/*`                     | `/rule/<anything>/<anything>` - for example, `/rule/4/new/` or `/rule/10/edit`, but not `/rule` nor `/rule/10/new/save`                                                                                          |
 | `/wp/**`                        | `/wp<anything, even slashes>` - for example, `/wp/assets/subdirectory/another/image.png` or `/wp/admin`, and everything in between, but not `/page/wp`                                                           |
+
+## Lua Integration
+With [Extension:PageViewInfo](https://www.mediawiki.org/wiki/Extension:PageViewInfo) active, plausible exposes the following function:
+
+1. `mw.ext.plausible.topPages()`
+Returns the top pages for the last day.  
+Example:
+```lua
+local result = mw.ext.plausible.topPages()
+{
+  {
+    page = "Foo",
+    views = 100
+  },
+  {
+    page = "Bar",
+    views = 80
+  },
+  { [...] }
+}
+```
+
+2. `mw.ext.plausible.pageData( titles, days )`
+Returns the page views for the given titles over the last N days.  
+Example:
+```lua
+local result = mw.ext.plausible.pageData( { "Foo", "Bar" }, 5 )
+{
+  ["Foo"] = {
+    ["2023-08-04"] = 10,
+    ["2023-08-05"] = 1,
+    ["2023-08-06"] = 4,
+    ["2023-08-07"] = 7,
+    ["2023-08-08"] = 1,
+    ["2023-08-09"] = 4,
+  },
+  ["Bar"] = {
+    ["2023-08-04"] = 100,
+    ["2023-08-05"] = 14,
+    ["2023-08-06"] = 54,
+    ["2023-08-07"] = 7,
+    ["2023-08-08"] = 31,
+    ["2023-08-09"] = 1,
+  },
+}
+```
+
+3`mw.ext.plausible.siteData( days )`
+Returns the site views for the given last N days.  
+Example:
+```lua
+local result = mw.ext.plausible.siteData( 5 )
+{
+  ["2023-08-04"] = 10,
+  ["2023-08-05"] = 1,
+  ["2023-08-06"] = 4,
+  ["2023-08-07"] = 7,
+  ["2023-08-08"] = 1,
+  ["2023-08-09"] = 4,
+}
+```

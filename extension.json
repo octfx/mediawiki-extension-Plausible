@@ -169,7 +169,8 @@
 		"UploadCompleteHook":  "FileHooks",
 		"FileDeleteCompleteHook": "FileHooks",
 		"SpecialSearchNogomatchHook": "SearchHooks",
-		"SpecialSearchGoResultHook": "SearchHooks"
+		"SpecialSearchGoResultHook": "SearchHooks",
+		"ScribuntoExternalLibraries": "MediaWiki\\Extension\\Plausible\\Hooks\\ScribuntoHooks::onScribuntoExternalLibraries"
 	},
 	"ResourceModules": {
 		"ext.plausible.opt-out": {

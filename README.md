@@ -92,7 +92,7 @@ By default, Plausible Analytics tracks every page you install the snippet on. If
 With [Extension:PageViewInfo](https://www.mediawiki.org/wiki/Extension:PageViewInfo) active, plausible exposes the following functions:
 
 1. `mw.ext.plausible.topPages()`
-Returns the top pages and the views for the last day.  
+Returns the top pages and the views for the last day. The table is ordered by the number of page views, and can be iterated by using `ipairs`.  
 Example:
 ```lua
 local result = mw.ext.plausible.topPages()

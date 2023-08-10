@@ -11,11 +11,11 @@ use MediaWiki\Hook\UserLogoutCompleteHook;
 
 class UserHooks implements LocalUserCreatedHook, UserLogoutCompleteHook, UserLoginCompleteHook {
 
-	private Config $config;
+	private array $config;
 	private JobQueueGroup $jobs;
 
 	public function __construct( Config $config, JobQueueGroup $group ) {
-		$this->config = $config;
+		$this->config = $config->get( 'PlausibleServerSideTracking' );
 		$this->jobs = $group;
 	}
 
@@ -23,7 +23,7 @@ class UserHooks implements LocalUserCreatedHook, UserLogoutCompleteHook, UserLog
 	 * @inheritDoc
 	 */
 	public function onLocalUserCreated( $user, $autocreated ) {
-		if ( !$this->config->get( 'PlausibleServerSideTracking' )['userregister'] ) {
+		if ( !$this->config['userregister'] ) {
 			return;
 		}
 
@@ -40,7 +40,7 @@ class UserHooks implements LocalUserCreatedHook, UserLogoutCompleteHook, UserLog
 	 * @inheritDoc
 	 */
 	public function onUserLoginComplete( $user, &$inject_html, $direct ) {
-		if ( !$this->config->get( 'PlausibleServerSideTracking' )['userlogin'] ) {
+		if ( !$this->config['userlogin'] ) {
 			return;
 		}
 
@@ -57,7 +57,7 @@ class UserHooks implements LocalUserCreatedHook, UserLogoutCompleteHook, UserLog
 	 * @inheritDoc
 	 */
 	public function onUserLogoutComplete( $user, &$inject_html, $oldName ) {
-		if ( !$this->config->get( 'PlausibleServerSideTracking' )['userlogout'] ) {
+		if ( !$this->config['userlogout'] ) {
 			return;
 		}
 

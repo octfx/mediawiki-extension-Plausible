@@ -12,11 +12,11 @@ use RequestContext;
 
 class FileHooks implements UploadCompleteHook, FileDeleteCompleteHook, FileUndeleteCompleteHook {
 
-	private Config $config;
+	private array $config;
 	private JobQueueGroup $jobs;
 
 	public function __construct( Config $config, JobQueueGroup $group ) {
-		$this->config = $config;
+		$this->config = $config->get( 'PlausibleServerSideTracking' );
 		$this->jobs = $group;
 	}
 
@@ -24,7 +24,7 @@ class FileHooks implements UploadCompleteHook, FileDeleteCompleteHook, FileUndel
 	 * @inheritDoc
 	 */
 	public function onFileDeleteComplete( $file, $oldimage, $article, $user, $reason ) {
-		if ( !$this->config->get( 'PlausibleServerSideTracking' )['filedelete'] ) {
+		if ( !$this->config['filedelete'] ) {
 			return;
 		}
 
@@ -35,7 +35,7 @@ class FileHooks implements UploadCompleteHook, FileDeleteCompleteHook, FileUndel
 	 * @inheritDoc
 	 */
 	public function onUploadComplete( $uploadBase ) {
-		if ( !$this->config->get( 'PlausibleServerSideTracking' )['fileupload'] ) {
+		if ( !$this->config['fileupload'] ) {
 			return;
 		}
 
@@ -46,7 +46,7 @@ class FileHooks implements UploadCompleteHook, FileDeleteCompleteHook, FileUndel
 	 * @inheritDoc
 	 */
 	public function onFileUndeleteComplete( $title, $fileVersions, $user, $reason ) {
-		if ( !$this->config->get( 'PlausibleServerSideTracking' )['fileundelete'] ) {
+		if ( !$this->config['fileundelete'] ) {
 			return;
 		}
 

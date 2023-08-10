@@ -11,11 +11,11 @@ use RequestContext;
 
 class SearchHooks implements SpecialSearchNogomatchHook, SpecialSearchGoResultHook {
 
-	private Config $config;
+	private array $config;
 	private JobQueueGroup $jobs;
 
 	public function __construct( Config $config, JobQueueGroup $group ) {
-		$this->config = $config;
+		$this->config = $config->get( 'PlausibleServerSideTracking' );
 		$this->jobs = $group;
 	}
 
@@ -23,7 +23,7 @@ class SearchHooks implements SpecialSearchNogomatchHook, SpecialSearchGoResultHo
 	 * @inheritDoc
 	 */
 	public function onSpecialSearchNogomatch( &$title ) {
-		if ( !$this->config->get( 'PlausibleServerSideTracking' )['searchnotfound'] ) {
+		if ( !$this->config['searchnotfound'] ) {
 			return;
 		}
 
@@ -40,7 +40,7 @@ class SearchHooks implements SpecialSearchNogomatchHook, SpecialSearchGoResultHo
 	 * @inheritDoc
 	 */
 	public function onSpecialSearchGoResult( $term, $title, &$url ) {
-		if ( !$this->config->get( 'PlausibleServerSideTracking' )['searchfound'] ) {
+		if ( !$this->config['searchfound'] ) {
 			return;
 		}
 

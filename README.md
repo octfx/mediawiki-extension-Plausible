@@ -40,6 +40,7 @@ The following custom events can be activated:
 ```php
 $wgPlausibleServerSideTracking = [
     'pageview' => false,
+    'page404' => false,
     'pageedit' => true,
     'pagedelete' => true,
     'pageundelete' => true,

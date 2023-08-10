@@ -39,11 +39,11 @@ use Skin;
  */
 class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleDeleteAfterSuccessHook, ArticleUndeleteHook, PageMoveCompleteHook {
 
-	private Config $config;
+	private array $config;
 	private JobQueueGroup $jobs;
 
 	public function __construct( Config $config, JobQueueGroup $group ) {
-		$this->config = $config;
+		$this->config = $config->get( 'PlausibleServerSideTracking' );
 		$this->jobs = $group;
 	}
 
@@ -60,9 +60,15 @@ class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleD
 		$plausible->addScript();
 		$plausible->addModules();
 
-		if ( $this->config->get( 'PlausibleServerSideTracking' )['pageview'] ) {
+		if ( $this->config['pageview'] && $out->getTitle()->exists() ) {
 			$this->jobs->push(
 				PlausibleEventJob::newFromRequest( $out->getRequest() )
+			);
+		}
+
+		if ( $this->config['page404'] && !$out->getTitle()->exists() ) {
+			$this->jobs->push(
+				PlausibleEventJob::newFromRequest( $out->getRequest(), '404' )
 			);
 		}
 	}
@@ -71,7 +77,7 @@ class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleD
 	 * @inheritDoc
 	 */
 	public function onArticleDeleteAfterSuccess( $title, $outputPage ) {
-		if ( !$this->config->get( 'PlausibleServerSideTracking' )['pagedelete'] ) {
+		if ( !$this->config['pagedelete'] ) {
 			return;
 		}
 
@@ -82,7 +88,7 @@ class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleD
 	 * @inheritDoc
 	 */
 	public function onPageSaveComplete( $wikiPage, $user, $summary, $flags, $revisionRecord, $editResult ) {
-		if ( !$this->config->get( 'PlausibleServerSideTracking' )['pageedit'] || $editResult->isNullEdit() ) {
+		if ( !$this->config['pageedit'] || $editResult->isNullEdit() ) {
 			return;
 		}
 
@@ -93,7 +99,7 @@ class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleD
 	 * @inheritDoc
 	 */
 	public function onArticleUndelete( $title, $create, $comment, $oldPageId, $restoredPages ) {
-		if ( !$this->config->get( 'PlausibleServerSideTracking' )['pageundelete'] ) {
+		if ( !$this->config['pageundelete'] ) {
 			return;
 		}
 
@@ -104,7 +110,7 @@ class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleD
 	 * @inheritDoc
 	 */
 	public function onPageMoveComplete( $old, $new, $user, $pageid, $redirid, $reason, $revision ) {
-		if ( !$this->config->get( 'PlausibleServerSideTracking' )['pagemove'] ) {
+		if ( !$this->config['pagemove'] ) {
 			return;
 		}
 

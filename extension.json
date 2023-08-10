@@ -91,6 +91,7 @@
 			"description": "Server side events that get sent as custom events to plausible",
 			"value": {
 				"pageview": false,
+				"page404": false,
 				"pageedit": true,
 				"pagedelete": true,
 				"pageundelete": true,

@@ -32,7 +32,25 @@ The following tracking modules can be activated by setting the provided configur
 | $wgPlausibleTrackCitizenSearchLinks | Only for [Skin:Citizen](https://github.com/StarCitizenTools/mediawiki-skins-Citizen). Track clicks to search result links found in `#typeahead-suggestions`. Event is named `CitizenSearchLinkClick`. | `CitizenSearchLinkClick` |
 | $wgPlausibleTrackCitizenMenuLinks   | Only for [Skin:Citizen](https://github.com/StarCitizenTools/mediawiki-skins-Citizen). Track clicks to links in the sidebar menu. Event is named `CitizenMenuLinkClick`.                               | `CitizenMenuLinkClick`   |
 
+### Server Side Tracking
+Some events can be sent serverside without having to rely on the included plausible client script.
 
+The following custom events can be activated: 
+```php
+$wgPlausibleServerSideTracking = [
+    'pageview' => false,
+    'pageedit' => true,
+    'pagedelete' => true,
+    'pageundelete' => true,
+    'pagemove' => true,
+    'userregister' => true,
+    'userlogin' => true,
+    'userlogout' =>  true,
+    'fileupload' => true,
+    'filedelete' => true,
+    'fileundelete' => true,
+];
+```
 
 ## Tracking Custom Events
 https://github.com/plausible/docs/blob/master/docs/custom-event-goals.md

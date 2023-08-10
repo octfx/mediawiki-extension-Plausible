@@ -34,6 +34,7 @@ class PlausibleLua extends Scribunto_LuaLibraryBase {
 	public function register() {
 		$lib = [
 			'getTopPages' => [ $this, 'getTopPages' ],
+			'getTopPagesDays' => [ $this, 'getTopPages' ],
 			'getPageData' => [ $this, 'getPageData' ],
 			'getSiteData' => [ $this, 'getSiteData' ],
 		];
@@ -42,10 +43,17 @@ class PlausibleLua extends Scribunto_LuaLibraryBase {
 	}
 
 	public function getTopPages() {
-		/** @var CachedPageViewService $service */
-		$service = MediaWikiServices::getInstance()->getService( 'PageViewService' );
+		$args = func_get_args();
 
-		$status = $service->getTopPages();
+		if ( empty( $args ) ) {
+			/** @var CachedPageViewService $service */
+			$service = MediaWikiServices::getInstance()->getService( 'PageViewService' );
+
+			$status = $service->getTopPages();
+		} else {
+			$service = new PlausiblePageViewService();
+			$status = $service->getTopPagesDays( $args[0] );
+		}
 
 		if ( $status->isOK() ) {
 			$out = [];

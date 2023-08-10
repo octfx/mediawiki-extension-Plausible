@@ -109,6 +109,9 @@ local result = mw.ext.plausible.topPages()
 }
 ```
 
+Alternatively this function can be called with the number of days to calculate the views over, e.g. `mw.ext.plausible.topPages( 30 )`.  
+This is _expensive_  as no caching is employed.
+
 2. `mw.ext.plausible.pageData( titles, days )`
 Returns the page views for the given titles over the last N days.  
 Example:

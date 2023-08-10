@@ -5,7 +5,13 @@ local checkTypeMulti = libraryUtil.checkTypeMulti
 local php
 
 
-function Plausible.topPages()
+function Plausible.topPages( days )
+    if days then
+        checkType( 'Plausible.topPages', 1, days, 'number' )
+
+        return php.getTopPagesDays( days )
+    end
+
     return php.getTopPages()
 end
 
@@ -13,11 +19,11 @@ end
 function Plausible.pageData( titles, days )
     days = days or 30
 
-	checkTypeMulti( 'Plausible.pageData', 1, titles, { 'string', 'table' } )
-	checkType( 'Plausible.pageData', 2, days, 'number' )
+    checkTypeMulti( 'Plausible.pageData', 1, titles, { 'string', 'table' } )
+    checkType( 'Plausible.pageData', 2, days, 'number' )
 
-	if type( titles ) == 'string' then
-	    titles = { titles }
+    if type( titles ) == 'string' then
+        titles = { titles }
     end
 
     return php.getPageData( titles, days )
@@ -26,7 +32,7 @@ end
 
 function Plausible.siteData( days )
     days = days or 30
-	checkType( 'Plausible.siteData', 1, days, 'number' )
+    checkType( 'Plausible.siteData', 1, days, 'number' )
 
     return php.getSiteData( days )
 end

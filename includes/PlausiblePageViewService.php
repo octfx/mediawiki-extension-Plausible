@@ -163,13 +163,20 @@ class PlausiblePageViewService implements PageViewService {
 	 * @inheritDoc
 	 */
 	public function getTopPages( $metric = self::METRIC_VIEW ) {
+		return $this->getTopPagesDays( 1, $metric );
+	}
+
+	/**
+	 * This is getTopPages with a configurable day range
+	 */
+	public function getTopPagesDays( $days = 1, $metric = self::METRIC_VIEW ) {
 		if ( !in_array( $metric, [ self::METRIC_VIEW, self::METRIC_UNIQUE ] ) ) {
 			throw new InvalidArgumentException( 'Invalid metric: ' . $metric );
 		}
 
 		$metric = $metric === self::METRIC_UNIQUE ? 'visitors' : 'pageviews';
 
-		$query = http_build_query( $this->makeBaseQuery( $metric, 1 ) + [
+		$query = http_build_query( $this->makeBaseQuery( $metric, $days ) + [
 			'property' => 'event:page',
 			'limit' => 10,
 		] );

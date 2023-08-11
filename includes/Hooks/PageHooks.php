@@ -21,15 +21,31 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\Plausible\Hooks;
 
+use Config;
+use JobQueueGroup;
 use MediaWiki\Extension\Plausible\Plausible;
+use MediaWiki\Extension\Plausible\PlausibleEventJob;
 use MediaWiki\Hook\BeforePageDisplayHook;
+use MediaWiki\Hook\PageMoveCompleteHook;
+use MediaWiki\Page\Hook\ArticleDeleteAfterSuccessHook;
+use MediaWiki\Page\Hook\ArticleUndeleteHook;
+use MediaWiki\Storage\Hook\PageSaveCompleteHook;
 use OutputPage;
+use RequestContext;
 use Skin;
 
 /**
  * Hooks to run relating the page
  */
-class PageHooks implements BeforePageDisplayHook {
+class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleDeleteAfterSuccessHook, ArticleUndeleteHook, PageMoveCompleteHook {
+
+	private array $config;
+	private JobQueueGroup $jobs;
+
+	public function __construct( Config $config, JobQueueGroup $group ) {
+		$this->config = $config->get( 'PlausibleServerSideTracking' );
+		$this->jobs = $group;
+	}
 
 	/**
 	 * Adds the tracking script to the page
@@ -43,5 +59,61 @@ class PageHooks implements BeforePageDisplayHook {
 		$plausible = new Plausible( $out );
 		$plausible->addScript();
 		$plausible->addModules();
+
+		if ( $this->config['pageview'] && $out->getTitle()->exists() ) {
+			$this->jobs->push(
+				PlausibleEventJob::newFromRequest( $out->getRequest() )
+			);
+		}
+
+		if ( $this->config['page404'] && !$out->getTitle()->exists() ) {
+			$this->jobs->push(
+				PlausibleEventJob::newFromRequest( $out->getRequest(), '404' )
+			);
+		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function onArticleDeleteAfterSuccess( $title, $outputPage ) {
+		if ( !$this->config['pagedelete'] ) {
+			return;
+		}
+
+		$this->jobs->push( PlausibleEventJob::newFromRequest( $outputPage->getRequest(), 'pagedelete' ) );
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function onPageSaveComplete( $wikiPage, $user, $summary, $flags, $revisionRecord, $editResult ) {
+		if ( !$this->config['pageedit'] || $editResult->isNullEdit() ) {
+			return;
+		}
+
+		$this->jobs->push( PlausibleEventJob::newFromRequest( $user->getRequest(), 'pageedit' ) );
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function onArticleUndelete( $title, $create, $comment, $oldPageId, $restoredPages ) {
+		if ( !$this->config['pageundelete'] ) {
+			return;
+		}
+
+		$this->jobs->push( PlausibleEventJob::newFromRequest( RequestContext::getMain()->getRequest(), 'pageedit' ) );
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function onPageMoveComplete( $old, $new, $user, $pageid, $redirid, $reason, $revision ) {
+		if ( !$this->config['pagemove'] ) {
+			return;
+		}
+
+		$this->jobs->push( PlausibleEventJob::newFromRequest( $user->getRequest(), 'pagemove' ) );
 	}
 }

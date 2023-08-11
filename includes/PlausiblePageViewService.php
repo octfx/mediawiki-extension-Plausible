@@ -9,7 +9,6 @@ use JsonException;
 use MediaWiki\Extension\PageViewInfo\PageViewService;
 use MediaWiki\MediaWikiServices;
 use MWTimestamp;
-use Psr\Log\NullLogger;
 use RuntimeException;
 use StatusValue;
 use Title;
@@ -28,16 +27,14 @@ class PlausiblePageViewService implements PageViewService {
 
 		// Skip the current day for which only partial information is available
 		$this->lastCompleteDay = strtotime( '0:0 1 day ago', MWTimestamp::time() );
-
-		$this->logger = new NullLogger();
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function supports( $metric, $scope ): bool {
-		return in_array( $metric, [ self::METRIC_VIEW, self::METRIC_UNIQUE ] ) &&
-			in_array( $scope, [ self::SCOPE_ARTICLE, self::SCOPE_TOP, self::SCOPE_SITE ] );
+		return in_array( $metric, [ self::METRIC_VIEW, self::METRIC_UNIQUE ], true ) &&
+			in_array( $scope, [ self::SCOPE_ARTICLE, self::SCOPE_TOP, self::SCOPE_SITE ], true );
 	}
 
 	/**
@@ -48,8 +45,12 @@ class PlausiblePageViewService implements PageViewService {
 	 *    per-title success information.
 	 */
 	public function getPageData( array $titles, $days, $metric = self::METRIC_VIEW ): StatusValue {
-		if ( !in_array( $metric, [ self::METRIC_VIEW, self::METRIC_UNIQUE ] ) ) {
+		if ( !in_array( $metric, [ self::METRIC_VIEW, self::METRIC_UNIQUE ], true ) ) {
 			throw new InvalidArgumentException( 'Invalid metric: ' . $metric );
+		}
+
+		if ( !$titles ) {
+			return StatusValue::newGood( [] );
 		}
 
 		if ( $days <= 0 ) {
@@ -87,6 +88,7 @@ class PlausiblePageViewService implements PageViewService {
 		}
 
 		$result = [];
+		$successCount = 0;
 
 		foreach ( $data as $i => $response ) {
 			[ $code, $reason, $headers, $body, $error ] = $response['response'];
@@ -100,20 +102,25 @@ class PlausiblePageViewService implements PageViewService {
 					foreach ( $body['results'] as $data ) {
 						$result[$title][$data['date']] = $data[$metric];
 					}
+					$status->success[$title] = true;
+					++$successCount;
 				} catch ( JsonException $e ) {
 					continue;
 				}
 			}
 		}
 
-		return $status->setResult( true, $result );
+		$status->successCount = $successCount;
+		$status->setResult( true, $result );
+
+		return $status;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function getSiteData( $days, $metric = self::METRIC_VIEW ) {
-		if ( !in_array( $metric, [ self::METRIC_VIEW, self::METRIC_UNIQUE ] ) ) {
+		if ( !in_array( $metric, [ self::METRIC_VIEW, self::METRIC_UNIQUE ], true ) ) {
 			throw new InvalidArgumentException( 'Invalid metric: ' . $metric );
 		}
 
@@ -163,18 +170,26 @@ class PlausiblePageViewService implements PageViewService {
 	 * @inheritDoc
 	 */
 	public function getTopPages( $metric = self::METRIC_VIEW ) {
+		return $this->getTopPagesDays( 1, $metric );
+	}
+
+	/**
+	 * This is getTopPages with a configurable day range
+	 */
+	public function getTopPagesDays( $days = 1, $metric = self::METRIC_VIEW ) {
 		if ( !in_array( $metric, [ self::METRIC_VIEW, self::METRIC_UNIQUE ] ) ) {
 			throw new InvalidArgumentException( 'Invalid metric: ' . $metric );
 		}
 
 		$metric = $metric === self::METRIC_UNIQUE ? 'visitors' : 'pageviews';
 
-		$query = http_build_query( $this->makeBaseQuery( $metric, 1 ), [
+		$query = http_build_query( $this->makeBaseQuery( $metric, $days ) + [
 			'property' => 'event:page',
 			'limit' => 10,
 		] );
 
-		$request = MediaWikiServices::getInstance()->getHttpRequestFactory()->create( sprintf( '%s/api/v1/stats/breakdown?%s', $this->config->get( 'PlausibleDomain' ), $query ),
+		$request = MediaWikiServices::getInstance()->getHttpRequestFactory()->create(
+			sprintf( '%s/api/v1/stats/breakdown?%s', $this->config->get( 'PlausibleDomain' ), $query ),
 			[
 				'headers' => [
 					'Authorization' => $this->getAuthHeaderValue(),

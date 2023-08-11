@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Nokeoo"
+		]
+	},
+	"ext-plausible-desc": "Integruoja Plausible Analytics, atviro kodo ir privatumui draugišką Google Analytics alternatyvą.",
+	"ext-plausible-exclude-visits": "Neįtraukti mano apsilankymų",
+	"ext-plausible-include-visits": "Vėl įtraukti mano apsilankymus",
+	"ext-plausible-notification-visits-excluded": "Jūsų apsilankymai bus neįtraukiami",
+	"ext-plausible-notification-visits-included": "Jūsų apsilankymai bus įtraukiami"
+}

@@ -9,7 +9,6 @@ use JsonException;
 use MediaWiki\Extension\PageViewInfo\PageViewService;
 use MediaWiki\MediaWikiServices;
 use MWTimestamp;
-use Psr\Log\NullLogger;
 use RuntimeException;
 use StatusValue;
 use Title;
@@ -28,8 +27,6 @@ class PlausiblePageViewService implements PageViewService {
 
 		// Skip the current day for which only partial information is available
 		$this->lastCompleteDay = strtotime( '0:0 1 day ago', MWTimestamp::time() );
-
-		$this->logger = new NullLogger();
 	}
 
 	/**
@@ -191,7 +188,8 @@ class PlausiblePageViewService implements PageViewService {
 			'limit' => 10,
 		] );
 
-		$request = MediaWikiServices::getInstance()->getHttpRequestFactory()->create( sprintf( '%s/api/v1/stats/breakdown?%s', $this->config->get( 'PlausibleDomain' ), $query ),
+		$request = MediaWikiServices::getInstance()->getHttpRequestFactory()->create(
+			sprintf( '%s/api/v1/stats/breakdown?%s', $this->config->get( 'PlausibleDomain' ), $query ),
 			[
 				'headers' => [
 					'Authorization' => $this->getAuthHeaderValue(),

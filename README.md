@@ -4,20 +4,32 @@ Plausible Analytics is a simple, lightweight (< 1 KB), open-source and privacy-f
 
 See https://github.com/plausible/analytics
 
+## Installation
+* Download, extract and place the file(s) in a directory called Plausible in your extensions/ folder.
+* Add the following code at the bottom of your LocalSettings.php file:
+```php
+wfLoadExtension( 'Plausible' );  
+$wgPlausibleDomain = "https://plausible.io";  
+$wgPlausibleDomainKey = "mywiki.example.com"; // change to your site address
+$wgPlausibleApikey = ''; // Only necessary when using Extension:PageViewInfo
+```
+* Configure as required.
+* Done – Navigate to Special:Version on your wiki to verify that the extension is successfully installed.
+
 ## Configuration
-| Key                                     | Description                                                                                                                                                      | Example                    | Default |
-|-----------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|---------|
-| $wgPlausibleDomain                      | Plausible Domain. **Required**                                                                                                                                   | https://plausible.io       | null    |
-| $wgPlausibleDomainKey                   | Domain Key set on the plausible website. **Required**                                                                                                            | plausible.io               | null    |
-| $wgPlausibleHonorDNT                    | Honor the Do Not Track header and disable tracking.                                                                                                              | false                      | true    |
-| $wgPlausibleTrackOutboundLinks          | Enable Tracking of outbound link clicks.                                                                                                                         | true                       | false   |
-| $wgPlausibleTrackFileDownloads          | Enable Tracking of link clicks that lead to files, sending a `File Download` event. See [the official docs](https://plausible.io/docs/file-downloads-tracking).  | true                       | false   |
-| $wgPlausibleTrackFileDownloadExtensions | List of additional file extensions to track. See [the official docs](https://plausible.io/docs/file-downloads-tracking#which-file-types-are-tracked).            | ['js', 'py']               | []      |
-| $wgPlausibleTrackLoggedIn               | Enable Tracking for logged in users.                                                                                                                             | true                       | false   |
-| $wgPlausibleEnableCustomEvents          | Enable to add the global `window.plausible` function needed for custom event tracking.                                                                           | true                       | false   |
-| $wgPlausibleIgnoredTitles               | List of page titles that should not be tracked. [Examples](https://github.com/plausible/docs/blob/master/docs/excluding-pages.md#common-use-cases-and-examples). | ['/Page1', '/Special:*', ] | []      |
-| $wgPlausibleEnableOptOutTag             | Enables or disables the `<plausible-opt-out />` tag that allows users to opt-out from being tracked.                                                             | false                      | true    |
-| $wgPlausibleApiKey                      | Auth Bearer key for integration with Extension:PageViewInfo                                                                                                      |                            |         |
+| Key                                     | Description                                                                                                                                                      | Example                      | Default |
+|-----------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------|---------|
+| $wgPlausibleDomain                      | Plausible Domain. **Required**                                                                                                                                   | https://plausible.io         | null    |
+| $wgPlausibleDomainKey                   | Domain Key set on the plausible website. **Required**                                                                                                            | plausible.io                 | null    |
+| $wgPlausibleHonorDNT                    | Honor the Do Not Track header and disable tracking.                                                                                                              | false                        | true    |
+| $wgPlausibleTrackOutboundLinks          | Enable Tracking of outbound link clicks.                                                                                                                         | true                         | false   |
+| $wgPlausibleTrackFileDownloads          | Enable Tracking of link clicks that lead to files, sending a `File Download` event. See [the official docs](https://plausible.io/docs/file-downloads-tracking).  | true                         | false   |
+| $wgPlausibleTrackFileDownloadExtensions | List of additional file extensions to track. See [the official docs](https://plausible.io/docs/file-downloads-tracking#which-file-types-are-tracked).            | ['js', 'py']                 | []      |
+| $wgPlausibleTrackLoggedIn               | Enable Tracking for logged in users.                                                                                                                             | true                         | false   |
+| $wgPlausibleEnableCustomEvents          | Enable to add the global `window.plausible` function needed for custom event tracking.                                                                           | true                         | false   |
+| $wgPlausibleIgnoredTitles               | List of page titles that should not be tracked. [Examples](https://github.com/plausible/docs/blob/master/docs/excluding-pages.md#common-use-cases-and-examples). | ['/Page1', '/Special:*', ]   | []      |
+| $wgPlausibleEnableOptOutTag             | Enables or disables the `<plausible-opt-out />` tag that allows users to opt-out from being tracked.                                                             | false                        | true    |
+| $wgPlausibleApiKey                      | Auth Bearer key for integration with [Extension:PageViewInfo](https://www.mediawiki.org/wiki/Extension:PageViewInfo)                                             |                              |         |
 
 
 ### Included tracking scripts

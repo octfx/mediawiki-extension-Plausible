@@ -42,7 +42,14 @@ class PlausibleLua extends Scribunto_LuaLibraryBase {
 		$this->getEngine()->registerInterface( __DIR__ . '/' . 'mw.ext.plausible.lua', $lib, [] );
 	}
 
-	public function getTopPages() {
+	/**
+	 * The top pages in the last day (or specified days) for this site
+	 *
+	 * @param $days int optional Number of days to calculate the top pages over
+	 *
+	 * @return array|array[]
+	 */
+	public function getTopPages(): array {
 		$args = func_get_args();
 
 		if ( empty( $args ) ) {
@@ -75,7 +82,14 @@ class PlausibleLua extends Scribunto_LuaLibraryBase {
 		return [];
 	}
 
-	public function getSiteData() {
+	/**
+	 * Number of views for whole site
+	 *
+	 * @param $days int optional Number of days for returning the views
+	 *
+	 * @return array
+	 */
+	public function getSiteData(): array {
 		$args = func_get_args();
 
 		/** @var CachedPageViewService $service */
@@ -90,7 +104,15 @@ class PlausibleLua extends Scribunto_LuaLibraryBase {
 		return [];
 	}
 
-	public function getPageData() {
+	/**
+	 * Number of views for the specified titles
+	 *
+	 * @param $titles string|string[] The titles to work on
+	 * @param $days int optional Number of days to calculate the views over
+	 *
+	 * @return array
+	 */
+	public function getPageData(): array {
 		$args = func_get_args();
 
 		/** @var CachedPageViewService $service */

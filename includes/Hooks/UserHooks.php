@@ -22,7 +22,7 @@ class UserHooks implements LocalUserCreatedHook, UserLogoutCompleteHook, UserLog
 	/**
 	 * @inheritDoc
 	 */
-	public function onLocalUserCreated( $user, $autocreated ) {
+	public function onLocalUserCreated( $user, $autocreated ): void {
 		if ( !$this->config['userregister'] ) {
 			return;
 		}
@@ -39,7 +39,7 @@ class UserHooks implements LocalUserCreatedHook, UserLogoutCompleteHook, UserLog
 	/**
 	 * @inheritDoc
 	 */
-	public function onUserLoginComplete( $user, &$inject_html, $direct ) {
+	public function onUserLoginComplete( $user, &$inject_html, $direct ): void {
 		if ( !$this->config['userlogin'] ) {
 			return;
 		}
@@ -56,7 +56,7 @@ class UserHooks implements LocalUserCreatedHook, UserLogoutCompleteHook, UserLog
 	/**
 	 * @inheritDoc
 	 */
-	public function onUserLogoutComplete( $user, &$inject_html, $oldName ) {
+	public function onUserLogoutComplete( $user, &$inject_html, $oldName ): void {
 		if ( !$this->config['userlogout'] ) {
 			return;
 		}

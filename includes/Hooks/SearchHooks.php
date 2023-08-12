@@ -22,7 +22,7 @@ class SearchHooks implements SpecialSearchNogomatchHook, SpecialSearchGoResultHo
 	/**
 	 * @inheritDoc
 	 */
-	public function onSpecialSearchNogomatch( &$title ) {
+	public function onSpecialSearchNogomatch( &$title ): void {
 		if ( !$this->config['searchnotfound'] ) {
 			return;
 		}
@@ -39,7 +39,7 @@ class SearchHooks implements SpecialSearchNogomatchHook, SpecialSearchGoResultHo
 	/**
 	 * @inheritDoc
 	 */
-	public function onSpecialSearchGoResult( $term, $title, &$url ) {
+	public function onSpecialSearchGoResult( $term, $title, &$url ): void {
 		if ( !$this->config['searchfound'] ) {
 			return;
 		}

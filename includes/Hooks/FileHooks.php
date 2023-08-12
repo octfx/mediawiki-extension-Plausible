@@ -23,7 +23,7 @@ class FileHooks implements UploadCompleteHook, FileDeleteCompleteHook, FileUndel
 	/**
 	 * @inheritDoc
 	 */
-	public function onFileDeleteComplete( $file, $oldimage, $article, $user, $reason ) {
+	public function onFileDeleteComplete( $file, $oldimage, $article, $user, $reason ): void {
 		if ( !$this->config['filedelete'] ) {
 			return;
 		}
@@ -34,7 +34,7 @@ class FileHooks implements UploadCompleteHook, FileDeleteCompleteHook, FileUndel
 	/**
 	 * @inheritDoc
 	 */
-	public function onUploadComplete( $uploadBase ) {
+	public function onUploadComplete( $uploadBase ): void {
 		if ( !$this->config['fileupload'] ) {
 			return;
 		}
@@ -45,7 +45,7 @@ class FileHooks implements UploadCompleteHook, FileDeleteCompleteHook, FileUndel
 	/**
 	 * @inheritDoc
 	 */
-	public function onFileUndeleteComplete( $title, $fileVersions, $user, $reason ) {
+	public function onFileUndeleteComplete( $title, $fileVersions, $user, $reason ): void {
 		if ( !$this->config['fileundelete'] ) {
 			return;
 		}

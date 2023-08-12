@@ -14,7 +14,7 @@ class MediaWikiServices implements MediaWikiServicesHook {
 	/**
 	 * @inheritDoc
 	 */
-	public function onMediaWikiServices( $services ) {
+	public function onMediaWikiServices( $services ): void {
 		if ( !ExtensionRegistry::getInstance()->isLoaded( 'PageViewInfo' ) ) {
 			return;
 		}

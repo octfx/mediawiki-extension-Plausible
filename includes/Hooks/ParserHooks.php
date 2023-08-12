@@ -12,7 +12,7 @@ class ParserHooks implements ParserFirstCallInitHook {
 	/**
 	 * @inheritDoc
 	 */
-	public function onParserFirstCallInit( $parser ) {
+	public function onParserFirstCallInit( $parser ): void {
 		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Plausible' );
 		if ( $config->get( 'PlausibleEnableOptOutTag' ) === false ) {
 			return;

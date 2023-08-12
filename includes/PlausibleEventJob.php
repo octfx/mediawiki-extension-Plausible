@@ -10,6 +10,7 @@ use NullJob;
 use WebRequest;
 
 class PlausibleEventJob extends Job implements GenericParameterJob {
+	protected $removeDuplicates = true;
 
 	public function __construct( array $params ) {
 		parent::__construct( 'PlausibleEvent', $params );
@@ -19,7 +20,7 @@ class PlausibleEventJob extends Job implements GenericParameterJob {
 	 * @inheritDoc
 	 */
 	public function run(): bool {
-		if ( !empty( $this->params['url'] ) || !is_string( $this->params['agent'] ) ) {
+		if ( empty( $this->params['url'] ) || empty( $this->params['agent'] ) ) {
 			return false;
 		}
 
@@ -28,10 +29,11 @@ class PlausibleEventJob extends Job implements GenericParameterJob {
 		$request = MediaWikiServices::getInstance()->getHttpRequestFactory()->create(
 			sprintf( '%s/api/event', $config->get( 'PlausibleDomain' ) ),
 			[
+				'method' => 'POST',
 				'userAgent' => $this->params['agent'],
 				'postData' => [
 					'domain' => $config->get( 'PlausibleDomainKey' ),
-					'name' => 'pageview',
+					'name' => $this->params['event'],
 					'url' => $this->params['url'],
 					'props' => $this->params['props'] ?? [],
 				],
@@ -59,7 +61,7 @@ class PlausibleEventJob extends Job implements GenericParameterJob {
 			return new self( [
 				'event' => $event,
 				'ip' => $request->getIP(),
-				'url' => $request->getRequestURL(),
+				'url' => $request->getFullRequestURL(),
 				'agent' => $request->getHeader( 'User-Agent' ),
 				'props' => $props,
 			] );

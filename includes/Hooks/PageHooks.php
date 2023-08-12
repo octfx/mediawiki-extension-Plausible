@@ -76,7 +76,7 @@ class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleD
 	/**
 	 * @inheritDoc
 	 */
-	public function onArticleDeleteAfterSuccess( $title, $outputPage ) {
+	public function onArticleDeleteAfterSuccess( $title, $outputPage ): void {
 		if ( !$this->config['pagedelete'] ) {
 			return;
 		}
@@ -87,7 +87,7 @@ class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleD
 	/**
 	 * @inheritDoc
 	 */
-	public function onPageSaveComplete( $wikiPage, $user, $summary, $flags, $revisionRecord, $editResult ) {
+	public function onPageSaveComplete( $wikiPage, $user, $summary, $flags, $revisionRecord, $editResult ): void {
 		if ( !$this->config['pageedit'] || $editResult->isNullEdit() ) {
 			return;
 		}
@@ -98,7 +98,7 @@ class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleD
 	/**
 	 * @inheritDoc
 	 */
-	public function onArticleUndelete( $title, $create, $comment, $oldPageId, $restoredPages ) {
+	public function onArticleUndelete( $title, $create, $comment, $oldPageId, $restoredPages ): void {
 		if ( !$this->config['pageundelete'] ) {
 			return;
 		}
@@ -109,7 +109,7 @@ class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleD
 	/**
 	 * @inheritDoc
 	 */
-	public function onPageMoveComplete( $old, $new, $user, $pageid, $redirid, $reason, $revision ) {
+	public function onPageMoveComplete( $old, $new, $user, $pageid, $redirid, $reason, $revision ): void {
 		if ( !$this->config['pagemove'] ) {
 			return;
 		}

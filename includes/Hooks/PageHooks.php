@@ -92,7 +92,14 @@ class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleD
 			return;
 		}
 
-		$this->jobs->push( PlausibleEventJob::newFromRequest( $user->getRequest(), 'pageedit' ) );
+		$this->jobs->push( PlausibleEventJob::newFromRequest(
+			$user->getRequest(),
+			'pageedit',
+			[
+				'title' => $wikiPage->getTitle()->getText(),
+				'user' => $user->isRegistered() ? $user->getName() : null,
+			]
+		) );
 	}
 
 	/**

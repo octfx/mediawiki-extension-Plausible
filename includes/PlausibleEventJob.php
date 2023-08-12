@@ -6,6 +6,7 @@ use Exception;
 use GenericParameterJob;
 use Job;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
 use NullJob;
 use WebRequest;
 
@@ -31,12 +32,12 @@ class PlausibleEventJob extends Job implements GenericParameterJob {
 			[
 				'method' => 'POST',
 				'userAgent' => $this->params['agent'],
-				'postData' => [
+				'postData' => json_encode( [
 					'domain' => $config->get( 'PlausibleDomainKey' ),
 					'name' => $this->params['event'],
 					'url' => $this->params['url'],
 					'props' => $this->params['props'] ?? [],
-				],
+				], JSON_THROW_ON_ERROR ),
 			]
 		);
 
@@ -58,10 +59,16 @@ class PlausibleEventJob extends Job implements GenericParameterJob {
 	 */
 	public static function newFromRequest( WebRequest $request, string $event = 'pageview', array $props = [] ): Job {
 		try {
+			$url = $request->getFullRequestURL();
+			if ( isset( $props['title'] ) ) {
+				$url = ( Title::newFromText( $props['title'] ) )->getFullURL();
+				unset( $props['title'] );
+			}
+
 			return new self( [
 				'event' => $event,
 				'ip' => $request->getIP(),
-				'url' => $request->getFullRequestURL(),
+				'url' => $url,
 				'agent' => $request->getHeader( 'User-Agent' ),
 				'props' => $props,
 			] );

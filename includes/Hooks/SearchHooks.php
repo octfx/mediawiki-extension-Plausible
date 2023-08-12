@@ -31,7 +31,7 @@ class SearchHooks implements SpecialSearchNogomatchHook, SpecialSearchGoResultHo
 			RequestContext::getMain()->getRequest(),
 			'searchnotfound',
 			[
-				'title' => $title->getText(),
+				'term' => $title->getText(),
 			]
 		) );
 	}

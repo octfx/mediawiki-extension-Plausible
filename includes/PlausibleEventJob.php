@@ -12,7 +12,7 @@ use WebRequest;
 class PlausibleEventJob extends Job implements GenericParameterJob {
 
 	public function __construct( array $params ) {
-		parent::__construct( null, $params );
+		parent::__construct( 'PlausibleEvent', $params );
 	}
 
 	/**

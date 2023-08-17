@@ -20,7 +20,7 @@
 						eventName,
 						{
 							props: {
-								link: 'Infobox Image',
+								title: 'Infobox Image',
 								isAnon,
 							}
 						}
@@ -32,7 +32,7 @@
 						eventName,
 						{
 							props: {
-								link: link.textContent,
+								title: link.innerText,
 								isAnon,
 							},
 							callback: function () {

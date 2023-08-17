@@ -21,7 +21,7 @@
 					eventName,
 					{
 						props: {
-							link: link.textContent,
+							title: link.innerText,
 							isAnon,
 						},
 						callback: function () {

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types=1 );
 
 namespace MediaWiki\Extension\Plausible;
 
@@ -32,9 +32,11 @@ class PlausibleEventJob extends Job implements GenericParameterJob {
 		$config = MediaWikiServices::getInstance()->getMainConfig();
 
 		try {
-			if ( !$config->get( 'PlausibleTrackLoggedIn' ) && ( $this->params['isRegistered'] ?? false ) === true ) {
+			if ( !$config->get( 'PlausibleTrackLoggedIn' ) && ( $this->params['isAnon'] ?? true ) === false ) {
 				return true;
 			}
+
+			$this->params['props']['isAnon'] = $this->params['isAnon'];
 
 			$request = MediaWikiServices::getInstance()->getHttpRequestFactory()->create(
 				sprintf( '%s/api/event', $config->get( 'PlausibleDomain' ) ),
@@ -83,7 +85,7 @@ class PlausibleEventJob extends Job implements GenericParameterJob {
 				'url' => $url,
 				'agent' => $request->getHeader( 'User-Agent' ),
 				'props' => $props,
-				'isRegistered' => $request->getSession()->getUser()->isRegistered(),
+				'isAnon' => $request->getSession()->getUser()->isAnon(),
 			] );
 		} catch ( Exception $e ) {
 			return new NullJob( [ 'removeDuplicates' => true ] );

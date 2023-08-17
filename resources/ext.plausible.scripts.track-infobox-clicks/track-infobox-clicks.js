@@ -1,7 +1,8 @@
 // Infobox Link Click Tracking
 ( function () {
 	var eventName = 'Infobox: Click',
-		infoboxes = document.querySelectorAll( '.mw-capiunto-infobox' );
+		infoboxes = document.querySelectorAll( '.mw-capiunto-infobox' ),
+		isAnon = mw.user?.tokens?.values?.watchToken === null || mw.user?.tokens?.values?.watchToken === '+\\';
 
 	if ( typeof window.plausible === 'undefined' || window.plausible.length === 0 || infoboxes === null ) {
 		return;
@@ -19,7 +20,8 @@
 						eventName,
 						{
 							props: {
-								link: 'Infobox Image'
+								link: 'Infobox Image',
+								isAnon,
 							}
 						}
 					);
@@ -30,7 +32,8 @@
 						eventName,
 						{
 							props: {
-								link: link.textContent
+								link: link.textContent,
+								isAnon,
 							},
 							callback: function () {
 								window.location = link.getAttribute('href');

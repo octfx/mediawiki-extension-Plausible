@@ -1,6 +1,7 @@
 // Menu Link click Tracking
 ( function () {
-	var eventName = 'CitizenMenuLinkClick';
+	var eventName = 'CitizenMenuLinkClick',
+		isAnon = mw.user?.tokens?.values?.watchToken === null || mw.user?.tokens?.values?.watchToken === '+\\';
 
 	if ( typeof window.plausible === 'undefined' || window.plausible.length === 0 ) {
 		return;
@@ -15,7 +16,8 @@
 				window.plausible( eventName, {
 					props: {
 						entry: event.target.innerText,
-						path: event.target.href
+						title: event.target.href,
+						isAnon,
 					},
 					callback: function () {
 						window.location = event.target.href;

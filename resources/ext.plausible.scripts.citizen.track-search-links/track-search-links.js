@@ -3,6 +3,7 @@
 	var eventName = 'CitizenSearchLinkClick',
 		suggestions = document.getElementById( 'searchform' ),
 		search = document.getElementById( 'searchInput' ),
+		isAnon = mw.user?.tokens?.values?.watchToken === null || mw.user?.tokens?.values?.watchToken === '+\\',
 		callback = function ( event ) {
 			var currentEl,
 				href = null,
@@ -38,8 +39,9 @@
 
 			window.plausible( eventName, {
 				props: {
-					query: searchValue,
-					path: url.pathname
+					term: searchValue,
+					title: url.pathname,
+					isAnon,
 				},
 				callback: function () {
 					window.location = href;

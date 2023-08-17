@@ -2,6 +2,7 @@
 ( function () {
 	var eventName = 'SpecialSearchInput',
 		search = document.querySelector( 'body.mw-special-Search input[type="search"]' ),
+		isAnon = mw.user?.tokens?.values?.watchToken === null || mw.user?.tokens?.values?.watchToken === '+\\',
 		sendAfter = 1500, // ms
 		minLength = 3,
 		timeoutId;
@@ -18,8 +19,9 @@
 				window.plausible(
 					eventName, {
 						props: {
-							query: event.target.value,
-							path: document.location.pathname
+							term: event.target.value,
+							title: document.location.pathname,
+							isAnon,
 						}
 					}
 				);

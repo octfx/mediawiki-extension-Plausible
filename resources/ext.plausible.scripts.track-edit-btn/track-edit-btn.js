@@ -5,10 +5,12 @@
   }
   
   var registerEvent = function() {
-    var eventName = 'EditButtonClick';
+    var eventName = 'EditButtonClick',
+        isAnon = mw.user?.tokens?.values?.watchToken === null || mw.user?.tokens?.values?.watchToken === '+\\';
+
     window.plausible( eventName, {
         props: {
-          path: document.location.pathname
+          isAnon,
         }
     } );
   };

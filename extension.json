@@ -43,8 +43,8 @@
 			"description": "Enable Tracking for logged in users",
 			"value": false
 		},
-		"PlausibleEnableCustomEvents": {
-			"description": "Set to true to add the window.plausible function. Needed for custom event goals etc.",
+		"PlausibleEnableTaggedEvents": {
+			"description": "Enable tracking clicks to tagged elements via css classes",
 			"value": false
 		},
 		"PlausibleIgnoredTitles": {
@@ -68,7 +68,7 @@
 			"value": false
 		},
 		"PlausibleTrackInfoboxClicks": {
-			"description": "Tracks clicks to links inside .mw-capiunto-infobox elements",
+			"description": "Tracks clicks to links inside .mw-capiunto-infobox and .infobox elements",
 			"value": false
 		},
 		"PlausibleTrackCitizenSearchLinks": {

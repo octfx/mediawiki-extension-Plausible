@@ -17,19 +17,19 @@ $wgPlausibleApikey = ''; // Only necessary when using Extension:PageViewInfo
 * Done – Navigate to Special:Version on your wiki to verify that the extension is successfully installed.
 
 ## Configuration
-| Key                                     | Description                                                                                                                                                      | Example                    | Default |
-|-----------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|---------|
-| $wgPlausibleDomain                      | Plausible Domain. **Required**                                                                                                                                   | https://plausible.io       | null    |
-| $wgPlausibleDomainKey                   | Domain Key set on the plausible website. **Required**                                                                                                            | plausible.io               | null    |
-| $wgPlausibleHonorDNT                    | Honor the Do Not Track header and disable tracking.                                                                                                              | false                      | true    |
-| $wgPlausibleTrackOutboundLinks          | Enable Tracking of outbound link clicks.                                                                                                                         | true                       | false   |
-| $wgPlausibleTrackFileDownloads          | Enable Tracking of link clicks that lead to files, sending a `File Download` event. See [the official docs](https://plausible.io/docs/file-downloads-tracking).  | true                       | false   |
-| $wgPlausibleTrackFileDownloadExtensions | List of additional file extensions to track. See [the official docs](https://plausible.io/docs/file-downloads-tracking#which-file-types-are-tracked).            | ['js', 'py']               | []      |
-| $wgPlausibleTrackLoggedIn               | Enable Tracking for logged in users.                                                                                                                             | true                       | false   |
-| $wgPlausibleEnableCustomEvents          | Enable to add the global `window.plausible` function needed for custom event tracking.                                                                           | true                       | false   |
-| $wgPlausibleIgnoredTitles               | List of page titles that should not be tracked. [Examples](https://github.com/plausible/docs/blob/master/docs/excluding-pages.md#common-use-cases-and-examples). | ['/Page1', '/Special:*', ] | []      |
-| $wgPlausibleEnableOptOutTag             | Enables or disables the `<plausible-opt-out />` tag that allows users to opt-out from being tracked.                                                             | false                      | true    |
-| $wgPlausibleApiKey                      | Auth Bearer key for integration with [Extension:PageViewInfo](https://www.mediawiki.org/wiki/Extension:PageViewInfo)                                             |                            |         |
+| Key                                     | Description                                                                                                                                                                        | Example                    | Default |
+|-----------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|---------|
+| $wgPlausibleDomain                      | Plausible Domain. **Required**                                                                                                                                                     | https://plausible.io       | null    |
+| $wgPlausibleDomainKey                   | Domain Key set on the plausible website. **Required**                                                                                                                              | plausible.io               | null    |
+| $wgPlausibleApiKey                      | Auth Bearer key for integration with [Extension:PageViewInfo](https://www.mediawiki.org/wiki/Extension:PageViewInfo)                                                               |                            |         |
+| $wgPlausibleHonorDNT                    | Honor the Do Not Track header and disable tracking.                                                                                                                                | false                      | true    |
+| $wgPlausibleTrackOutboundLinks          | Enable Tracking of outbound link clicks.                                                                                                                                           | true                       | false   |
+| $wgPlausibleTrackFileDownloads          | Enable Tracking of link clicks that lead to files, sending a `File Download` event. See [the official docs](https://plausible.io/docs/file-downloads-tracking).                    | true                       | false   |
+| $wgPlausibleTrackFileDownloadExtensions | List of additional file extensions to track. See [the official docs](https://plausible.io/docs/file-downloads-tracking#which-file-types-are-tracked).                              | ['js', 'py']               | []      |
+| $wgPlausibleTrackLoggedIn               | Enable Tracking for logged in users.                                                                                                                                               | true                       | false   |
+| $wgPlausibleEnableTaggedEvents          | Enable click tracking via css classes. See [the official docs](https://plausible.io/docs/custom-event-goals#2-add-a-css-class-name-to-the-element-you-want-to-track-on-your-site). | true                       | false   |
+| $wgPlausibleIgnoredTitles               | List of page titles that should not be tracked. [Examples](https://github.com/plausible/docs/blob/master/docs/excluding-pages.md#common-use-cases-and-examples).                   | ['/Page1', '/Special:*', ] | []      |
+| $wgPlausibleEnableOptOutTag             | Enables or disables the `<plausible-opt-out />` tag that allows users to opt-out from being tracked.                                                                               | false                      | true    |
 
 
 ### Included tracking scripts
@@ -102,6 +102,27 @@ document.querySelector('#ca-edit a').addEventListener('click', function (event) 
     plausible('Edit Button: Click');
 });
 ```
+
+### Via css classes
+With setting `$wgPlausibleEnableTaggedEvents = true;` click to elements can be tracked by setting css classes.
+From [the official docs](https://plausible.io/docs/custom-event-goals): 
+> You can also add class names directly in HTML
+> If you can edit the raw HTML code of the element you want to track, you can also add the classes directly in HTML. For example:
+> 
+> ```<!-- before -->```  
+> ```<button>Click Me</button>```  
+> ```<!-- after -->```  
+> ```<button class="plausible-event-name=Button+Click">Click Me</button>```
+> 
+> Or if your element already has a class attribute, just separate the new ones with a space:
+>
+> ```<!-- before -->```  
+> ```<button class="some-existing-class">Click Me</button>```
+> 
+> ```<!-- after -->```  
+> ```<button class="some-existing-class plausible-event-name=Button+Click">Click Me</button>```
+
+> When you send custom events to Plausible, they won't show up in your dashboard automatically. You'll have to configure the goal for the conversion numbers to show up.
 
 ## Ignoring Pages
 https://github.com/plausible/docs/blob/master/docs/excluding-pages.md#common-use-cases-and-examples

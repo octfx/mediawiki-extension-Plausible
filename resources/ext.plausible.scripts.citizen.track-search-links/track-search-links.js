@@ -1,6 +1,6 @@
 // Search Link click Tracking
 ( function () {
-	var eventName = 'CitizenSearchLinkClick',
+	var eventName = 'Citizen: Search Link Click',
 		suggestions = document.getElementById( 'searchform' ),
 		search = document.getElementById( 'searchInput' ),
 		isAnon = mw.user?.tokens?.values?.watchToken === null || mw.user?.tokens?.values?.watchToken === '+\\',

@@ -28,7 +28,7 @@ class FileHooks implements UploadCompleteHook, FileDeleteCompleteHook, FileUndel
 			return;
 		}
 
-		$this->jobs->push( PlausibleEventJob::newFromRequest( $user->getRequest(), 'filedelete' ) );
+		$this->jobs->push( PlausibleEventJob::newFromRequest( $user->getRequest(), 'File: Delete' ) );
 	}
 
 	/**
@@ -39,7 +39,7 @@ class FileHooks implements UploadCompleteHook, FileDeleteCompleteHook, FileUndel
 			return;
 		}
 
-		$this->jobs->push( PlausibleEventJob::newFromRequest( RequestContext::getMain()->getRequest(), 'fileupload' ) );
+		$this->jobs->push( PlausibleEventJob::newFromRequest( RequestContext::getMain()->getRequest(), 'File: Upload' ) );
 	}
 
 	/**
@@ -50,6 +50,6 @@ class FileHooks implements UploadCompleteHook, FileDeleteCompleteHook, FileUndel
 			return;
 		}
 
-		$this->jobs->push( PlausibleEventJob::newFromRequest( $user->getRequest(), 'fileundelete' ) );
+		$this->jobs->push( PlausibleEventJob::newFromRequest( $user->getRequest(), 'File: Undelete' ) );
 	}
 }

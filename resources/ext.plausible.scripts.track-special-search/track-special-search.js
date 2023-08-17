@@ -1,6 +1,6 @@
 // Special Search Input Tracking
 ( function () {
-	var eventName = 'SpecialSearchInput',
+	var eventName = 'Special Search: Input',
 		search = document.querySelector( 'body.mw-special-Search input[type="search"]' ),
 		isAnon = mw.user?.tokens?.values?.watchToken === null || mw.user?.tokens?.values?.watchToken === '+\\',
 		sendAfter = 1500, // ms

@@ -5,7 +5,7 @@
   }
   
   var registerEvent = function() {
-    var eventName = 'EditButtonClick',
+    var eventName = 'Edit Button: Click',
         isAnon = mw.user?.tokens?.values?.watchToken === null || mw.user?.tokens?.values?.watchToken === '+\\';
 
     window.plausible( eventName, {

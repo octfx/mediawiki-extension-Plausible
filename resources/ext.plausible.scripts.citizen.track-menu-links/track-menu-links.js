@@ -1,6 +1,6 @@
 // Menu Link click Tracking
 ( function () {
-	var eventName = 'CitizenMenuLinkClick',
+	var eventName = 'Citizen: Menu Link Click',
 		isAnon = mw.user?.tokens?.values?.watchToken === null || mw.user?.tokens?.values?.watchToken === '+\\';
 
 	if ( typeof window.plausible === 'undefined' || window.plausible.length === 0 ) {

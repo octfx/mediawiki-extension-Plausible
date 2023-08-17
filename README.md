@@ -17,33 +17,33 @@ $wgPlausibleApikey = ''; // Only necessary when using Extension:PageViewInfo
 * Done – Navigate to Special:Version on your wiki to verify that the extension is successfully installed.
 
 ## Configuration
-| Key                                     | Description                                                                                                                                                      | Example                      | Default |
-|-----------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------|---------|
-| $wgPlausibleDomain                      | Plausible Domain. **Required**                                                                                                                                   | https://plausible.io         | null    |
-| $wgPlausibleDomainKey                   | Domain Key set on the plausible website. **Required**                                                                                                            | plausible.io                 | null    |
-| $wgPlausibleHonorDNT                    | Honor the Do Not Track header and disable tracking.                                                                                                              | false                        | true    |
-| $wgPlausibleTrackOutboundLinks          | Enable Tracking of outbound link clicks.                                                                                                                         | true                         | false   |
-| $wgPlausibleTrackFileDownloads          | Enable Tracking of link clicks that lead to files, sending a `File Download` event. See [the official docs](https://plausible.io/docs/file-downloads-tracking).  | true                         | false   |
-| $wgPlausibleTrackFileDownloadExtensions | List of additional file extensions to track. See [the official docs](https://plausible.io/docs/file-downloads-tracking#which-file-types-are-tracked).            | ['js', 'py']                 | []      |
-| $wgPlausibleTrackLoggedIn               | Enable Tracking for logged in users.                                                                                                                             | true                         | false   |
-| $wgPlausibleEnableCustomEvents          | Enable to add the global `window.plausible` function needed for custom event tracking.                                                                           | true                         | false   |
-| $wgPlausibleIgnoredTitles               | List of page titles that should not be tracked. [Examples](https://github.com/plausible/docs/blob/master/docs/excluding-pages.md#common-use-cases-and-examples). | ['/Page1', '/Special:*', ]   | []      |
-| $wgPlausibleEnableOptOutTag             | Enables or disables the `<plausible-opt-out />` tag that allows users to opt-out from being tracked.                                                             | false                        | true    |
-| $wgPlausibleApiKey                      | Auth Bearer key for integration with [Extension:PageViewInfo](https://www.mediawiki.org/wiki/Extension:PageViewInfo)                                             |                              |         |
+| Key                                     | Description                                                                                                                                                      | Example                    | Default |
+|-----------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|---------|
+| $wgPlausibleDomain                      | Plausible Domain. **Required**                                                                                                                                   | https://plausible.io       | null    |
+| $wgPlausibleDomainKey                   | Domain Key set on the plausible website. **Required**                                                                                                            | plausible.io               | null    |
+| $wgPlausibleHonorDNT                    | Honor the Do Not Track header and disable tracking.                                                                                                              | false                      | true    |
+| $wgPlausibleTrackOutboundLinks          | Enable Tracking of outbound link clicks.                                                                                                                         | true                       | false   |
+| $wgPlausibleTrackFileDownloads          | Enable Tracking of link clicks that lead to files, sending a `File Download` event. See [the official docs](https://plausible.io/docs/file-downloads-tracking).  | true                       | false   |
+| $wgPlausibleTrackFileDownloadExtensions | List of additional file extensions to track. See [the official docs](https://plausible.io/docs/file-downloads-tracking#which-file-types-are-tracked).            | ['js', 'py']               | []      |
+| $wgPlausibleTrackLoggedIn               | Enable Tracking for logged in users.                                                                                                                             | true                       | false   |
+| $wgPlausibleEnableCustomEvents          | Enable to add the global `window.plausible` function needed for custom event tracking.                                                                           | true                       | false   |
+| $wgPlausibleIgnoredTitles               | List of page titles that should not be tracked. [Examples](https://github.com/plausible/docs/blob/master/docs/excluding-pages.md#common-use-cases-and-examples). | ['/Page1', '/Special:*', ] | []      |
+| $wgPlausibleEnableOptOutTag             | Enables or disables the `<plausible-opt-out />` tag that allows users to opt-out from being tracked.                                                             | false                      | true    |
+| $wgPlausibleApiKey                      | Auth Bearer key for integration with [Extension:PageViewInfo](https://www.mediawiki.org/wiki/Extension:PageViewInfo)                                             |                            |         |
 
 
 ### Included tracking scripts
 The following tracking modules can be activated by setting the provided configuration key in `LocalSettings.php` to true.
 
-| Key                                 | Description                                                                                                                                                                                           | EventName                |
-|-------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------|
-| $wgPlausibleTrack404                | Sends a `404` event for unknown titles.                                                                                                                                                               | `404`                    |
-| $wgPlausibleTrackSearchInput        | Send inputs to `#searchInput` to plausible as a custom event named `SearchInput`.                                                                                                                     | `SearchInput`            |
-| $wgPlausibleTrackEditButtonClicks   | Track clicks to `#ca-edit a` as a custom event named `EditButtonClick`.                                                                                                                               | `EditButtonClick`        |
-| $wgPlausibleTrackNavplateClicks     | Track clicks to links inside `.navplate` elements.                                                                                                                                                    | `Navplate: Click`        |
-| $wgPlausibleTrackInfoboxClicks      | Track clicks to links inside `.mw-capiunto-infobox` elements.                                                                                                                                         | `Infobox: Click`         |
-| $wgPlausibleTrackCitizenSearchLinks | Only for [Skin:Citizen](https://github.com/StarCitizenTools/mediawiki-skins-Citizen). Track clicks to search result links found in `#typeahead-suggestions`. Event is named `CitizenSearchLinkClick`. | `CitizenSearchLinkClick` |
-| $wgPlausibleTrackCitizenMenuLinks   | Only for [Skin:Citizen](https://github.com/StarCitizenTools/mediawiki-skins-Citizen). Track clicks to links in the sidebar menu. Event is named `CitizenMenuLinkClick`.                               | `CitizenMenuLinkClick`   |
+| Key                                 | Description                                                                                                                                                                                               | EventName                    |
+|-------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------|
+| $wgPlausibleTrack404                | Sends a `404` event for unknown titles.                                                                                                                                                                   | `404`                        |
+| $wgPlausibleTrackSearchInput        | Send inputs to `#searchInput` to plausible as a custom event named `Search: Input`.                                                                                                                       | `Search: Input`              |
+| $wgPlausibleTrackEditButtonClicks   | Track clicks to `#ca-edit a` as a custom event named `Edit Button: Click`.                                                                                                                                | `Edit Button: Click`         |
+| $wgPlausibleTrackNavplateClicks     | Track clicks to links inside `.navplate` elements.                                                                                                                                                        | `Navplate: Click`            |
+| $wgPlausibleTrackInfoboxClicks      | Track clicks to links inside `.mw-capiunto-infobox` and `.infobox` elements.                                                                                                                              | `Infobox: Click`             |
+| $wgPlausibleTrackCitizenSearchLinks | Only for [Skin:Citizen](https://github.com/StarCitizenTools/mediawiki-skins-Citizen). Track clicks to search result links found in `#typeahead-suggestions`. Event is named `Citizen: Search Link Click`. | `Citizen: Search Link Click` |
+| $wgPlausibleTrackCitizenMenuLinks   | Only for [Skin:Citizen](https://github.com/StarCitizenTools/mediawiki-skins-Citizen). Track clicks to links in the sidebar menu. Event is named `Citizen: Menu Link Click`.                               | `Citizen: Menu Link Click`   |
 
 ### Server Side Tracking
 Some events can be sent serverside without having to rely on the included plausible client script.
@@ -51,18 +51,20 @@ Some events can be sent serverside without having to rely on the included plausi
 The following custom events can be activated: 
 ```php
 $wgPlausibleServerSideTracking = [
-    'pageview' => false,
-    'page404' => false,
-    'pageedit' => true,
-    'pagedelete' => true,
-    'pageundelete' => true,
-    'pagemove' => true,
-    'userregister' => true,
-    'userlogin' => true,
-    'userlogout' =>  true,
-    'fileupload' => true,
-    'filedelete' => true,
-    'fileundelete' => true,
+    'pageview' => false, // EventName: pageview 
+    'page404' => false, // EventName: 404 
+    'pageedit' => true, // EventName: Page: Edit; Info: Page has been successfully edited
+    'pagedelete' => true, // EventName: Page: Delete; Info: Page has been deleted
+    'pageundelete' => true, // EventName: Page: Undelete; Info: Page has been undeleted
+    'pagemove' => true, // EventName: Page: Move; Info: Page was moved
+    'userregister' => false, // EventName: User: Register; Info: A new user registered
+    'userlogin' => false, // EventName: User: Login; Info: A user logged in
+    'userlogout' =>  false, // EventName: User: Logout; Info: A user logged out
+    'fileupload' => true, // EventName: File: Upload; Info: A file was uploaded
+    'filedelete' => true, // EventName: File: Delete; Info: A file was deleted
+    'fileundelete' => true, // EventName: File: Undelete; Info: A file was undeleted
+    'searchnotfound' => true, // EventName: Search: Not found; Info: A searched term was not found / has no title on the wiki
+    'searchfound' => true, // EventName: Search: Found; Info: A searched term was found / has a corresponding title on the wiki
 ];
 ```
 
@@ -80,7 +82,7 @@ if (typeof window.plausible === 'undefined') {
 }
 
 document.querySelector('#ca-edit a').addEventListener('click', function (event) {
-    plausible('Editbtn Clicked');
+    plausible('Edit Button: Click');
 });
 ```
 

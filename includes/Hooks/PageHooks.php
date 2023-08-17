@@ -81,7 +81,7 @@ class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleD
 			return;
 		}
 
-		$this->jobs->push( PlausibleEventJob::newFromRequest( $outputPage->getRequest(), 'pagedelete' ) );
+		$this->jobs->push( PlausibleEventJob::newFromRequest( $outputPage->getRequest(), 'Page: Delete' ) );
 	}
 
 	/**
@@ -94,7 +94,7 @@ class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleD
 
 		$this->jobs->push( PlausibleEventJob::newFromRequest(
 			$user->getRequest(),
-			'pageedit',
+			'Page: Edit',
 			[
 				'title' => $wikiPage->getTitle()->getText(),
 				'user' => $user->isRegistered() ? $user->getName() : null,
@@ -110,7 +110,7 @@ class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleD
 			return;
 		}
 
-		$this->jobs->push( PlausibleEventJob::newFromRequest( RequestContext::getMain()->getRequest(), 'pageedit' ) );
+		$this->jobs->push( PlausibleEventJob::newFromRequest( RequestContext::getMain()->getRequest(), 'Page: Undelete' ) );
 	}
 
 	/**
@@ -121,6 +121,6 @@ class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleD
 			return;
 		}
 
-		$this->jobs->push( PlausibleEventJob::newFromRequest( $user->getRequest(), 'pagemove' ) );
+		$this->jobs->push( PlausibleEventJob::newFromRequest( $user->getRequest(), 'Page: Move' ) );
 	}
 }

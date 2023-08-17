@@ -29,7 +29,7 @@ class SearchHooks implements SpecialSearchNogomatchHook, SpecialSearchGoResultHo
 
 		$this->jobs->push( PlausibleEventJob::newFromRequest(
 			RequestContext::getMain()->getRequest(),
-			'searchnotfound',
+			'Search: Not Found',
 			[
 				'term' => $title->getText(),
 			]
@@ -46,7 +46,7 @@ class SearchHooks implements SpecialSearchNogomatchHook, SpecialSearchGoResultHo
 
 		$this->jobs->push( PlausibleEventJob::newFromRequest(
 			RequestContext::getMain()->getRequest(),
-			'searchfound',
+			'Search: Found',
 			[
 				'term' => $term,
 				'title' => $title->getText(),

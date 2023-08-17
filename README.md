@@ -35,7 +35,7 @@ $wgPlausibleApikey = ''; // Only necessary when using Extension:PageViewInfo
 ### Included tracking scripts
 The following tracking modules can be activated by setting the provided configuration key in `LocalSettings.php` to true.
 
-| Key                                 | Description                                                                                                                                                                                               | EventName                    |
+| Key                                 | Description                                                                                                                                                                                               | Event Name                   |
 |-------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------|
 | $wgPlausibleTrack404                | Sends a `404` event for unknown titles.                                                                                                                                                                   | `404`                        |
 | $wgPlausibleTrackSearchInput        | Send inputs to `#searchInput` to plausible as a custom event named `Search: Input`.                                                                                                                       | `Search: Input`              |
@@ -51,22 +51,39 @@ Some events can be sent serverside without having to rely on the included plausi
 The following custom events can be activated: 
 ```php
 $wgPlausibleServerSideTracking = [
-    'pageview' => false, // EventName: pageview 
-    'page404' => false, // EventName: 404 
-    'pageedit' => true, // EventName: Page: Edit; Info: Page has been successfully edited
-    'pagedelete' => true, // EventName: Page: Delete; Info: Page has been deleted
-    'pageundelete' => true, // EventName: Page: Undelete; Info: Page has been undeleted
-    'pagemove' => true, // EventName: Page: Move; Info: Page was moved
-    'userregister' => false, // EventName: User: Register; Info: A new user registered
-    'userlogin' => false, // EventName: User: Login; Info: A user logged in
-    'userlogout' =>  false, // EventName: User: Logout; Info: A user logged out
-    'fileupload' => true, // EventName: File: Upload; Info: A file was uploaded
-    'filedelete' => true, // EventName: File: Delete; Info: A file was deleted
-    'fileundelete' => true, // EventName: File: Undelete; Info: A file was undeleted
-    'searchnotfound' => true, // EventName: Search: Not found; Info: A searched term was not found / has no title on the wiki
-    'searchfound' => true, // EventName: Search: Found; Info: A searched term was found / has a corresponding title on the wiki
+    // Event Name: pageview
+    'pageview' => false,
+    // Event Name: 404 
+    'page404' => false,
+    // Event Name: Page: Edit 
+    'pageedit' => true, // Page has been successfully edited
+    // Event Name: Page: Delete
+    'pagedelete' => true, // Page has been deleted
+    // Event Name: Page: Undelete
+    'pageundelete' => true, // Page has been undeleted
+    // Event Name: Page: Move
+    'pagemove' => true, // Page was moved
+    // Event Name: User: Register
+    'userregister' => false, // A new user registered
+    // Event Name: User: Login
+    'userlogin' => false, // A user logged in
+    // Event Name: User: Logout
+    'userlogout' =>  false, // A user logged out
+    // Event Name: File: Upload
+    'fileupload' => true, // A file was uploaded
+    // Event Name: File: Delete
+    'filedelete' => true, // A file was deleted
+    // Event Name: File: Undelete
+    'fileundelete' => true, // A file was undeleted
+    // Event Name: Search: Not found
+    'searchnotfound' => true, // A searched term was not found / has no title on the wiki
+    // Event Name: Search: Found
+    'searchfound' => true, // A searched term was found / has a corresponding title on the wiki
 ];
 ```
+
+### Event / Goal Names
+This extension chooses the following convention for naming events / goals: `Subject: Event/Action`.
 
 ## Tracking Custom Events
 https://github.com/plausible/docs/blob/master/docs/custom-event-goals.md

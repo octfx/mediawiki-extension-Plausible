@@ -30,7 +30,7 @@ class ScribuntoHooks {
 	 * Register Lua Library
 	 *
 	 * @param string $engine
-	 * @param array $extraLibraries
+	 * @param array &$extraLibraries
 	 * @return bool
 	 */
 	public static function onScribuntoExternalLibraries( string $engine, array &$extraLibraries ): bool {

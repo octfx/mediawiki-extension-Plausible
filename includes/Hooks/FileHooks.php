@@ -15,6 +15,10 @@ class FileHooks implements UploadCompleteHook, FileDeleteCompleteHook, FileUndel
 	private array $config;
 	private JobQueueGroup $jobs;
 
+	/**
+	 * @param Config $config
+	 * @param JobQueueGroup $group
+	 */
 	public function __construct( Config $config, JobQueueGroup $group ) {
 		$this->config = $config->get( 'PlausibleServerSideTracking' );
 		$this->jobs = $group;
@@ -39,7 +43,9 @@ class FileHooks implements UploadCompleteHook, FileDeleteCompleteHook, FileUndel
 			return;
 		}
 
-		$this->jobs->push( PlausibleEventJob::newFromRequest( RequestContext::getMain()->getRequest(), 'File: Upload' ) );
+		$this->jobs->push(
+			PlausibleEventJob::newFromRequest( RequestContext::getMain()->getRequest(), 'File: Upload' )
+		);
 	}
 
 	/**

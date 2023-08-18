@@ -17,6 +17,9 @@ use WebRequest;
 class PlausibleEventJob extends Job implements GenericParameterJob {
 	protected $removeDuplicates = true;
 
+	/**
+	 * @param array $params
+	 */
 	public function __construct( array $params ) {
 		parent::__construct( 'PlausibleEvent', $params );
 	}

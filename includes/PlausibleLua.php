@@ -26,6 +26,9 @@ use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 use Scribunto_LuaLibraryBase;
 
+/**
+ * phpcs:disable MediaWiki.Commenting.FunctionComment.ExtraParamComment
+ */
 class PlausibleLua extends Scribunto_LuaLibraryBase {
 
 	/**
@@ -45,7 +48,7 @@ class PlausibleLua extends Scribunto_LuaLibraryBase {
 	/**
 	 * The top pages in the last day (or specified days) for this site
 	 *
-	 * @param $days int optional Number of days to calculate the top pages over
+	 * @param int $days optional Number of days to calculate the top pages over
 	 *
 	 * @return array|array[]
 	 */
@@ -85,7 +88,7 @@ class PlausibleLua extends Scribunto_LuaLibraryBase {
 	/**
 	 * Number of views for whole site
 	 *
-	 * @param $days int optional Number of days for returning the views
+	 * @param int $days optional Number of days for returning the views
 	 *
 	 * @return array
 	 */
@@ -107,8 +110,9 @@ class PlausibleLua extends Scribunto_LuaLibraryBase {
 	/**
 	 * Number of views for the specified titles
 	 *
-	 * @param $titles string|string[] The titles to work on
-	 * @param $days int optional Number of days to calculate the views over
+	 *  MediaWiki.Commenting.FunctionComment.ExtraParamComment
+	 * @param string|string[] $titles The titles to work on
+	 * @param int $days optional Number of days to calculate the views over
 	 *
 	 * @return array
 	 */

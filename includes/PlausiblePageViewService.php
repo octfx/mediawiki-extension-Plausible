@@ -175,6 +175,9 @@ class PlausiblePageViewService implements PageViewService {
 
 	/**
 	 * This is getTopPages with a configurable day range
+	 * @param int $days
+	 * @param string $metric One of the METRIC_* constants.
+	 * @return StatusValue
 	 */
 	public function getTopPagesDays( $days = 1, $metric = self::METRIC_VIEW ) {
 		if ( !in_array( $metric, [ self::METRIC_VIEW, self::METRIC_UNIQUE ] ) ) {

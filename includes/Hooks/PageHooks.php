@@ -37,11 +37,21 @@ use Skin;
 /**
  * Hooks to run relating the page
  */
-class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleDeleteAfterSuccessHook, ArticleUndeleteHook, PageMoveCompleteHook {
+class PageHooks implements
+	BeforePageDisplayHook,
+	PageSaveCompleteHook,
+	ArticleDeleteAfterSuccessHook,
+	ArticleUndeleteHook,
+	PageMoveCompleteHook
+{
 
 	private array $config;
 	private JobQueueGroup $jobs;
 
+	/**
+	 * @param Config $config
+	 * @param JobQueueGroup $group
+	 */
 	public function __construct( Config $config, JobQueueGroup $group ) {
 		$this->config = $config->get( 'PlausibleServerSideTracking' );
 		$this->jobs = $group;
@@ -110,7 +120,9 @@ class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleD
 			return;
 		}
 
-		$this->jobs->push( PlausibleEventJob::newFromRequest( RequestContext::getMain()->getRequest(), 'Page: Undelete' ) );
+		$this->jobs->push(
+			PlausibleEventJob::newFromRequest( RequestContext::getMain()->getRequest(), 'Page: Undelete' )
+		);
 	}
 
 	/**

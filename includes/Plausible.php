@@ -52,6 +52,9 @@ class Plausible {
 	 */
 	private $config;
 
+	/**
+	 * @param OutputPage $out
+	 */
 	public function __construct( OutputPage $out ) {
 		$this->out = $out;
 		$this->config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Plausible' );

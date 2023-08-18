@@ -10,9 +10,10 @@ class OptOut {
 	/**
 	 * <plausible-opt-out />
 	 *
+	 * @param string|null $input
+	 * @param array $args Arguments
 	 * @param Parser $parser The active Parser instance
 	 * @param PPFrame $frame Frame
-	 * @param array $args Arguments
 	 *
 	 * @return string The button
 	 */

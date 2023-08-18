@@ -14,6 +14,10 @@ class UserHooks implements LocalUserCreatedHook, UserLogoutCompleteHook, UserLog
 	private array $config;
 	private JobQueueGroup $jobs;
 
+	/**
+	 * @param Config $config
+	 * @param JobQueueGroup $group
+	 */
 	public function __construct( Config $config, JobQueueGroup $group ) {
 		$this->config = $config->get( 'PlausibleServerSideTracking' );
 		$this->jobs = $group;

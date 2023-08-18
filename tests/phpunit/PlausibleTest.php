@@ -34,6 +34,9 @@ class PlausibleTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * @covers \MediaWiki\Extension\Plausible\Plausible::addScript
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::buildScript
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::buildScriptAttribs
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::buildScriptPath
 	 * @covers \MediaWiki\Extension\Plausible\Plausible::addModules
 	 * @covers \MediaWiki\Extension\Plausible\Plausible::canAdd
 	 * @return void
@@ -55,6 +58,9 @@ class PlausibleTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * @covers \MediaWiki\Extension\Plausible\Plausible::addScript
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::buildScript
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::buildScriptAttribs
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::buildScriptPath
 	 * @covers \MediaWiki\Extension\Plausible\Plausible::addModules
 	 * @covers \MediaWiki\Extension\Plausible\Plausible::canAdd
 	 * @return void
@@ -77,6 +83,9 @@ class PlausibleTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * @covers \MediaWiki\Extension\Plausible\Plausible::addScript
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::buildScript
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::buildScriptAttribs
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::buildScriptPath
 	 * @covers \MediaWiki\Extension\Plausible\Plausible::addModules
 	 * @covers \MediaWiki\Extension\Plausible\Plausible::canAdd
 	 * @return void
@@ -102,6 +111,9 @@ class PlausibleTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * @covers \MediaWiki\Extension\Plausible\Plausible::addScript
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::buildScript
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::buildScriptAttribs
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::buildScriptPath
 	 * @covers \MediaWiki\Extension\Plausible\Plausible::addModules
 	 * @covers \MediaWiki\Extension\Plausible\Plausible::canAdd
 	 * @return void
@@ -123,5 +135,31 @@ class PlausibleTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertStringContainsString( 'exclusions', $script );
 		$this->assertStringContainsString( 'data-exclude="Main Page, Foo"', $script );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::addScript
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::buildScript
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::buildScriptAttribs
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::buildScriptPath
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::addModules
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::canAdd
+	 * @return void
+	 */
+	public function testAddModule() {
+		$this->overrideConfigValues( [
+			'PlausibleDomain' => 'localhost',
+			'PlausibleDomainKey' => 'localwiki',
+			'PlausibleTrack404' => true,
+		] );
+
+		$page = new OutputPage( RequestContext::getMain() );
+		$plausible = new Plausible( $page );
+		$plausible->addModules();
+		$plausible->addScript();
+
+		$this->assertArrayHasKey( 'plausible', $page->getHeadItemsArray() );
+
+		$this->assertContainsEquals( 'ext.plausible.scripts.track-404', $page->getModules() );
 	}
 }

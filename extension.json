@@ -104,7 +104,8 @@
 				"fileundelete": true,
 				"searchnotfound": true,
 				"searchfound": true
-			}
+			},
+			"merge_strategy": "array_plus"
 		}
 	},
 	"ConfigRegistry": {

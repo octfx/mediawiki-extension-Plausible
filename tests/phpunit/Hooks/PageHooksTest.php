@@ -38,6 +38,84 @@ class PageHooksTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
+	 * @covers \MediaWiki\Extension\Plausible\Hooks\PageHooks
+	 *
+	 * @return void
+	 * @throws Exception
+	 */
+	public function testConstructor() {
+		$hooks = new PageHooks(
+			$this->getServiceContainer()->getMainConfig(),
+			$this->getServiceContainer()->getJobQueueGroup()
+		);
+
+		$this->assertInstanceOf( PageHooks::class, $hooks );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\Plausible\Hooks\PageHooks::onBeforePageDisplay
+	 * @return void
+	 * @throws Exception
+	 */
+	public function testOnBeforePageDisplay() {
+		$this->overrideConfigValues( [
+			'PlausibleDomain' => 'foo',
+			'PlausibleDomainKey' => 'foo',
+			'PlausibleTrackLoggedIn' => true,
+			'PlausibleHonorDNT' => false,
+		] );
+
+		$out = new OutputPage( RequestContext::getMain() );
+
+		$hooks = new PageHooks(
+			$this->getServiceContainer()->getMainConfig(),
+			$this->mockQueue
+		);
+
+		$hooks->onBeforePageDisplay( $out, null );
+
+		$this->assertArrayHasKey( 'plausible', $out->getHeadItemsArray() );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\Plausible\Hooks\PageHooks::onBeforePageDisplay
+	 * @return void
+	 * @throws Exception
+	 */
+	public function testOnBeforePageDisplayAllModules() {
+		$this->overrideConfigValues( [
+			'PlausibleDomain' => 'foo',
+			'PlausibleDomainKey' => 'foo',
+			'PlausibleTrackLoggedIn' => true,
+			'PlausibleHonorDNT' => false,
+			'PlausibleTrack404' => true,
+			'PlausibleTrackSearchInput' => true,
+			'PlausibleTrackEditButtonClicks' => true,
+			'PlausibleTrackNavplateClicks' => true,
+			'PlausibleTrackInfoboxClicks' => true,
+			'PlausibleTrackCitizenSearchLinks' => true,
+			'PlausibleTrackCitizenMenuLinks' => true,
+		] );
+
+		$out = new OutputPage( RequestContext::getMain() );
+
+		$hooks = new PageHooks(
+			$this->getServiceContainer()->getMainConfig(),
+			$this->mockQueue
+		);
+
+		$hooks->onBeforePageDisplay( $out, null );
+
+		$this->assertContains( 'ext.plausible.scripts.track-404', $out->getModules() );
+		$this->assertContains( 'ext.plausible.scripts.track-search', $out->getModules() );
+		$this->assertContains( 'ext.plausible.scripts.track-edit-btn', $out->getModules() );
+		$this->assertContains( 'ext.plausible.scripts.track-navplate-clicks', $out->getModules() );
+		$this->assertContains( 'ext.plausible.scripts.track-infobox-clicks', $out->getModules() );
+		$this->assertContains( 'ext.plausible.scripts.citizen.track-search-links', $out->getModules() );
+		$this->assertContains( 'ext.plausible.scripts.citizen.track-menu-links', $out->getModules() );
+	}
+
+	/**
 	 * @covers \MediaWiki\Extension\Plausible\Hooks\PageHooks::onArticleDeleteAfterSuccess
 	 * @covers \MediaWiki\Extension\Plausible\PlausibleEventJob::newFromRequest
 	 *
@@ -52,7 +130,10 @@ class PageHooksTest extends MediaWikiIntegrationTestCase {
 			$this->mockQueue
 		);
 
-		$hooks->onArticleDeleteAfterSuccess( Title::newFromText( 'Foo' ), new OutputPage( RequestContext::getMain() ) );
+		$hooks->onArticleDeleteAfterSuccess(
+			Title::newFromText( 'Foo' ),
+			new OutputPage( RequestContext::getMain() )
+		);
 	}
 
 	/**
@@ -76,6 +157,7 @@ class PageHooksTest extends MediaWikiIntegrationTestCase {
 			'',
 			0,
 			$this->getMockBuilder( RevisionRecord::class )->disableOriginalConstructor()->getMock(),
+            // phpcs:ignore Generic.Files.LineLength.TooLong
 			new EditResult( true, false, null, null, null, false, false, [] )
 		);
 	}
@@ -154,7 +236,10 @@ class PageHooksTest extends MediaWikiIntegrationTestCase {
 			$this->mockQueue
 		);
 
-		$hooks->onArticleDeleteAfterSuccess( Title::newFromText( 'Foo' ), new OutputPage( RequestContext::getMain() ) );
+		$hooks->onArticleDeleteAfterSuccess(
+			Title::newFromText( 'Foo' ),
+			new OutputPage( RequestContext::getMain() )
+		);
 	}
 
 	/**
@@ -187,6 +272,7 @@ class PageHooksTest extends MediaWikiIntegrationTestCase {
 			'',
 			0,
 			$this->getMockBuilder( RevisionRecord::class )->disableOriginalConstructor()->getMock(),
+            // phpcs:ignore Generic.Files.LineLength.TooLong
 			new EditResult( true, false, null, null, null, false, false, [] )
 		);
 	}

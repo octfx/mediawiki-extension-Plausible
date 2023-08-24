@@ -23,7 +23,6 @@ namespace MediaWiki\Extension\Plausible;
 
 use Config;
 use ConfigException;
-use MediaWiki\MediaWikiServices;
 use OutputPage;
 
 class Plausible {
@@ -57,7 +56,7 @@ class Plausible {
 	 */
 	public function __construct( OutputPage $out ) {
 		$this->out = $out;
-		$this->config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Plausible' );
+		$this->config = $out->getConfig();
 		$this->plausibleDomain = $this->getConfigValue( 'PlausibleDomain' );
 		$this->domainKey = $this->getConfigValue( 'PlausibleDomainKey' );
 	}

@@ -33,6 +33,21 @@ class SearchHooksTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
+	 * @covers \MediaWiki\Extension\Plausible\Hooks\SearchHooks
+	 *
+	 * @return void
+	 * @throws Exception
+	 */
+	public function testConstructor() {
+		$hooks = new SearchHooks(
+			$this->getServiceContainer()->getMainConfig(),
+			$this->getServiceContainer()->getJobQueueGroup()
+		);
+
+		$this->assertInstanceOf( SearchHooks::class, $hooks );
+	}
+
+	/**
 	 * @covers \MediaWiki\Extension\Plausible\Hooks\SearchHooks::onSpecialSearchGoResult
 	 * @covers \MediaWiki\Extension\Plausible\PlausibleEventJob::newFromRequest
 	 *

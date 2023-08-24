@@ -36,6 +36,7 @@ class UserHooks implements LocalUserCreatedHook, UserLogoutCompleteHook, UserLog
 			'User: Register',
 			[
 				'user' => $user->isRegistered() ? $user->getName() : null,
+				'autocreated' => $autocreated,
 			]
 		) );
 	}
@@ -44,7 +45,7 @@ class UserHooks implements LocalUserCreatedHook, UserLogoutCompleteHook, UserLog
 	 * @inheritDoc
 	 */
 	public function onUserLoginComplete( $user, &$inject_html, $direct ): void {
-		if ( !$this->config['userlogin'] ) {
+		if ( !$this->config['userlogin'] || !$direct ) {
 			return;
 		}
 

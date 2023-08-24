@@ -36,6 +36,21 @@ class FileHooksTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
+	 * @covers \MediaWiki\Extension\Plausible\Hooks\FileHooks
+	 *
+	 * @return void
+	 * @throws Exception
+	 */
+	public function testConstructor() {
+		$hooks = new FileHooks(
+			$this->getServiceContainer()->getMainConfig(),
+			$this->getServiceContainer()->getJobQueueGroup()
+		);
+
+		$this->assertInstanceOf( FileHooks::class, $hooks );
+	}
+
+	/**
 	 * @covers \MediaWiki\Extension\Plausible\Hooks\FileHooks::onUploadComplete
 	 * @covers \MediaWiki\Extension\Plausible\PlausibleEventJob::newFromRequest
 	 *

@@ -17,6 +17,7 @@ use User;
 
 /**
  * @group Plausible
+ * @group Database
  */
 class PageHooksTest extends MediaWikiIntegrationTestCase {
 	private $mockQueue;

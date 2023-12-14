@@ -11,6 +11,7 @@ use MediaWikiIntegrationTestCase;
 
 /**
  * @group Plausible
+ * @group Database
  */
 class UserHooksTest extends MediaWikiIntegrationTestCase {
 	private $mockQueue;

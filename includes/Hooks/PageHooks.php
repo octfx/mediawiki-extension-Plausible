@@ -37,11 +37,21 @@ use Skin;
 /**
  * Hooks to run relating the page
  */
-class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleDeleteAfterSuccessHook, ArticleUndeleteHook, PageMoveCompleteHook {
+class PageHooks implements
+	BeforePageDisplayHook,
+	PageSaveCompleteHook,
+	ArticleDeleteAfterSuccessHook,
+	ArticleUndeleteHook,
+	PageMoveCompleteHook
+{
 
 	private array $config;
 	private JobQueueGroup $jobs;
 
+	/**
+	 * @param Config $config
+	 * @param JobQueueGroup $group
+	 */
 	public function __construct( Config $config, JobQueueGroup $group ) {
 		$this->config = $config->get( 'PlausibleServerSideTracking' );
 		$this->jobs = $group;
@@ -76,44 +86,53 @@ class PageHooks implements BeforePageDisplayHook, PageSaveCompleteHook, ArticleD
 	/**
 	 * @inheritDoc
 	 */
-	public function onArticleDeleteAfterSuccess( $title, $outputPage ) {
+	public function onArticleDeleteAfterSuccess( $title, $outputPage ): void {
 		if ( !$this->config['pagedelete'] ) {
 			return;
 		}
 
-		$this->jobs->push( PlausibleEventJob::newFromRequest( $outputPage->getRequest(), 'pagedelete' ) );
+		$this->jobs->push( PlausibleEventJob::newFromRequest( $outputPage->getRequest(), 'Page: Delete' ) );
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function onPageSaveComplete( $wikiPage, $user, $summary, $flags, $revisionRecord, $editResult ) {
+	public function onPageSaveComplete( $wikiPage, $user, $summary, $flags, $revisionRecord, $editResult ): void {
 		if ( !$this->config['pageedit'] || $editResult->isNullEdit() ) {
 			return;
 		}
 
-		$this->jobs->push( PlausibleEventJob::newFromRequest( $user->getRequest(), 'pageedit' ) );
+		$this->jobs->push( PlausibleEventJob::newFromRequest(
+			$user->getRequest(),
+			'Page: Edit',
+			[
+				'title' => $wikiPage->getTitle()->getText(),
+				'user' => $user->isRegistered() ? $user->getName() : null,
+			]
+		) );
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function onArticleUndelete( $title, $create, $comment, $oldPageId, $restoredPages ) {
+	public function onArticleUndelete( $title, $create, $comment, $oldPageId, $restoredPages ): void {
 		if ( !$this->config['pageundelete'] ) {
 			return;
 		}
 
-		$this->jobs->push( PlausibleEventJob::newFromRequest( RequestContext::getMain()->getRequest(), 'pageedit' ) );
+		$this->jobs->push(
+			PlausibleEventJob::newFromRequest( RequestContext::getMain()->getRequest(), 'Page: Undelete' )
+		);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function onPageMoveComplete( $old, $new, $user, $pageid, $redirid, $reason, $revision ) {
+	public function onPageMoveComplete( $old, $new, $user, $pageid, $redirid, $reason, $revision ): void {
 		if ( !$this->config['pagemove'] ) {
 			return;
 		}
 
-		$this->jobs->push( PlausibleEventJob::newFromRequest( $user->getRequest(), 'pagemove' ) );
+		$this->jobs->push( PlausibleEventJob::newFromRequest( $user->getRequest(), 'Page: Move' ) );
 	}
 }

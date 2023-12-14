@@ -23,7 +23,6 @@ namespace MediaWiki\Extension\Plausible;
 
 use Config;
 use ConfigException;
-use MediaWiki\MediaWikiServices;
 use OutputPage;
 
 class Plausible {
@@ -48,20 +47,16 @@ class Plausible {
 	private $domainKey;
 
 	/**
-	 * True if window.plausible was added
-	 *
-	 * @var bool
-	 */
-	private $windowFnAdded = false;
-
-	/**
 	 * @var Config
 	 */
 	private $config;
 
+	/**
+	 * @param OutputPage $out
+	 */
 	public function __construct( OutputPage $out ) {
 		$this->out = $out;
-		$this->config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Plausible' );
+		$this->config = $out->getConfig();
 		$this->plausibleDomain = $this->getConfigValue( 'PlausibleDomain' );
 		$this->domainKey = $this->getConfigValue( 'PlausibleDomainKey' );
 	}
@@ -75,16 +70,7 @@ class Plausible {
 		}
 
 		$script = $this->buildScript();
-		// Script needs to be placed in <head>
-		if ( strpos( $script, 'plausible.js' ) === false ) {
-			$this->out->addHeadItem( 'plausible', $script );
-		} else {
-			$this->out->addScript( $script );
-		}
-
-		if ( $this->getConfigValue( 'PlausibleEnableCustomEvents', false ) === true ) {
-			$this->addWindowDotPlausible();
-		}
+		$this->out->addHeadItem( 'plausible', $script );
 	}
 
 	/**
@@ -106,8 +92,6 @@ class Plausible {
 			'PlausibleTrackCitizenMenuLinks' => 'ext.plausible.scripts.citizen.track-menu-links',
 		];
 
-		$anythingAdded = false;
-
 		foreach ( $availableModules as $config => $module ) {
 			if ( $this->getConfigValue( $config, false ) === false ) {
 				continue;
@@ -119,31 +103,7 @@ class Plausible {
 			}
 
 			$this->out->addModules( $module );
-			$anythingAdded = true;
 		}
-
-		if ( $anythingAdded ) {
-			$this->addWindowDotPlausible();
-		}
-	}
-
-	/**
-	 * Adds the global window.plausible function
-	 */
-	private function addWindowDotPlausible(): void {
-		if ( $this->windowFnAdded === true ) {
-			return;
-		}
-
-		$nonce = $this->out->getCSP()->getNonce();
-
-		$this->out->addScript(
-			sprintf(
-				'<script nonce="%s">window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>',
-				$nonce !== false ? $nonce : ''
-			)
-		);
-		$this->windowFnAdded = true;
 	}
 
 	/**
@@ -168,7 +128,8 @@ class Plausible {
 	 * @return string
 	 */
 	private function buildScriptPath(): string {
-		$name = 'plausible';
+		$name = 'script';
+		$name = sprintf( '%s.pageview-props', $name );
 
 		if ( $this->getConfigValue( 'PlausibleTrackOutboundLinks', false ) === true ) {
 			$name = sprintf( '%s.outbound-links', $name );
@@ -180,6 +141,10 @@ class Plausible {
 
 		if ( $this->getConfigValue( 'PlausibleTrackFileDownloads', false ) === true ) {
 			$name = sprintf( '%s.file-downloads', $name );
+		}
+
+		if ( $this->getConfigValue( 'PlausibleEnableTaggedEvents', false ) === true ) {
+			$name = sprintf( '%s.tagged-events', $name );
 		}
 
 		return sprintf(

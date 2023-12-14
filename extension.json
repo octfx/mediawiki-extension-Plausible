@@ -1,6 +1,6 @@
 {
 	"name": "Plausible",
-	"version": "1.3.1",
+	"version": "1.4.0",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
 	],
@@ -11,7 +11,7 @@
 	"requires": {
 		"MediaWiki": ">= 1.39.0",
 		"platform": {
-			"php": ">=7.3.19"
+			"php": ">=8.0"
 		}
 	},
 	"config": {
@@ -43,8 +43,8 @@
 			"description": "Enable Tracking for logged in users",
 			"value": false
 		},
-		"PlausibleEnableCustomEvents": {
-			"description": "Set to true to add the window.plausible function. Needed for custom event goals etc.",
+		"PlausibleEnableTaggedEvents": {
+			"description": "Enable tracking clicks to tagged elements via css classes",
 			"value": false
 		},
 		"PlausibleIgnoredTitles": {
@@ -68,7 +68,7 @@
 			"value": false
 		},
 		"PlausibleTrackInfoboxClicks": {
-			"description": "Tracks clicks to links inside .mw-capiunto-infobox elements",
+			"description": "Tracks clicks to links inside .mw-capiunto-infobox and .infobox elements",
 			"value": false
 		},
 		"PlausibleTrackCitizenSearchLinks": {
@@ -96,15 +96,16 @@
 				"pagedelete": true,
 				"pageundelete": true,
 				"pagemove": true,
-				"userregister": true,
-				"userlogin": true,
-				"userlogout":  true,
+				"userregister": false,
+				"userlogin": false,
+				"userlogout":  false,
 				"fileupload": true,
 				"filedelete": true,
 				"fileundelete": true,
 				"searchnotfound": true,
 				"searchfound": true
-			}
+			},
+			"merge_strategy": "array_plus"
 		}
 	},
 	"ConfigRegistry": {
@@ -160,17 +161,17 @@
 	},
 	"Hooks": {
 		"BeforePageDisplay": "PageHooks",
-		"PageSaveCompleteHook": "PageHooks",
-		"ArticleDeleteAfterSuccessHook": "PageHooks",
+		"PageSaveComplete": "PageHooks",
+		"ArticleDeleteAfterSuccess": "PageHooks",
 		"ParserFirstCallInit": "ParserHooks",
 		"MediaWikiServices": "MediaWikiServices",
-		"LocalUserCreatedHook": "UserHooks",
-		"UserLogoutCompleteHook": "UserHooks",
-		"UserLoginCompleteHook":  "UserHooks",
-		"UploadCompleteHook":  "FileHooks",
-		"FileDeleteCompleteHook": "FileHooks",
-		"SpecialSearchNogomatchHook": "SearchHooks",
-		"SpecialSearchGoResultHook": "SearchHooks",
+		"LocalUserCreated": "UserHooks",
+		"UserLogoutComplete": "UserHooks",
+		"UserLoginComplete":  "UserHooks",
+		"UploadComplete":  "FileHooks",
+		"FileDeleteComplete": "FileHooks",
+		"SpecialSearchNogomatch": "SearchHooks",
+		"SpecialSearchGoResult": "SearchHooks",
 		"ScribuntoExternalLibraries": "MediaWiki\\Extension\\Plausible\\Hooks\\ScribuntoHooks::onScribuntoExternalLibraries"
 	},
 	"ResourceModules": {

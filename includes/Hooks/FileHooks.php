@@ -15,6 +15,10 @@ class FileHooks implements UploadCompleteHook, FileDeleteCompleteHook, FileUndel
 	private array $config;
 	private JobQueueGroup $jobs;
 
+	/**
+	 * @param Config $config
+	 * @param JobQueueGroup $group
+	 */
 	public function __construct( Config $config, JobQueueGroup $group ) {
 		$this->config = $config->get( 'PlausibleServerSideTracking' );
 		$this->jobs = $group;
@@ -23,33 +27,35 @@ class FileHooks implements UploadCompleteHook, FileDeleteCompleteHook, FileUndel
 	/**
 	 * @inheritDoc
 	 */
-	public function onFileDeleteComplete( $file, $oldimage, $article, $user, $reason ) {
+	public function onFileDeleteComplete( $file, $oldimage, $article, $user, $reason ): void {
 		if ( !$this->config['filedelete'] ) {
 			return;
 		}
 
-		$this->jobs->push( PlausibleEventJob::newFromRequest( $user->getRequest(), 'filedelete' ) );
+		$this->jobs->push( PlausibleEventJob::newFromRequest( $user->getRequest(), 'File: Delete' ) );
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function onUploadComplete( $uploadBase ) {
+	public function onUploadComplete( $uploadBase ): void {
 		if ( !$this->config['fileupload'] ) {
 			return;
 		}
 
-		$this->jobs->push( PlausibleEventJob::newFromRequest( RequestContext::getMain()->getRequest(), 'fileupload' ) );
+		$this->jobs->push(
+			PlausibleEventJob::newFromRequest( RequestContext::getMain()->getRequest(), 'File: Upload' )
+		);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function onFileUndeleteComplete( $title, $fileVersions, $user, $reason ) {
+	public function onFileUndeleteComplete( $title, $fileVersions, $user, $reason ): void {
 		if ( !$this->config['fileundelete'] ) {
 			return;
 		}
 
-		$this->jobs->push( PlausibleEventJob::newFromRequest( $user->getRequest(), 'fileundelete' ) );
+		$this->jobs->push( PlausibleEventJob::newFromRequest( $user->getRequest(), 'File: Undelete' ) );
 	}
 }

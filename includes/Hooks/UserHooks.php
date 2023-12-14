@@ -14,6 +14,10 @@ class UserHooks implements LocalUserCreatedHook, UserLogoutCompleteHook, UserLog
 	private array $config;
 	private JobQueueGroup $jobs;
 
+	/**
+	 * @param Config $config
+	 * @param JobQueueGroup $group
+	 */
 	public function __construct( Config $config, JobQueueGroup $group ) {
 		$this->config = $config->get( 'PlausibleServerSideTracking' );
 		$this->jobs = $group;
@@ -22,16 +26,17 @@ class UserHooks implements LocalUserCreatedHook, UserLogoutCompleteHook, UserLog
 	/**
 	 * @inheritDoc
 	 */
-	public function onLocalUserCreated( $user, $autocreated ) {
+	public function onLocalUserCreated( $user, $autocreated ): void {
 		if ( !$this->config['userregister'] ) {
 			return;
 		}
 
 		$this->jobs->push( PlausibleEventJob::newFromRequest(
 			$user->getRequest(),
-			'userregister',
+			'User: Register',
 			[
 				'user' => $user->isRegistered() ? $user->getName() : null,
+				'autocreated' => $autocreated,
 			]
 		) );
 	}
@@ -39,14 +44,14 @@ class UserHooks implements LocalUserCreatedHook, UserLogoutCompleteHook, UserLog
 	/**
 	 * @inheritDoc
 	 */
-	public function onUserLoginComplete( $user, &$inject_html, $direct ) {
-		if ( !$this->config['userlogin'] ) {
+	public function onUserLoginComplete( $user, &$inject_html, $direct ): void {
+		if ( !$this->config['userlogin'] || !$direct ) {
 			return;
 		}
 
 		$this->jobs->push( PlausibleEventJob::newFromRequest(
 			$user->getRequest(),
-			'userlogin',
+			'User: Login',
 			[
 				'user' => $user->isRegistered() ? $user->getName() : null,
 			]
@@ -56,14 +61,14 @@ class UserHooks implements LocalUserCreatedHook, UserLogoutCompleteHook, UserLog
 	/**
 	 * @inheritDoc
 	 */
-	public function onUserLogoutComplete( $user, &$inject_html, $oldName ) {
+	public function onUserLogoutComplete( $user, &$inject_html, $oldName ): void {
 		if ( !$this->config['userlogout'] ) {
 			return;
 		}
 
 		$this->jobs->push( PlausibleEventJob::newFromRequest(
 			$user->getRequest(),
-			'userlogout',
+			'User: Logout',
 			[
 				'user' => $user->isRegistered() ? $user->getName() : null,
 			]

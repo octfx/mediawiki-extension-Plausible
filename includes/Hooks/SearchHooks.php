@@ -14,6 +14,10 @@ class SearchHooks implements SpecialSearchNogomatchHook, SpecialSearchGoResultHo
 	private array $config;
 	private JobQueueGroup $jobs;
 
+	/**
+	 * @param Config $config
+	 * @param JobQueueGroup $group
+	 */
 	public function __construct( Config $config, JobQueueGroup $group ) {
 		$this->config = $config->get( 'PlausibleServerSideTracking' );
 		$this->jobs = $group;
@@ -22,16 +26,16 @@ class SearchHooks implements SpecialSearchNogomatchHook, SpecialSearchGoResultHo
 	/**
 	 * @inheritDoc
 	 */
-	public function onSpecialSearchNogomatch( &$title ) {
+	public function onSpecialSearchNogomatch( &$title ): void {
 		if ( !$this->config['searchnotfound'] ) {
 			return;
 		}
 
 		$this->jobs->push( PlausibleEventJob::newFromRequest(
 			RequestContext::getMain()->getRequest(),
-			'searchnotfound',
+			'Search: Not Found',
 			[
-				'title' => $title->getText(),
+				'term' => $title->getText(),
 			]
 		) );
 	}
@@ -39,14 +43,14 @@ class SearchHooks implements SpecialSearchNogomatchHook, SpecialSearchGoResultHo
 	/**
 	 * @inheritDoc
 	 */
-	public function onSpecialSearchGoResult( $term, $title, &$url ) {
+	public function onSpecialSearchGoResult( $term, $title, &$url ): void {
 		if ( !$this->config['searchfound'] ) {
 			return;
 		}
 
 		$this->jobs->push( PlausibleEventJob::newFromRequest(
 			RequestContext::getMain()->getRequest(),
-			'searchfound',
+			'Search: Found',
 			[
 				'term' => $term,
 				'title' => $title->getText(),

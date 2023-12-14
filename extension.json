@@ -161,7 +161,7 @@
 	"Hooks": {
 		"BeforePageDisplay": "PageHooks",
 		"PageSaveCompleteHook": "PageHooks",
-		"ArticleDeleteAfterSuccessHook": "PageHooks",
+		"ArticleDeleteAfterSuccess": "PageHooks",
 		"ParserFirstCallInit": "ParserHooks",
 		"MediaWikiServices": "MediaWikiServices",
 		"LocalUserCreatedHook": "UserHooks",

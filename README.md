@@ -50,6 +50,7 @@ Some events can be sent serverside without having to rely on the included plausi
 
 The following custom events can be activated: 
 ```php
+# Default Configuration
 $wgPlausibleServerSideTracking = [
     // Event Name: pageview
     'pageview' => false,

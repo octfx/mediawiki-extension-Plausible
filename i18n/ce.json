@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Умар"
+		]
+	},
+	"ext-plausible-exclude-visits": "Со чуэхар йукъарадаккха",
+	"ext-plausible-notification-visits-excluded": "Хьан чуэхар хӀинца йукъарадоху",
+	"ext-plausible-notification-visits-included": "Хьан чуэхар хӀинца дӀахӀоттийна"
+}

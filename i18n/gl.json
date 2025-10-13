@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Toliño"
+		]
+	},
+	"ext-plausible-desc": "Integra Plausible Analytics, unha alternativa a Google Analytics que é de código aberto e respectuosa coa privacidade.",
+	"ext-plausible-exclude-visits": "Excluír as miñas visitas",
+	"ext-plausible-include-visits": "Deixar de excluír as miñas visitas",
+	"ext-plausible-notification-visits-excluded": "As túas visitas están a ser excluídas",
+	"ext-plausible-notification-visits-included": "As túas visitas están a ser incluídas"
+}

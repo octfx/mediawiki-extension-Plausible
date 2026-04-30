@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Tensama0415"
+		]
+	},
+	"ext-plausible-desc": "Google Analytics의 오픈 소스 대안이자 개인정보 보호에 유리한 Plausible Analytics를 통합합니다.",
+	"ext-plausible-exclude-visits": "내 방문 기록 제외하기",
+	"ext-plausible-include-visits": "내 방문 기록 제외 중지하기",
+	"ext-plausible-notification-visits-excluded": "당신의 방문 기록이 이제 제외됩니다.",
+	"ext-plausible-notification-visits-included": "당신의 방문 기록이 이제 포함됩니다."
+}

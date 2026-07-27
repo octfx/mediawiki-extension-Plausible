@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"شاه زمان پټان"
+		]
+	},
+	"ext-plausible-exclude-visits": "پرته زما له ليدنو",
+	"ext-plausible-include-visits": "زما ليدنې پکې مه رانغاړئ",
+	"ext-plausible-notification-visits-excluded": "ستاسو ليدنې پکې اوس نه دي رانغاړل شوي",
+	"ext-plausible-notification-visits-included": "ستاسو ليدنې پکې اوس رانغاړل شوې دي"
+}

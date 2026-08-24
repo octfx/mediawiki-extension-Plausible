@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Wizzard"
+		]
+	},
+	"ext-plausible-desc": "Integruje Plausible Analytics, open-source alternatívu ku Google Analytics ohľaduplnú k súkromiu.",
+	"ext-plausible-exclude-visits": "Vylúčiť moje návštevy",
+	"ext-plausible-include-visits": "Prestať vylučovať moje návštevy",
+	"ext-plausible-notification-visits-excluded": "Vaše návštevy sa odteraz vylučujú",
+	"ext-plausible-notification-visits-included": "Vaše návštevy sa odteraz zahŕňajú"
+}

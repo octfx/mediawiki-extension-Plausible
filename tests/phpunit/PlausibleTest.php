@@ -71,13 +71,23 @@ class PlausibleTest extends MediaWikiIntegrationTestCase {
 			'PlausibleDomainKey' => null,
 		] );
 
-		$this->expectWarning();
+		$warnings = [];
+		set_error_handler( static function ( $errno, $errstring ) use ( &$warnings ): bool {
+			$warnings[] = $errstring;
+			return true;
+		} );
 
 		$page = new OutputPage( RequestContext::getMain() );
 		$plausible = new Plausible( $page );
 		$plausible->addModules();
 		$plausible->addScript();
 
+		restore_error_handler();
+
+		$this->assertStringContainsString(
+			'$wgPlausibleDomain or $wgPlausibleDomainKey is not set.',
+			implode( "\n", $warnings )
+		);
 		$this->assertArrayNotHasKey( 'plausible', $page->getHeadItemsArray() );
 	}
 

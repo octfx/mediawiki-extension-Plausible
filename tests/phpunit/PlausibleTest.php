@@ -121,6 +121,38 @@ class PlausibleTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * @covers \MediaWiki\Extension\Plausible\Plausible::addScript
+	 * @dataProvider provideFileDownloadExtensions
+	 */
+	public function testFileDownloadExtensions( bool $enabled, array $extensions, ?string $expected ) {
+		$this->overrideConfigValues( [
+			'PlausibleDomain' => 'localhost',
+			'PlausibleDomainKey' => 'localwiki',
+			'PlausibleTrackFileDownloads' => $enabled,
+			'PlausibleTrackFileDownloadExtensions' => $extensions,
+		] );
+
+		$page = new OutputPage( RequestContext::getMain() );
+		( new Plausible( $page ) )->addScript();
+		$script = $page->getHeadItemsArray()['plausible'];
+
+		$this->assertStringNotContainsString( ' file-types=', $script );
+		if ( $expected === null ) {
+			$this->assertStringNotContainsString( ' add-file-types=', $script );
+		} else {
+			$this->assertStringContainsString( ' add-file-types="' . $expected . '"', $script );
+		}
+	}
+
+	public static function provideFileDownloadExtensions(): array {
+		return [
+			'additional extensions' => [ true, [ 'js', 'py' ], 'js,py' ],
+			'disabled' => [ false, [ 'js' ], null ],
+			'empty list' => [ true, [], null ],
+		];
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::addScript
 	 * @covers \MediaWiki\Extension\Plausible\Plausible::buildScript
 	 * @covers \MediaWiki\Extension\Plausible\Plausible::buildScriptAttribs
 	 * @covers \MediaWiki\Extension\Plausible\Plausible::buildScriptPath

@@ -176,7 +176,7 @@ class Plausible {
 
 		$additionalExtensions = $this->getConfigValue( 'PlausibleTrackFileDownloadExtensions', [] );
 		if ( $this->getConfigValue( 'PlausibleTrackFileDownloads' ) && $additionalExtensions ) {
-			$attributes[] = sprintf( 'file-types="%s"', implode( ',', $additionalExtensions ) );
+			$attributes[] = sprintf( 'add-file-types="%s"', implode( ',', $additionalExtensions ) );
 		}
 
 		return implode( ' ', $attributes );

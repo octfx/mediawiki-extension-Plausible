@@ -22,14 +22,14 @@ $wgPlausibleApikey = ''; // Only necessary when using Extension:PageViewInfo
 | $wgPlausibleDomain                      | Plausible Domain. **Required**                                                                                                                                                     | https://plausible.io       | null    |
 | $wgPlausibleDomainKey                   | Domain Key set on the plausible website. **Required**                                                                                                                              | plausible.io               | null    |
 | $wgPlausibleApiKey                      | Auth Bearer key for integration with [Extension:PageViewInfo](https://www.mediawiki.org/wiki/Extension:PageViewInfo)                                                               |                            |         |
-| $wgPlausibleHonorDNT                    | Honor the Do Not Track header and disable tracking.                                                                                                                                | false                      | true    |
+| $wgPlausibleHonorDNT                    | Honor the Do Not Track header for browser-side tracking. This does not prevent server-side events.                                                                                 | false                      | true    |
 | $wgPlausibleTrackOutboundLinks          | Enable Tracking of outbound link clicks.                                                                                                                                           | true                       | false   |
 | $wgPlausibleTrackFileDownloads          | Enable Tracking of link clicks that lead to files, sending a `File Download` event. See [the official docs](https://plausible.io/docs/file-downloads-tracking).                    | true                       | false   |
 | $wgPlausibleTrackFileDownloadExtensions | List of additional file extensions to track. See [the official docs](https://plausible.io/docs/file-downloads-tracking#which-file-types-are-tracked).                              | ['js', 'py']               | []      |
 | $wgPlausibleTrackLoggedIn               | Enable Tracking for logged in users.                                                                                                                                               | true                       | false   |
 | $wgPlausibleEnableTaggedEvents          | Enable click tracking via css classes. See [the official docs](https://plausible.io/docs/custom-event-goals#2-add-a-css-class-name-to-the-element-you-want-to-track-on-your-site). | true                       | false   |
 | $wgPlausibleIgnoredTitles               | List of page titles that should not be tracked. [Examples](https://github.com/plausible/docs/blob/master/docs/excluding-pages.md#common-use-cases-and-examples).                   | ['/Page1', '/Special:*', ] | []      |
-| $wgPlausibleEnableOptOutTag             | Enables or disables the `<plausible-opt-out />` tag that allows users to opt-out from being tracked.                                                                               | false                      | true    |
+| $wgPlausibleEnableOptOutTag             | Enables the `<plausible-opt-out />` tag for browser-side tracking. Opting out does not prevent server-side events.                                                                 | false                      | true    |
 
 
 ### Included tracking scripts
@@ -46,7 +46,7 @@ The following tracking modules can be activated by setting the provided configur
 | $wgPlausibleTrackCitizenMenuLinks   | Only for [Skin:Citizen](https://github.com/StarCitizenTools/mediawiki-skins-Citizen). Track clicks to links in the sidebar menu. Event is named `Citizen: Menu Link Click`.                               | `Citizen: Menu Link Click`   |
 
 ### Server Side Tracking
-Some events can be sent serverside without having to rely on the included plausible client script.
+Some events can be sent server-side without relying on the Plausible client script. The DNT setting and browser opt-out do not prevent these events. The opt-out uses browser local storage, which the server cannot read.
 
 The following custom events can be activated: 
 ```php

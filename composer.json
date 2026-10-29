@@ -18,30 +18,38 @@
 		"composer/installers": ">=1.0.1"
 	},
 	"require-dev": {
-		"mediawiki/mediawiki-codesniffer": "35.0.0",
-		"mediawiki/mediawiki-phan-config": "0.10.6",
-		"mediawiki/minus-x": "1.1.1",
-		"php-parallel-lint/php-console-highlighter": "0.5.0",
-		"php-parallel-lint/php-parallel-lint": "1.2.0"
+		"mediawiki/mediawiki-codesniffer": "52.0.0",
+		"mediawiki/mediawiki-phan-config": "0.20.0",
+		"mediawiki/minus-x": "2.0.1",
+		"php-parallel-lint/php-console-highlighter": "1.0.0",
+		"php-parallel-lint/php-parallel-lint": "1.4.0"
 	},
 	"scripts": {
 		"test": [
 			"parallel-lint . --exclude vendor --exclude node_modules",
-			"phpcs -p -s",
+			"@phpcs",
 			"minus-x check ."
 		],
 		"fix": [
 			"minus-x fix .",
 			"phpcbf"
 		],
-		"phan": "phan -d . --long-progress-bar"
+		"phan": "phan -d . --long-progress-bar",
+		"phpcs": "phpcs -sp --cache",
+		"phpunit": "cd ../../ && composer phpunit -- extensions/Plausible/tests/phpunit/",
+		"preflight": [
+			"@test",
+			"@phan",
+			"@phpunit"
+		]
 	},
 	"extra": {
 		"installer-name": "Plausible"
 	},
 	"config": {
 		"allow-plugins": {
-			"composer/installers": true
+			"composer/installers": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true
 		}
 	}
 }

@@ -16,7 +16,7 @@ class MediaWikiServices implements MediaWikiServicesHook {
 	 */
 	public function onMediaWikiServices( $services ): void {
 		if ( !ExtensionRegistry::getInstance()->isLoaded( 'PageViewInfo' ) ||
-			empty( $services->getMainConfig()->get( 'PlausibleApiKey' ) ) ) {
+			$services->getMainConfig()->get( 'PlausibleApiKey' ) === null ) {
 			return;
 		}
 
@@ -29,13 +29,18 @@ class MediaWikiServices implements MediaWikiServicesHook {
 		$services->redefineService(
 			'PageViewService',
 			static function () use (
+				$services,
 				$cache,
 				$logger,
 				$cachedDays
 			) {
 				$service = new PlausiblePageViewService();
 
-				$cachedService = new CachedPageViewService( $service, $cache );
+				$cachedService = new CachedPageViewService(
+					$service,
+					$cache,
+					$services->getTitleFormatter()
+				);
 				$cachedService->setCachedDays( $cachedDays );
 				$cachedService->setLogger( $logger );
 				return $cachedService;

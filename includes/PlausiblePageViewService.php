@@ -8,10 +8,10 @@ use InvalidArgumentException;
 use JsonException;
 use MediaWiki\Extension\PageViewInfo\PageViewService;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
 use MWTimestamp;
 use RuntimeException;
 use StatusValue;
-use Title;
 
 class PlausiblePageViewService implements PageViewService {
 	private Config $config;
@@ -83,7 +83,7 @@ class PlausiblePageViewService implements PageViewService {
 
 		try {
 			$data = $client->runMulti( $urls );
-		} catch ( Exception $e ) {
+		} catch ( Exception ) {
 			return StatusValue::newFatal( 'pvi-invalidresponse' );
 		}
 
@@ -96,15 +96,15 @@ class PlausiblePageViewService implements PageViewService {
 			$result[$title] = $this->getEmptyDateRange( $days );
 
 			if ( $code == 200 ) {
-				try{
+				try {
 					$body = json_decode( $body, true, 512, JSON_THROW_ON_ERROR );
 
-					foreach ( $body['results'] as $data ) {
+					foreach ( ( $body['results'] ?? [] ) as $data ) {
 						$result[$title][$data['date']] = $data[$metric];
 					}
 					$status->success[$title] = true;
 					++$successCount;
-				} catch ( JsonException $e ) {
+				} catch ( JsonException ) {
 					continue;
 				}
 			}
@@ -138,7 +138,8 @@ class PlausiblePageViewService implements PageViewService {
 				'headers' => [
 					'Authorization' => $this->getAuthHeaderValue(),
 				]
-			]
+			],
+			__METHOD__
 		);
 
 		$request->setHeader( 'Authorization', $this->getAuthHeaderValue() );
@@ -151,13 +152,13 @@ class PlausiblePageViewService implements PageViewService {
 
 		try {
 			$result = json_decode( $request->getContent(), true, 512, JSON_THROW_ON_ERROR );
-		} catch ( JsonException $e ) {
-			$result = null;
+		} catch ( JsonException ) {
+			return StatusValue::newFatal( 'pvi-invalidresponse' );
 		}
 
 		$out = [];
 
-		foreach ( $result['results'] as $pageMetric ) {
+		foreach ( ( $result['results'] ?? [] ) as $pageMetric ) {
 			$out[$pageMetric['date']] = $pageMetric[$metric];
 		}
 
@@ -197,7 +198,8 @@ class PlausiblePageViewService implements PageViewService {
 				'headers' => [
 					'Authorization' => $this->getAuthHeaderValue(),
 				]
-			]
+			],
+			__METHOD__
 		);
 
 		$request->setHeader( 'Authorization', $this->getAuthHeaderValue() );
@@ -210,13 +212,13 @@ class PlausiblePageViewService implements PageViewService {
 
 		try {
 			$result = json_decode( $request->getContent(), true, 512, JSON_THROW_ON_ERROR );
-		} catch ( JsonException $e ) {
-			$result = null;
+		} catch ( JsonException ) {
+			return StatusValue::newFatal( 'pvi-invalidresponse' );
 		}
 
 		$out = [];
 
-		foreach ( $result['results'] as $pageMetric ) {
+		foreach ( ( $result['results'] ?? [] ) as $pageMetric ) {
 			$out[self::pageTitleForMW( $pageMetric['page'] )] = $pageMetric[$metric];
 		}
 
@@ -260,7 +262,7 @@ class PlausiblePageViewService implements PageViewService {
 	 * @return string
 	 */
 	private function getAuthHeaderValue(): string {
-		if ( empty( $this->config->get( 'PlausibleApiKey' ) ) ) {
+		if ( $this->config->get( 'PlausibleApiKey' ) === null ) {
 			throw new RuntimeException( 'wgPlausibleApiKey is empty' );
 		}
 		return sprintf( 'Bearer %s', $this->config->get( 'PlausibleApiKey' ) );

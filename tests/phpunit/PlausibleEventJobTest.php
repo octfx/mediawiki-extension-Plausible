@@ -17,6 +17,9 @@ use NullJob;
 use Status;
 use User;
 
+/**
+ * @group Database
+ */
 class PlausibleEventJobTest extends MediaWikiIntegrationTestCase {
 
 	/**
@@ -109,7 +112,7 @@ class PlausibleEventJobTest extends MediaWikiIntegrationTestCase {
 			->onlyMethods( [ 'create' ] )
 			->getMock();
 
-		$this->getServiceContainer()->redefineService( 'HttpRequestFactory', function () use ( $fac ) {
+		$this->getServiceContainer()->redefineService( 'HttpRequestFactory', static function () use ( $fac ) {
 			return $fac;
 		} );
 
@@ -155,7 +158,7 @@ class PlausibleEventJobTest extends MediaWikiIntegrationTestCase {
 			->onlyMethods( [ 'create' ] )
 			->getMock();
 
-		$this->getServiceContainer()->redefineService( 'HttpRequestFactory', function () use ( $fac ) {
+		$this->getServiceContainer()->redefineService( 'HttpRequestFactory', static function () use ( $fac ) {
 			return $fac;
 		} );
 
@@ -201,7 +204,7 @@ class PlausibleEventJobTest extends MediaWikiIntegrationTestCase {
 			->onlyMethods( [ 'create' ] )
 			->getMock();
 
-		$this->getServiceContainer()->redefineService( 'HttpRequestFactory', function () use ( $fac ) {
+		$this->getServiceContainer()->redefineService( 'HttpRequestFactory', static function () use ( $fac ) {
 			return $fac;
 		} );
 

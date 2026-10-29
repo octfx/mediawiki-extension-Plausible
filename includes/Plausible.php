@@ -135,7 +135,7 @@ class Plausible {
 			$name = sprintf( '%s.outbound-links', $name );
 		}
 
-		if ( !empty( $this->getConfigValue( 'PlausibleIgnoredTitles', [] ) ) ) {
+		if ( $this->getConfigValue( 'PlausibleIgnoredTitles', [] ) ) {
 			$name = sprintf( '%s.exclusions', $name );
 		}
 
@@ -166,7 +166,7 @@ class Plausible {
 
 		$ignoredTitles = $this->getConfigValue( 'PlausibleIgnoredTitles', [] );
 
-		if ( !empty( $ignoredTitles ) ) {
+		if ( $ignoredTitles ) {
 			$attributes['exclude'] = implode( ', ', $ignoredTitles );
 		}
 
@@ -175,7 +175,7 @@ class Plausible {
 		}, array_keys( $attributes ), $attributes );
 
 		$additionalExtensions = $this->getConfigValue( 'PlausibleTrackFileDownloadExtensions', [] );
-		if ( $this->getConfigValue( 'PlausibleTrackFileDownloads' ) && !empty( $additionalExtensions ) ) {
+		if ( $this->getConfigValue( 'PlausibleTrackFileDownloads' ) && $additionalExtensions ) {
 			$attributes[] = sprintf( 'file-types="%s"', implode( ',', $additionalExtensions ) );
 		}
 
@@ -196,7 +196,7 @@ class Plausible {
 
 		$dnt = $this->out->getRequest()->getHeader( 'DNT' ) === '1';
 
-		if ( $dnt === true && (bool)$this->getConfigValue( 'PlausibleHonorDNT', true ) === true ) {
+		if ( $dnt && (bool)$this->getConfigValue( 'PlausibleHonorDNT', true ) ) {
 			return false;
 		}
 
@@ -211,7 +211,7 @@ class Plausible {
 	 * Returns null on if an ConfigException was thrown
 	 *
 	 * @param string $key The config key
-	 * @param null $default
+	 * @param mixed $default
 	 * @return mixed|null
 	 */
 	private function getConfigValue( string $key, $default = null ) {

@@ -103,7 +103,7 @@ class PageHooks implements
 		}
 
 		$this->jobs->push( PlausibleEventJob::newFromRequest(
-			$user->getRequest(),
+			RequestContext::getMain()->getRequest(),
 			'Page: Edit',
 			[
 				'title' => $wikiPage->getTitle()->getText(),
@@ -133,6 +133,6 @@ class PageHooks implements
 			return;
 		}
 
-		$this->jobs->push( PlausibleEventJob::newFromRequest( $user->getRequest(), 'Page: Move' ) );
+		$this->jobs->push( PlausibleEventJob::newFromRequest( RequestContext::getMain()->getRequest(), 'Page: Move' ) );
 	}
 }

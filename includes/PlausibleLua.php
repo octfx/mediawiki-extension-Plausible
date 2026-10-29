@@ -27,7 +27,7 @@ use MediaWiki\Title\Title;
 use Scribunto_LuaLibraryBase;
 
 /**
- * phpcs:disable MediaWiki.Commenting.FunctionComment.ExtraParamComment
+ * Plausible Lua library, registered when the Scribunto extension is loaded
  */
 class PlausibleLua extends Scribunto_LuaLibraryBase {
 
@@ -42,20 +42,18 @@ class PlausibleLua extends Scribunto_LuaLibraryBase {
 			'getSiteData' => [ $this, 'getSiteData' ],
 		];
 
-		$this->getEngine()->registerInterface( __DIR__ . '/' . 'mw.ext.plausible.lua', $lib, [] );
+		return $this->getEngine()->registerInterface( __DIR__ . '/' . 'mw.ext.plausible.lua', $lib, [] );
 	}
 
 	/**
 	 * The top pages in the last day (or specified days) for this site
 	 *
-	 * @param int $days optional Number of days to calculate the top pages over
+	 * @param int ...$args Optional number of days to calculate the top pages over
 	 *
 	 * @return array|array[]
 	 */
-	public function getTopPages(): array {
-		$args = func_get_args();
-
-		if ( empty( $args ) ) {
+	public function getTopPages( ...$args ): array {
+		if ( !$args ) {
 			/** @var CachedPageViewService $service */
 			$service = MediaWikiServices::getInstance()->getService( 'PageViewService' );
 
@@ -76,8 +74,8 @@ class PlausibleLua extends Scribunto_LuaLibraryBase {
 				++$i;
 			}
 
-			uasort( $out, function ( $a, $b ) {
-				return $a['views'] < $b['views'];
+			uasort( $out, static function ( $a, $b ) {
+				return $b['views'] <=> $a['views'];
 			} );
 			return [ $out ];
 		}
@@ -88,13 +86,11 @@ class PlausibleLua extends Scribunto_LuaLibraryBase {
 	/**
 	 * Number of views for whole site
 	 *
-	 * @param int $days optional Number of days for returning the views
+	 * @param int ...$args Number of days for returning the views
 	 *
 	 * @return array
 	 */
-	public function getSiteData(): array {
-		$args = func_get_args();
-
+	public function getSiteData( ...$args ): array {
 		/** @var CachedPageViewService $service */
 		$service = MediaWikiServices::getInstance()->getService( 'PageViewService' );
 
@@ -110,15 +106,11 @@ class PlausibleLua extends Scribunto_LuaLibraryBase {
 	/**
 	 * Number of views for the specified titles
 	 *
-	 *  MediaWiki.Commenting.FunctionComment.ExtraParamComment
-	 * @param string|string[] $titles The titles to work on
-	 * @param int $days optional Number of days to calculate the views over
+	 * @param string|mixed ...$args Titles to work on, then the number of days
 	 *
 	 * @return array
 	 */
-	public function getPageData(): array {
-		$args = func_get_args();
-
+	public function getPageData( ...$args ): array {
 		/** @var CachedPageViewService $service */
 		$service = MediaWikiServices::getInstance()->getService( 'PageViewService' );
 

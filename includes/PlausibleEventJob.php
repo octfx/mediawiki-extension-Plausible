@@ -52,9 +52,10 @@ class PlausibleEventJob extends Job implements GenericParameterJob {
 						'url' => $this->params['url'],
 						'props' => $this->params['props'] ?? [],
 					], JSON_THROW_ON_ERROR ),
-				]
+				],
+				__METHOD__
 			);
-		} catch ( JsonException | ConfigException $e ) {
+		} catch ( JsonException | ConfigException ) {
 			return false;
 		}
 
@@ -90,7 +91,7 @@ class PlausibleEventJob extends Job implements GenericParameterJob {
 				'props' => $props,
 				'isAnon' => $request->getSession()->getUser()->isAnon(),
 			] );
-		} catch ( Exception $e ) {
+		} catch ( Exception ) {
 			return new NullJob( [ 'removeDuplicates' => true ] );
 		}
 	}

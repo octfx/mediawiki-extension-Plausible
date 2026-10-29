@@ -22,6 +22,8 @@ class OptOut {
 
 		$message = new Message( 'ext-plausible-exclude-visits' );
 
+		// System message content without parameters, so no user-controlled HTML
+		// @phan-suppress-next-line SecurityCheck-XSS
 		return sprintf(
 			'<button type="submit" class="plausible-opt-out plausible-opt-out__disabled">%s</button>',
 			$message->plain()

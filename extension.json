@@ -15,6 +15,14 @@
 		}
 	},
 	"config": {
+		"PlausibleTrackerMode": {
+			"description": "Tracker format: legacy or site-specific",
+			"value": "legacy"
+		},
+		"PlausibleScriptUrl": {
+			"description": "Site-specific tracker script URL",
+			"value": null
+		},
 		"PlausibleDomain": {
 			"description": "Plausible Domain",
 			"value": null

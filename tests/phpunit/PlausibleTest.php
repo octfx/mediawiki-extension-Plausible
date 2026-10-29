@@ -143,6 +143,69 @@ class PlausibleTest extends MediaWikiIntegrationTestCase {
 		}
 	}
 
+	/**
+	 * @covers \MediaWiki\Extension\Plausible\Plausible::addScript
+	 * @dataProvider provideSiteSpecificOptions
+	 */
+	public function testSiteSpecificOptions( bool $outbound, bool $downloads, array $extensions, string $expected ) {
+		$this->overrideConfigValues( [
+			'PlausibleTrackerMode' => 'site-specific',
+			'PlausibleScriptUrl' => 'https://analytics.example/js/pa-test.js',
+			'PlausibleDomain' => 'https://analytics.example',
+			'PlausibleDomainKey' => 'localwiki',
+			'PlausibleTrackOutboundLinks' => $outbound,
+			'PlausibleTrackFileDownloads' => $downloads,
+			'PlausibleTrackFileDownloadExtensions' => $extensions,
+		] );
+
+		$page = new OutputPage( RequestContext::getMain() );
+
+		( new Plausible( $page ) )->addScript();
+
+		$script = $page->getHeadItemsArray()['plausible'];
+		$this->assertStringContainsString( 'https://analytics.example/js/pa-test.js', $script );
+		$this->assertStringContainsString( $expected, $script );
+		$this->assertStringContainsString( 'plausible.init(', $script );
+		$this->assertStringNotContainsString( 'script.pageview-props', $script );
+		$this->assertStringNotContainsString( 'transformRequest', $script );
+	}
+
+	/** @covers \MediaWiki\Extension\Plausible\Plausible::addScript */
+	public function testSiteSpecificRequiresUrl() {
+		$this->overrideConfigValues( [
+			'PlausibleTrackerMode' => 'site-specific',
+			'PlausibleScriptUrl' => null,
+			'PlausibleDomain' => 'https://analytics.example',
+			'PlausibleDomainKey' => 'localwiki',
+		] );
+
+		$warnings = [];
+
+		set_error_handler( static function ( $errno, $message ) use ( &$warnings ): bool {
+			$warnings[] = $message;
+			return true;
+		} );
+
+		try {
+			$page = new OutputPage( RequestContext::getMain() );
+			( new Plausible( $page ) )->addScript();
+		} finally {
+			restore_error_handler();
+		}
+
+		$this->assertArrayNotHasKey( 'plausible', $page->getHeadItemsArray() );
+		$this->assertStringContainsString( '$wgPlausibleScriptUrl', implode( ' ', $warnings ) );
+	}
+
+	public static function provideSiteSpecificOptions(): array {
+		return [
+			'disabled' => [ false, false, [ 'js' ], '"outboundLinks":false,"fileDownloads":false' ],
+			'default file types' => [ true, true, [], '"outboundLinks":true,"fileDownloads":true' ],
+			'replacement file types' => [ false, true, [ 'js', 'py' ],
+				'"outboundLinks":false,"fileDownloads":{"fileExtensions":["js","py"]}' ],
+		];
+	}
+
 	public static function provideFileDownloadExtensions(): array {
 		return [
 			'additional extensions' => [ true, [ 'js', 'py' ], 'js,py' ],

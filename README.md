@@ -17,20 +17,43 @@ $wgPlausibleApikey = ''; // Only necessary when using Extension:PageViewInfo
 * Done – Navigate to Special:Version on your wiki to verify that the extension is successfully installed.
 
 ## Configuration
-| Key                                     | Description                                                                                                                                                                        | Example                    | Default |
-|-----------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|---------|
-| $wgPlausibleDomain                      | Plausible Domain. **Required**                                                                                                                                                     | https://plausible.io       | null    |
-| $wgPlausibleDomainKey                   | Domain Key set on the plausible website. **Required**                                                                                                                              | plausible.io               | null    |
-| $wgPlausibleApiKey                      | Auth Bearer key for integration with [Extension:PageViewInfo](https://www.mediawiki.org/wiki/Extension:PageViewInfo)                                                               |                            |         |
-| $wgPlausibleHonorDNT                    | Honor the Do Not Track header for browser-side tracking. This does not prevent server-side events.                                                                                 | false                      | true    |
-| $wgPlausibleTrackOutboundLinks          | Enable Tracking of outbound link clicks.                                                                                                                                           | true                       | false   |
-| $wgPlausibleTrackFileDownloads          | Enable Tracking of link clicks that lead to files, sending a `File Download` event. See [the official docs](https://plausible.io/docs/file-downloads-tracking).                    | true                       | false   |
-| $wgPlausibleTrackFileDownloadExtensions | List of additional file extensions to track. See [the official docs](https://plausible.io/docs/file-downloads-tracking#which-file-types-are-tracked).                              | ['js', 'py']               | []      |
-| $wgPlausibleTrackLoggedIn               | Enable Tracking for logged in users.                                                                                                                                               | true                       | false   |
-| $wgPlausibleEnableTaggedEvents          | Enable click tracking via css classes. See [the official docs](https://plausible.io/docs/custom-event-goals#2-add-a-css-class-name-to-the-element-you-want-to-track-on-your-site). | true                       | false   |
-| $wgPlausibleIgnoredTitles               | List of page titles that should not be tracked. [Examples](https://github.com/plausible/docs/blob/master/docs/excluding-pages.md#common-use-cases-and-examples).                   | ['/Page1', '/Special:*', ] | []      |
-| $wgPlausibleEnableOptOutTag             | Enables the `<plausible-opt-out />` tag for browser-side tracking. Opting out does not prevent server-side events.                                                                 | false                      | true    |
+| Key                                     | Description                                                                                                                                                     | Example                               | Default  |
+|-----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------|----------|
+| $wgPlausibleTrackerMode                 | Tracker format: `legacy` or `site-specific`. See [Tracker modes](#tracker-modes).                                                                               | 'site-specific'                       | 'legacy' |
+| $wgPlausibleScriptUrl                   | Site-specific script URL from the Plausible installation snippet. Required in `site-specific` mode.                                                             | https://plausible.io/js/pa-example.js | null     |
+| $wgPlausibleDomain                      | Plausible domain. Required for legacy tracking and server-side tracking.                                                                                        | https://plausible.io                  | null     |
+| $wgPlausibleDomainKey                   | Domain key set in Plausible. Required for legacy tracking and server-side tracking.                                                                             | plausible.io                          | null     |
+| $wgPlausibleApiKey                      | Auth Bearer key for integration with [Extension:PageViewInfo](https://www.mediawiki.org/wiki/Extension:PageViewInfo)                                            |                                       |          |
+| $wgPlausibleHonorDNT                    | Honor the Do Not Track header for browser-side tracking. This does not prevent server-side events.                                                              | false                                 | true     |
+| $wgPlausibleTrackOutboundLinks          | Enable Tracking of outbound link clicks.                                                                                                                        | true                                  | false    |
+| $wgPlausibleTrackFileDownloads          | Enable Tracking of link clicks that lead to files, sending a `File Download` event. See [the official docs](https://plausible.io/docs/file-downloads-tracking). | true                                  | false    |
+| $wgPlausibleTrackFileDownloadExtensions | File extensions to track. Legacy mode adds them to the defaults; site-specific mode replaces the defaults when the list is not empty.                           | ['js', 'py']                          | []       |
+| $wgPlausibleTrackLoggedIn               | Enable Tracking for logged in users.                                                                                                                            | true                                  | false    |
+| $wgPlausibleEnableTaggedEvents          | Enable tagged events in legacy mode. The site-specific tracker enables tagged events regardless of this setting.                                                | true                                  | false    |
+| $wgPlausibleIgnoredTitles               | URL path patterns excluded from browser pageviews in both modes. Custom events are not excluded by path.                                                          | ['/Page1', '/Special:*']              | []       |
+| $wgPlausibleEnableOptOutTag             | Enables the `<plausible-opt-out />` tag for browser-side tracking. Opting out does not prevent server-side events.                                              | false                                 | true     |
 
+
+### Tracker modes
+
+Legacy mode is the default. It uses Plausible's legacy script variants and supports self-hosted Plausible v2.0.0.
+
+Site-specific mode is a work in progress. **Do not use it in production:** browser controls have not been fully verified. It requires a Plausible deployment that provides a site-specific tracker. Plausible Community Edition introduced this tracker in v3.1.0. Live Cloud and self-hosted compatibility has not yet been verified.
+
+To opt in, copy the script URL from your site's Plausible installation snippet:
+
+```php
+$wgPlausibleTrackerMode = 'site-specific';
+$wgPlausibleScriptUrl = 'https://plausible.io/js/pa-example.js'; // Replace with your site's script URL.
+```
+
+The extension's outbound-link and file-download settings override the Plausible site settings. With downloads enabled, an empty extension list uses Plausible's defaults. A non-empty list replaces them in site-specific mode. Legacy mode adds the listed extensions to the defaults.
+
+The site-specific tracker enables tagged events independently of `$wgPlausibleEnableTaggedEvents`. Legacy mode uses that setting to enable or disable tagged events.
+
+`$wgPlausibleIgnoredTitles` matches browser URL paths, not MediaWiki title text. It uses Plausible's legacy wildcard and regular-expression matching rules in both modes. For examples, see [Plausible's exclusion documentation](https://github.com/plausible/docs/blob/master/docs/excluding-pages.md#common-use-cases-and-examples). Exclusions do not suppress custom events or server-side events.
+
+If you use a Content Security Policy, allow the tracker script origin in `script-src` and the event endpoint origin in `connect-src`. These origins may differ when using a proxy.
 
 ### Included tracking scripts
 The following tracking modules can be activated by setting the provided configuration key in `LocalSettings.php` to true.

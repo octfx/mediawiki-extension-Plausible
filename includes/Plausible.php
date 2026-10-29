@@ -110,9 +110,47 @@ class Plausible {
 	 * Builds the complete script
 	 *
 	 * @return string
+	 * @throws \JsonException
 	 */
 	private function buildScript(): string {
 		$nonce = $this->out->getCSP()->getNonce();
+
+		if ( $this->getConfigValue( 'PlausibleTrackerMode', 'legacy' ) === 'site-specific' ) {
+			$downloads = $this->getConfigValue( 'PlausibleTrackFileDownloads', false );
+			$extensions = $this->getConfigValue( 'PlausibleTrackFileDownloadExtensions', [] );
+
+			$options = [
+				'outboundLinks' => $this->getConfigValue( 'PlausibleTrackOutboundLinks', false ),
+				'fileDownloads' => $downloads && $extensions ? [ 'fileExtensions' => $extensions ] : $downloads,
+			];
+
+			$flags = JSON_THROW_ON_ERROR | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT;
+			$json = json_encode( $options, $flags );
+			$ignored = implode( ', ', $this->getConfigValue( 'PlausibleIgnoredTitles', [] ) );
+			$init = 'var options=' . $json . ';';
+
+			if ( $ignored !== '' ) {
+				$patterns = json_encode( $ignored, $flags );
+				$init .= 'var exclusions=' . $patterns . '.split(",");';
+				$init .= <<<'JS'
+options.transformRequest=function(payload){
+if(payload.n==='pageview'&&exclusions.some(function(path){
+return location.pathname.match(new RegExp('^'+path.trim().replace(/\*\*/g,'.*')
+.replace(/([^\.])\*/g,'$1[^\\s\/]*')+'\/?$'));
+}))return false;
+return payload;
+};
+JS;
+			}
+			$nonceAttr = $nonce !== false ? sprintf( ' nonce="%s"', htmlspecialchars( $nonce, ENT_QUOTES ) ) : '';
+			$url = htmlspecialchars( $this->getConfigValue( 'PlausibleScriptUrl' ), ENT_QUOTES );
+
+			return '<script' . $nonceAttr . '>window.plausible=window.plausible||function(){'
+				. '(window.plausible.q=window.plausible.q||[]).push(arguments)};'
+				. 'window.plausible.init=window.plausible.init||function(i){window.plausible.o=i||{}};'
+				. '(function(){' . $init . 'plausible.init(options);})();</script>'
+				. '<script async src="' . $url . '"' . $nonceAttr . '></script>';
+		}
 
 		return sprintf(
 			'<script async defer %s src="%s"%s></script>',
@@ -188,7 +226,17 @@ class Plausible {
 	 * @return bool
 	 */
 	private function canAdd(): bool {
-		if ( $this->plausibleDomain === null || $this->domainKey === null ) {
+		$mode = $this->getConfigValue( 'PlausibleTrackerMode', 'legacy' );
+
+		if ( $mode === 'site-specific' ) {
+			if ( !$this->getConfigValue( 'PlausibleScriptUrl' ) ) {
+				wfLogWarning( '$wgPlausibleScriptUrl is not set.' );
+				return false;
+			}
+		} elseif ( $mode !== 'legacy' ) {
+			wfLogWarning( 'Invalid $wgPlausibleTrackerMode.' );
+			return false;
+		} elseif ( $this->plausibleDomain === null || $this->domainKey === null ) {
 			wfLogWarning( '$wgPlausibleDomain or $wgPlausibleDomainKey is not set.' );
 
 			return false;
